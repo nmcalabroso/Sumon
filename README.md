@@ -27,6 +27,14 @@ Next, from within the virtual environment, we install pyglet.
 pip install --upgrade http://pyglet.googlecode.com/archive/tip.zip
 ```
 
+For audio support, install pyglet's AVBin.
+Download the source code from https://code.google.com/p/avbin.
+Extract and install the library.
+```bash
+cd /my/dir/avbin-linux-x86-64-7
+sudo ./install.sh
+```
+
 ### Project
 
 Clone our repository, and switch to that directory (make sure you've been added to the repo as a collaborator. Otherwise, kindly inform me so that I can add you)
@@ -34,4 +42,4 @@ Clone our repository, and switch to that directory (make sure you've been added 
 $ git clone https://github.com/nmcalabroso/Sumon.git
 $ cd Sumon
 ```
-༼ つ ◕_◕ ༽つ GIFF ME MP2 <3
+༼ つ ◕_◕ ༽つ GIFF ME MP2 <3z
