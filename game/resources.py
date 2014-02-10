@@ -31,11 +31,13 @@ class Resources:
 	sprites = {}
 	res_path = './assets/img'
 	
-	sprites['play_button']  = center_image(image.load(join(res_path,'play_button.png')))
-	sprites['title_bg'] 	= image.load(join(res_path,'title_bg.png'))
-	sprites['sumo']		    = center_image(image.load(join(res_path,'sumo_title.gif')))
-	sprites['BLACK_JONOKUCHI']	= center_image(image.load(join(res_path,'sumo_title.gif')))
-	sprites['KOMUSUBI']		= center_image(image.load(join(res_path,'sumo_title.gif')))
-	sprites['SEKIWAKE']		= center_image(image.load(join(res_path,'sumo_title.gif')))
-	sprites['OZEKI']		= center_image(image.load(join(res_path,'sumo_title.gif')))
-	sprites['YOKUZANA']		= center_image(image.load(join(res_path,'sumo_title.gif')))
+	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
+	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
+	sprites['sumo']		    		= center_image(image.load(join(res_path,'sumo_title.gif')))
+	sprites['player_bg']			= center_image(image.load(join(res_path,'fight.jpg')))
+
+	sprites['BLACK_JONOKUCHI']		= center_image(image.load(join(res_path,'sumo_title.gif')))
+	sprites['KOMUSUBI']				= center_image(image.load(join(res_path,'sumo_title.gif')))
+	sprites['SEKIWAKE']				= center_image(image.load(join(res_path,'sumo_title.gif')))
+	sprites['OZEKI']				= center_image(image.load(join(res_path,'sumo_title.gif')))
+	sprites['YOKUZANA']				= center_image(image.load(join(res_path,'sumo_title.gif')))
