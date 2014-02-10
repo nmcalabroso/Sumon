@@ -1,7 +1,7 @@
 import pyglet
 from game.world import GameWorld
 from game.resources import Resources
-from game.gui import UIObject
+from game.gui import StartButton
 from game.background import Background
 from game.sumo import SumoWrestler
 
@@ -20,25 +20,42 @@ def update(dt):
 	for obj in world.get_game_objects():
 		obj.update(dt)
 
-def main():
+
+#--- STATES ----------------------------------------------------------------------------------------------------------------
+
+def player_screen():
+	player_bg = Background(image = Resources.sprites['player_bg'], x=550, y=300)
+	world.add_object(player_bg)
+
+
+def title():
 	# Instantiation section #
-	world.set_window(game_window)
 	title_bg 	= Background(image = Resources.sprites['title_bg'])
-	play_button = UIObject(image = Resources.sprites['play_button'],
-						   x = Resources.window_width*0.5,
-						   y = Resources.window_height*0.5)
+	play_button = StartButton(world = world, image = Resources.sprites['play_button'],
+						   	x = Resources.window_width*0.5,
+						   	y = Resources.window_height*0.5)
 	wrestler 	= SumoWrestler(wrestler_info = ('BLACK','JONOKUCHI'),
 								x = 0,
 								y = 0)
-	
-	# End of Instantiation #
+	#player_bg = Background(image = Resources.sprites['player_bg'])
+
+	# Handler specification #
+	game_window.push_handlers(world)
+	game_window.push_handlers(play_button)
+	# End of specification #
 
 	# Importation section #
 	world.add_object(title_bg)
 	world.add_object(play_button)
 	world.add_object(wrestler)
-	# End of Imporation #
-	
+	# End of importation #
+
+#--- MAIN ----------------------------------------------------------------------------------------------------------------
+
+def main():
+	world.set_window(game_window)
+	title()
+
 	pyglet.clock.schedule_interval(update, 1/120.0)
 	pyglet.app.run()
 
