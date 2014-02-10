@@ -1,10 +1,11 @@
+import pyglet
 from resources import Resources
 from game.gameobject import GameObject
-import pyglet
+
 class GameWorld(GameObject):
 
 	def __init__(self,*args,**kwargs):
-		super(GameWorld,self).__init__(img = Resources.sprites['no_sprite'], *args,**kwargs)
+		super(GameWorld,self).__init__(name = 'World',img = Resources.sprites['no_sprite'], *args,**kwargs)
 		self.game_state = Resources.state['START']
 		self.pool = [] #gameobject pool
 		self.window = None #game window

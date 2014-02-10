@@ -1,6 +1,24 @@
 from gameobject import GameObject
 from game.resources import Resources
 
+class Card(GameObject):
+	def __init__(self,title,*args, **kwargs):
+		super(Card,self).__init__(img = Resources.sprites['blank_card'],*args,**kwargs)
+		self.name = "Card"
+		self.title = title
+
+
+class SumoWrestlerCard(Card):
+	def __init__(self,title,*args,**kwargs):
+		super(SumoWrestlerCard,self).__init__(title = title, *args, **kwargs)
+		self.name = "SumoWrestlerCard"
+
+class PowerUpCard(Card):
+	def __init__(self,title,*args,**kwargs):
+		super(SumoWrestlerCard,self).__init__(title = title, *args, **kwargs)
+		self.name = "PowerUpCard"
+
+
 class SumoWrestler(GameObject):
 	def __init__(self,wrestler_info,*args, **kwargs):
 		self.race,self.type = wrestler_info

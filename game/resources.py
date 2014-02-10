@@ -14,7 +14,7 @@ def center_image(image):
 	return image
 
 class Resources:
-	state = {'START':1,'GAME':2,'END':3} #game states
+	state = {'START':1,'PLAYER':2,'GAME':3,'END':4} #game states
 	race = {'BLACK':1,'WHITE':2} #player side
 	stype = {
 			'JONOKUCHI':(1,0),
@@ -36,8 +36,8 @@ class Resources:
 	sprites['hand_cursor'] 			= image.load(join(res_path,'hand_cursor.PNG'))
 	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
 	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
+	sprites['player_bg'] 			= center_image(image.load(join(res_path,'player_bg.jpg')))
 	sprites['sumo']		    		= center_image(image.load(join(res_path,'sumo_title.gif')))
-	sprites['player_bg']			= center_image(image.load(join(res_path,'fight.jpg')))
 
 	sprites['BLACK_JONOKUCHI']		= center_image(image.load(join(res_path,'sumo_title.gif')))
 	sprites['KOMUSUBI']				= center_image(image.load(join(res_path,'sumo_title.gif')))
