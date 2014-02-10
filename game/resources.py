@@ -24,13 +24,16 @@ class Resources:
 			'YOKUZANA':(13,10)
 			} #sumo constants (weight,energy)
 
-	window_width = 1024
-	window_height = 600
+	window_width = 1280
+	window_height = 650
 	center_x,center_y = get_center_coordinates(window_width,window_height)
 
 	sprites = {}
 	res_path = './assets/img'
-	
+	sprites['no_sprite'] 			= image.load(join(res_path,'title_bg.png'))
+	sprites['default_cursor'] 		= image.load(join(res_path,'default_cursor.PNG'))
+	sprites['active_cursor'] 		= image.load(join(res_path,'active_cursor.PNG'))
+	sprites['hand_cursor'] 			= image.load(join(res_path,'hand_cursor.PNG'))
 	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
 	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
 	sprites['sumo']		    		= center_image(image.load(join(res_path,'sumo_title.gif')))
