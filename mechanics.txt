@@ -1,0 +1,29 @@
+SUMOn
+
+1.Each round is consists of two phases: the programming phase and the execution phase. In the programming phase, each player will decide what moves shall be executed. Moves can be a summoning move, a power card move, or a regular move (e.g. move forward, takes one mana). Execution of moves will be according to the player’s programming sequence.
+
+3. Each player will be granted 20 life points at the start of the game.
+
+4. Initial summoning energy of each player is 10. Summoning moves consume summoning energy. After every round, each player will be granted 5 additional summoning energy points.
+
+5. Each player will be granted 3 mana at the start of the game. Usage of power cards and regular moves consume mana. After every round, each player will be granted 2 additional mana.
+
+6. Initial power card count for both player is three. One power card shall be given to each player after each programming phase starts.
+
+7. A player may only have at most 10 summoning cards and 10 powerup cards in hand. After each round, the player will receive up to 5 random cards from the deck. Any unused cards will also remain in the player's possession.
+
+8. The time limit for each programming round is three minutes. The player may decide to end the phase early.
+
+9. Each player will choose which lane each summoned wrestler shall take. All summoned wrestlers will start at the player’s respective summoning rows.
+
+10. Strictly one sumo wrestler per tile.
+
+11. Heavier (measured by the weight attribute) sumo wrestlers beat the lighter ones. Lighter wrestlers will be pushed back one tile, thus allowing the heavier wrestler to occupy the recently vacated tile.
+
+12. Every sumo wrestler that goes past the summoning row will cause damage to the player that owns that particular summoning row, regardless of alliance.
+
+13. The player will receive damage equal to the weight of each sumo wrestler that is pushed back past his/her summoning row.
+
+14. The wrestler who deals direct damage to the opponent will disappear in the game. Its role is already complete.
+
+15. A player will win if, and only if, its opponent will exhaust all of its 20 initial life points.

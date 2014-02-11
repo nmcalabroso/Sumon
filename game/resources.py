@@ -30,7 +30,7 @@ class Resources:
 
 	sprites = {}
 	res_path = './assets/img'
-	sprites['no_sprite'] 			= image.load(join(res_path,'title_bg.png'))
+	sprites['no_sprite'] 			= image.load(join(res_path,'blank.png'))
 	sprites['default_cursor'] 		= image.load(join(res_path,'default_cursor.PNG'))
 	sprites['active_cursor'] 		= image.load(join(res_path,'active_cursor.PNG'))
 	sprites['hand_cursor'] 			= image.load(join(res_path,'hand_cursor.PNG'))

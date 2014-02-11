@@ -2,6 +2,7 @@ import pyglet
 from game.world import GameWorld
 from game.resources import Resources
 from game.gui import StartButton
+from game.gui import TextWidget
 from game.background import Background
 #from game.sumo import SumoWrestler
 
@@ -60,20 +61,56 @@ def title_screen():
 
 	# Importation section #
 	world.add_object(title_bg)
-	world.add_object(play_button)
+
 	# End of importation #
 
 def player_screen():
+	x1 = int((Resources.window_width*0.5)-200)
+	y1 = int((Resources.window_height*0.5)+50)
+
 	player_bg = Background('player_bg',
 						img =  Resources.sprites['player_bg'],
 						batch = player_batch)
 
-	# Handler specification #
+	label_p1 =  pyglet.text.Label('Player 1:',
+								x = x1,
+								y = y1,
+								anchor_y='bottom',
+                              	color=(57, 255, 20, 255),
+                              	batch=player_batch)
 
+	text_p1 = TextWidget(text = '',
+						x = x1+75,
+						y = y1,
+						width = 250,
+						batch = player_batch,
+						cursor = game_window.get_system_mouse_cursor('text'),
+						world = world)
+
+	label_p2 =  pyglet.text.Label('Player 2:',
+								x = x1,
+								y = y1-50,
+								anchor_y='bottom',
+                              	color=(57, 255, 20, 255),
+                              	batch=player_batch)
+
+	text_p2 = TextWidget(text = '',
+						x = x1+75,
+						y = y1-50,
+						width = 250,
+						batch = player_batch,
+						cursor = game_window.get_system_mouse_cursor('text'),
+						world = world)
+	
+	# Handler specification #
+	game_window.push_handlers(text_p1)
+	game_window.push_handlers(text_p2)
 	# End of specification #
 
 	# Importation section #
 	world.add_object(player_bg)
+	world.add_widget(text_p1)
+	world.add_widget(text_p2)
 	# End of importation #
 
 def game_screen():
