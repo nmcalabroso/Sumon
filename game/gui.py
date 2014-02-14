@@ -7,24 +7,39 @@ __docformat__ = 'restructuredtext'
 __version__ = '$Id: $'
 
 class UIObject(GameObject):
-	def __init__(self,world,*args,**kwargs):
-		super(UIObject, self).__init__(name = 'UIObject',*args, **kwargs)
-		self.world = world
+    def __init__(self,world,curr_state,*args,**kwargs):
+        super(UIObject, self).__init__(name = 'UIObject',*args, **kwargs)
+        self.world = world
+        self.curr_state = curr_state
 
-class StartButton(UIObject):
-	def __init__(self,world,*args,**kwargs):
-		super(StartButton, self).__init__(world = world,*args,**kwargs)
-		self.name = 'StartButton'
+class Button(UIObject):
+    def __init__(self,name,curr_state,target_state,world,*args,**kwargs):
+        super(Button, self).__init__(curr_state = curr_state, world = world,*args,**kwargs)
+        self.name = name
+        self.hand_cursor = world.window.get_system_mouse_cursor('hand')
+        self.target_game_state = target_state
 
-	def on_mouse_press(self, x, y, button, modifiers):
-		if self.active:
-			if button == mouse.LEFT:
-		   		if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
-		   			if y > (self.y - self.height*0.5) and y < (self.y + (self.height*0.5)):
-		   				print "StartButton: Proceeding to PLAYER_STATE."
-                        self.world.game_state = Resources.state['PLAYER']
-                        self.active = False
-		   				
+    def hit_test(self,x,y):
+        if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
+            if y > (self.y - self.height*0.5) and y < (self.y + (self.height*0.5)):
+                return True
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if self.active and self.world.game_state == Resources.state[self.curr_state]:
+            if button == mouse.LEFT:
+                if self.hit_test(x,y):
+                    print "Button: Proceeding to",self.target_game_state,"STATE."
+                    self.world.game_state = Resources.state[self.target_game_state]
+                    self.active = False
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        if self.active and self.world.game_state == Resources.state[self.curr_state]:
+            if self.hit_test(x,y):
+                print "Entering Button:",self.name
+                self.world.window.set_mouse_cursor(self.hand_cursor)
+            else:
+                self.world.window.set_mouse_cursor(None)
+
 class Rectangle(object):
     '''Draws a rectangle into a batch.'''
     def __init__(self, x1, y1, x2, y2, batch):
@@ -34,11 +49,12 @@ class Rectangle(object):
         )
 
 class TextWidget(UIObject):
-    def __init__(self, text, x, y, width, batch, cursor, world,*args,**kwargs):
+    def __init__(self, text, x, y, width, batch, cursor, curr_state, world,*args,**kwargs):
         super(TextWidget,self).__init__(img = Resources.sprites['no_sprite'],
                                         x = x,
                                         y = y,
                                         batch = batch,
+                                        curr_state = curr_state,
                                         world = world,
                                         *args,
                                         **kwargs
@@ -52,7 +68,11 @@ class TextWidget(UIObject):
         height = font.ascent - font.descent
 
         self.layout = pyglet.text.layout.IncrementalTextLayout(
-            self.document, width, height, multiline=False, batch=batch)
+                                                            self.document,
+                                                            width,
+                                                            height,
+                                                            multiline=False,
+                                                            batch=batch)
         self.caret = pyglet.text.caret.Caret(self.layout)
 
         self.layout.x = x
@@ -65,14 +85,17 @@ class TextWidget(UIObject):
         # Rectangular outline
         pad = 2
         self.rectangle = Rectangle(x - pad, y - pad, 
-                                   x + width + pad, y + height + pad, batch)
+                                   x + width + pad, 
+                                   y + height + pad, batch)
 
     def hit_test(self, x, y):
-        return (0 < x - self.layout.x < self.layout.width and
+        if self.active and self.world.game_state == Resources.state[self.curr_state]:
+            return (0 < x - self.layout.x < self.layout.width and
             0 < y - self.layout.y < self.layout.height)
+        return False
 
     def on_mouse_motion(self, x, y, dx, dy):
-        for widget in self.world.widgets:
+        for widget in self.world.get_widgets():
             if widget.hit_test(x, y):
                 print 'Entering TextWidget.'
                 self.world.window.set_mouse_cursor(self.text_cursor)
@@ -81,7 +104,7 @@ class TextWidget(UIObject):
             self.world.window.set_mouse_cursor(None)
 
     def on_mouse_press(self, x, y, button, modifiers):
-        for widget in self.world.widgets:
+        for widget in self.world.get_widgets():
             if widget.hit_test(x, y):
                 print 'Focusing TextWidget.'
                 self.world.set_focus(widget)
@@ -116,7 +139,7 @@ class TextWidget(UIObject):
                 dir = 1
 
             if self.world.focus in self.world.widgets:
-                i = self.world.widgets.index(self.focus)
+                i = self.world.widgets.index(self.world.focus)
             else:
                 i = 0
                 dir = 0

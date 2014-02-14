@@ -1,0 +1,68 @@
+SUMOn
+
+The Board Game
+
+Starting Phase
+
+1. Each Player will choose sides - Red or Blue Wrestlers.
+
+2. Each player will be granted 5 life points (Green Stones) at the start of the game.
+
+3. Each player will be granted 10 mana points (Brown Stones) at the start of the game.
+
+4. Each player will be granted 3 power cards at the start of the game.
+
+5. Each player will be granted all the sumo wrestlers (Game Pieces) at the start of the game. (i.e. you can already summon them any time as long as you have the mana points)
+
+Programming Phase
+
+1. Each round consists of two phases: the programming phase and the execution phase. In the programming phase, each player will decide what moves shall be executed. Moves can be a summoning move, a power card move, or a regular move (e.g. move forward, takes one mana). Execution of moves will be according to the player’s programming sequence.
+
+2. Summoning pieces, usage of power cards, and regular moves (forward only) consume mana.
+
+3. To program, each player will place the cards and pieces in their respective programming board.
+
+   Format:
+   a. If the player is going to summon, he/she needs to put the game piece at the programming board and place the mana cost for that piece.
+
+   b. If the player is going to use a power card, he/she needs to put the card at the programming board and place the mana cost for that card.
+
+   c. If the player is going move a summoned unit, he/she needs to place only the mana cost for that move. Each mana point will move the unit 1 tile forward. Maximum of 3 moves (tiles) per program move. (i.e. the  player can only place a maximum of 3 mana stone per card location in the programming board).
+
+4. The time limit for each programming round is three minutes. The player may decide to end the phase early.
+
+5. After this phase, each player shall agree to proceed to the execution phase of their respective programs.
+
+Execution Phase
+	A. Command Execution
+		1. Each player will execute their programs in a sequential manner. As a rule, summoning move has higher priority than power cards; power card move has higher priority than regular move. In case of the moves having the same category, the mana cost, will be the deciding factor - higher mana cost has higher priority. In case of all of these factors are equal, Rock-Paper-Scissor is the decider.
+
+		2. If the move is a summoning move, a player will choose which lane each summoned wrestler shall take. All summoned wrestlers will start at the player’s respective summoning rows.
+
+		3. If the move is a power card move, a player will choose which particular sumo wrestler(s) shall the card affect depending on the stated ability.
+
+		4. If the move is a regular move, a player will choose wich allied sumo wrestler he/she want to be moved.
+	
+	B. Rules and Resolutions
+
+		1. Strictly one sumo wrestler per tile.
+
+		2. Heavier (measured by the weight attribute) sumo wrestlers beat the lighter ones. Lighter wrestlers will be pushed back one tile, thus allowing the heavier wrestler to occupy the recently vacated tile. In case of there are other wrestlers at the back of the weaker sumo wrestler, the pushing will be disallowed.
+
+		3. Every sumo wrestler that goes past the summoning row will cause damage to the player that owns that particular summoning row, regardless of alliance.
+
+		4. The player will reduce its lifepoints by 1 for each sumo wrestler that is pushed back past his/her summoning row.
+
+		5. The wrestler who deals direct damage to the opponent will disappear in the game. Its role is already complete.
+
+End of Round
+
+1. After every round, each player will be granted 10 mana points.
+
+2. After every round, 1 new power card shall be given to each player.
+
+3. If applicable, each wrestler who damage the enemy summoner directly will disappear on the game; but the mana points required to summon that wrestler will be replenished and given to the allied summoner.
+
+Game Over
+
+A player will win if, and only if, its opponent will exhaust all of its life points.

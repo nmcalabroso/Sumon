@@ -5,7 +5,7 @@ class GameObject(Sprite):
 	def __init__(self,name,*args,**kwargs):
 		super(GameObject, self).__init__(*args, **kwargs)
 		self.name = name
-		self.active = True
+		self.active = False
 		self.velocity_x = 0
 		self.velocity_y = 0
 
