@@ -2,8 +2,10 @@ import pyglet
 from game.world import GameWorld
 from game.resources import Resources
 from game.gui import Button
+from game.gui import PlayerButton
 from game.gui import TextWidget
 from game.background import Background
+from game.player import Player
 
 game_window = pyglet.window.Window(Resources.window_width, Resources.window_height)
 game_window.set_caption("SUMOn")
@@ -27,9 +29,8 @@ def on_draw():
 		player_batch.draw()
 	elif world.game_state == Resources.state['END']:
 		end_batch.draw()
-	#else:
-	#	for obj in world.get_game_objects():
-	#		obj.draw()
+	else:
+		game_batch.draw()
 
 def update(dt):
 	for obj in world.get_game_objects():
@@ -68,14 +69,15 @@ def player_screen():
 	x1 = int((Resources.window_width*0.5)-200)
 	y1 = int((Resources.window_height*0.5)+50)
 
-	label_p1 =  pyglet.text.Label('Player 1:',
+	label_p1 =  pyglet.text.Label(
+								'Player 1:',
 								x = x1,
 								y = y1,
-								anchor_y='bottom',
-                              	color=(57, 255, 20, 255),
-                              	batch=player_batch)
-
-	text_p1 = TextWidget(text = '',
+								anchor_y = 'bottom',
+                              	color = (57, 255, 20, 255),
+                              	batch = player_batch)
+	text_p1 = TextWidget(
+						text = '',
 						x = x1+75,
 						y = y1,
 						width = 250,
@@ -84,14 +86,16 @@ def player_screen():
 						curr_state = 'PLAYER',
 						world = world)
 	
-	label_p2 =  pyglet.text.Label('Player 2:',
+	label_p2 =  pyglet.text.Label(
+								'Player 2:',
 								x = x1,
 								y = y1-50,
-								anchor_y='bottom',
-                              	color=(57, 255, 20, 255),
-                              	batch=player_batch)
+								anchor_y = 'bottom',
+                              	color = (57, 255, 20, 255),
+                              	batch = player_batch)
 
-	text_p2 = TextWidget(text = '',
+	text_p2 = TextWidget(
+						text = '',
 						x = x1+75,
 						y = y1-50,
 						width = 250,
@@ -100,7 +104,7 @@ def player_screen():
 						curr_state = 'PLAYER',
 						world = world)
 
-	play_button = Button(
+	play_button = PlayerButton(
 						name = 'play_button',
 						curr_state = 'PLAYER',
 						target_state = 'GAME',
@@ -111,13 +115,16 @@ def player_screen():
 					   	batch = player_batch)
 	
 
-	player_bg = Background('player_bg',
+	player_bg = Background(
+						name = 'player_bg',
 						img =  Resources.sprites['player_bg'],
 						batch = player_batch)
+
 	# Handler specification #
-	game_window.push_handlers(play_button)
 	game_window.push_handlers(text_p1)
 	game_window.push_handlers(text_p2)
+	game_window.push_handlers(play_button)
+	
 	# End of specification #
 
 	# Importation section #
@@ -128,7 +135,55 @@ def player_screen():
 	# End of importation #
 
 def game_screen():
-	pass
+
+	player1 = Player(
+				actual_name = 'Player',
+				name = 'Player1',
+				img = Resources.sprites['player1_avatar'],
+				x = (Resources.window_width*0.5) - 150,
+				y = Resources.window_height*0.5,
+				batch = game_batch)
+
+	label_p1 =  pyglet.text.Label(
+								'Player1: ',
+								x = Resources.window_width*0.5 - 220,
+								y = Resources.window_height*0.5 + 185,
+								anchor_y = 'bottom',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	player2 = Player(
+				actual_name = 'Player',
+				name = 'Player2',
+				img = Resources.sprites['player2_avatar'],
+				x = Resources.window_width*0.5+100,
+				y = Resources.window_height*0.5,
+				batch = game_batch)
+
+	label_p2 =  pyglet.text.Label(
+								'Player2: ',
+								x = Resources.window_width*0.5 + 20,
+								y = Resources.window_height*0.5 + 185,
+								anchor_y = 'bottom',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+	game_bg = Background(
+						name = 'player_bg',
+						img =  Resources.sprites['player_bg'],
+						batch = game_batch)
+
+	# Handler specification #
+	game_window.push_handlers(player1)
+	game_window.push_handlers(player2)
+	# End of specification #
+
+	# Importation section #
+	world.add_object(game_bg)
+	world.add_object(player1)
+	world.add_object(player2)
+	world.add_label(label_p1)
+	world.add_label(label_p2)
+	# End of importation #
 
 def end_screen():
 	pass
@@ -140,7 +195,7 @@ def main():
 
 	title_screen()
 	player_screen()
-	#game_screen()
+	game_screen()
 	#end_screen()
 
 	pyglet.clock.schedule_interval(update, 1/120.0)

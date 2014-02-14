@@ -7,14 +7,14 @@ __docformat__ = 'restructuredtext'
 __version__ = '$Id: $'
 
 class UIObject(GameObject):
-    def __init__(self,world,curr_state,*args,**kwargs):
-        super(UIObject, self).__init__(name = 'UIObject',*args, **kwargs)
+    def __init__(self,name,world,curr_state,*args,**kwargs):
+        super(UIObject, self).__init__(name = name,*args, **kwargs)
         self.world = world
         self.curr_state = curr_state
 
 class Button(UIObject):
     def __init__(self,name,curr_state,target_state,world,*args,**kwargs):
-        super(Button, self).__init__(curr_state = curr_state, world = world,*args,**kwargs)
+        super(Button, self).__init__(name = name, curr_state = curr_state, world = world,*args,**kwargs)
         self.name = name
         self.hand_cursor = world.window.get_system_mouse_cursor('hand')
         self.target_game_state = target_state
@@ -40,6 +40,26 @@ class Button(UIObject):
             else:
                 self.world.window.set_mouse_cursor(None)
 
+class PlayerButton(Button):
+    def __init__(self,name,curr_state,target_state,world,*args,**kwargs):
+        super(PlayerButton, self).__init__(
+                                    name = name,
+                                    curr_state = curr_state,
+                                    target_state = target_state,
+                                    world = world,
+                                    *args,
+                                    **kwargs)
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if self.active and self.world.game_state == Resources.state[self.curr_state]:
+            if button == mouse.LEFT:
+                if self.hit_test(x,y):
+                    print "Button: Proceeding to",self.target_game_state,"STATE."
+                    self.world.game_state = Resources.state[self.target_game_state]
+                    self.active = False
+                    self.world.set_player_names()
+
+
 class Rectangle(object):
     '''Draws a rectangle into a batch.'''
     def __init__(self, x1, y1, x2, y2, batch):
@@ -50,7 +70,9 @@ class Rectangle(object):
 
 class TextWidget(UIObject):
     def __init__(self, text, x, y, width, batch, cursor, curr_state, world,*args,**kwargs):
-        super(TextWidget,self).__init__(img = Resources.sprites['no_sprite'],
+        super(TextWidget,self).__init__(
+                                        name = None,
+                                        img = Resources.sprites['no_sprite'],
                                         x = x,
                                         y = y,
                                         batch = batch,
@@ -143,4 +165,5 @@ class TextWidget(UIObject):
             else:
                 i = 0
                 dir = 0
+                
             self.world.set_focus(self.world.widgets[(i + dir) % len(self.world.widgets)])

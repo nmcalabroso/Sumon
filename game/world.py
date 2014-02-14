@@ -7,12 +7,26 @@ class GameWorld():
 		self.game_state = Resources.state['START']
 		self.pool = [] #gameobject pool
 		self.widgets = [] #UIObject pool
+		self.labels = [] #label pool
 		self.window = None #game window
 		self.active = True
 		self.visible = False
 		self.cursor_name = 'default_cursor'
 		self.focus = None
 		self.set_focus(None)
+
+	def set_player_names(self):
+		p1 = self.find_game_object('Player1')
+		p1.name = self.widgets[0].document.text
+		p2 = self.find_game_object('Player2')
+		p2.name = self.widgets[1].document.text
+
+		self.labels[0].text += p1.name
+		self.labels[1].text += p2.name
+
+		print "Player Names:"
+		print "Player1:",p1.name
+		print "Player2:",p2.name
 		
 	def set_window(self,window):
 		self.window = window
@@ -32,6 +46,9 @@ class GameWorld():
 	def add_object(self,obj):
 		obj.active = True
 		self.pool.append(obj)
+
+	def add_label(self,label):
+		self.labels.append(label)
 
 	def add_widget(self,wid):
 		wid.active = True
