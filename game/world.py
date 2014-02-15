@@ -1,9 +1,11 @@
 #import pyglet
+from game.gameobject import GameObject
 from resources import Resources
 
-class GameWorld():
+class GameWorld(GameObject):
 
-	def __init__(self):
+	def __init__(self,*args,**kwargs):
+		super(GameWorld,self).__init__(name = 'World',img = Resources.sprites['no_sprite'], *args,**kwargs)
 		self.game_state = Resources.state['START']
 		self.pool = [] #gameobject pool
 		self.widgets = [] #UIObject pool
@@ -14,6 +16,20 @@ class GameWorld():
 		self.cursor_name = 'default_cursor'
 		self.focus = None
 		self.set_focus(None)
+
+	def switch_to_player(self):
+		self.game_state = Resources.state['PLAYER']
+		bg = self.find_game_object('my_bg')
+		bg.set_image(Resources.sprites['title_bg'])
+
+	def switch_to_game(self):
+		self.game_state = Resources.state['GAME']
+		bg = self.find_game_object('my_bg')
+		bg.set_image(Resources.sprites['title_bg'])
+		self.set_player_names()
+
+	def switch_to_end(self):
+		pass
 
 	def set_player_names(self):
 		p1 = self.find_game_object('Player1')
@@ -90,3 +106,6 @@ class GameWorld():
 			elif not active and not obj.active:
 				new_pool.append(obj)
 		return new_pool
+
+	def on_mouse_motion(self,x,y,dx,dy):
+		self.window.set_mouse_cursor(None)

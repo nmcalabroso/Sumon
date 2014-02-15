@@ -29,37 +29,20 @@ class Button(UIObject):
             if button == mouse.LEFT:
                 if self.hit_test(x,y):
                     print "Button: Proceeding to",self.target_game_state,"STATE."
-                    self.world.game_state = Resources.state[self.target_game_state]
+                    if self.target_game_state == 'PLAYER':
+                        self.world.switch_to_player()
+                    elif self.target_game_state == 'GAME':
+                        self.world.switch_to_game()
                     self.active = False
+                    self.delete()
 
     def on_mouse_motion(self, x, y, dx, dy):
+        #print self.world.focus
         if self.active and self.world.game_state == Resources.state[self.curr_state]:
             if self.hit_test(x,y):
                 print "Entering Button:",self.name
                 self.world.window.set_mouse_cursor(self.hand_cursor)
-            else:
-                self.world.window.set_mouse_cursor(None)
-
-class PlayerButton(Button):
-    def __init__(self,name,curr_state,target_state,world,*args,**kwargs):
-        super(PlayerButton, self).__init__(
-                                    name = name,
-                                    curr_state = curr_state,
-                                    target_state = target_state,
-                                    world = world,
-                                    *args,
-                                    **kwargs)
-
-    def on_mouse_press(self, x, y, button, modifiers):
-        if self.active and self.world.game_state == Resources.state[self.curr_state]:
-            if button == mouse.LEFT:
-                if self.hit_test(x,y):
-                    print "Button: Proceeding to",self.target_game_state,"STATE."
-                    self.world.game_state = Resources.state[self.target_game_state]
-                    self.active = False
-                    self.world.set_player_names()
-
-
+                    
 class Rectangle(object):
     '''Draws a rectangle into a batch.'''
     def __init__(self, x1, y1, x2, y2, batch):
@@ -106,9 +89,10 @@ class TextWidget(UIObject):
 
         # Rectangular outline
         pad = 2
-        self.rectangle = Rectangle(x - pad, y - pad, 
-                                   x + width + pad, 
-                                   y + height + pad, batch)
+        self.rectangle = Rectangle(x - pad, y - pad,
+                                   x + width + pad,
+                                   y + height + pad, 
+                                   batch)
 
     def hit_test(self, x, y):
         if self.active and self.world.game_state == Resources.state[self.curr_state]:
@@ -122,8 +106,6 @@ class TextWidget(UIObject):
                 print 'Entering TextWidget.'
                 self.world.window.set_mouse_cursor(self.text_cursor)
                 break
-        else:
-            self.world.window.set_mouse_cursor(None)
 
     def on_mouse_press(self, x, y, button, modifiers):
         for widget in self.world.get_widgets():
@@ -131,8 +113,6 @@ class TextWidget(UIObject):
                 print 'Focusing TextWidget.'
                 self.world.set_focus(widget)
                 break
-        else:
-            self.world.set_focus(None)
 
         if self.world.focus:
             self.world.focus.caret.on_mouse_press(x, y, button, modifiers)
