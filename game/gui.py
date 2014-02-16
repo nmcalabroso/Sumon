@@ -30,11 +30,9 @@ class Button(UIObject):
                 if self.hit_test(x,y):
                     print "Button: Proceeding to",self.target_game_state,"STATE."
                     if self.target_game_state == 'PLAYER':
-                        self.world.switch_to_player()
+                        self.world.switch_to_player(self.batch)
                     elif self.target_game_state == 'GAME':
-                        self.world.switch_to_game()
-                    self.active = False
-                    self.delete()
+                        self.world.switch_to_game(self.batch)
 
     def on_mouse_motion(self, x, y, dx, dy):
         #print self.world.focus
@@ -42,7 +40,13 @@ class Button(UIObject):
             if self.hit_test(x,y):
                 print "Entering Button:",self.name
                 self.world.window.set_mouse_cursor(self.hand_cursor)
-                    
+
+class MyRectangle(UIObject):
+     def __init__(self,name,curr_state,*args,**kwargs):
+        super(MyRectangle, self).__init__(name = name, curr_state = curr_state, world = None,*args,**kwargs)
+        self.opacity = 180
+
+
 class Rectangle(object):
     '''Draws a rectangle into a batch.'''
     def __init__(self, x1, y1, x2, y2, batch):
@@ -52,9 +56,9 @@ class Rectangle(object):
         )
 
 class TextWidget(UIObject):
-    def __init__(self, text, x, y, width, batch, cursor, curr_state, world,*args,**kwargs):
+    def __init__(self, text, x, y, width, batch, cursor, curr_state, world, name, *args,**kwargs):
         super(TextWidget,self).__init__(
-                                        name = None,
+                                        name = name,
                                         img = Resources.sprites['no_sprite'],
                                         x = x,
                                         y = y,
@@ -64,6 +68,9 @@ class TextWidget(UIObject):
                                         *args,
                                         **kwargs
                                         )
+        self.batch = batch
+        self.text_cursor = cursor
+        self.world = world
 
         self.document = pyglet.text.document.UnformattedDocument(text)
         self.document.set_style(0, len(self.document.text), 
@@ -71,7 +78,6 @@ class TextWidget(UIObject):
         )
         font = self.document.get_font()
         height = font.ascent - font.descent
-
         self.layout = pyglet.text.layout.IncrementalTextLayout(
                                                             self.document,
                                                             width,
@@ -83,10 +89,6 @@ class TextWidget(UIObject):
         self.layout.x = x
         self.layout.y = y
 
-        self.text_cursor = cursor
-
-        self.world = world
-
         # Rectangular outline
         pad = 2
         self.rectangle = Rectangle(x - pad, y - pad,
@@ -97,22 +99,19 @@ class TextWidget(UIObject):
     def hit_test(self, x, y):
         if self.active and self.world.game_state == Resources.state[self.curr_state]:
             return (0 < x - self.layout.x < self.layout.width and
-            0 < y - self.layout.y < self.layout.height)
+                    0 < y - self.layout.y < self.layout.height)
         return False
 
     def on_mouse_motion(self, x, y, dx, dy):
-        for widget in self.world.get_widgets():
-            if widget.hit_test(x, y):
-                print 'Entering TextWidget.'
-                self.world.window.set_mouse_cursor(self.text_cursor)
-                break
+        if self.hit_test(x, y):
+            print 'Hovering TextWidget:',self.name
+            self.world.window.set_mouse_cursor(self.text_cursor)
 
     def on_mouse_press(self, x, y, button, modifiers):
-        for widget in self.world.get_widgets():
-            if widget.hit_test(x, y):
-                print 'Focusing TextWidget.'
-                self.world.set_focus(widget)
-                break
+        if button == mouse.LEFT:
+            if self.hit_test(x, y):
+                print 'Focusing TextWidget:',self.name
+                self.world.set_focus(self)
 
         if self.world.focus:
             self.world.focus.caret.on_mouse_press(x, y, button, modifiers)
@@ -133,17 +132,12 @@ class TextWidget(UIObject):
         if self.world.focus:
             self.world.focus.caret.on_text_motion_select(motion)
 
-    def on_key_press(self, symbol, modifiers):
-        if symbol == pyglet.window.key.TAB:
-            if modifiers & pyglet.window.key.MOD_SHIFT:
-                dir = -1
-            else:
-                dir = 1
 
-            if self.world.focus in self.world.widgets:
-                i = self.world.widgets.index(self.world.focus)
-            else:
-                i = 0
-                dir = 0
-                
-            self.world.set_focus(self.world.widgets[(i + dir) % len(self.world.widgets)])
+class Background(GameObject):
+    def __init__(self,name,*args, **kwargs):
+        super(Background, self).__init__(name = name,*args, **kwargs)
+        self.x = Resources.window_width * 0.5
+        self.y = Resources.window_height * 0.5
+
+    def set_image(self,img):
+        self.image = img

@@ -24,8 +24,12 @@ class Resources:
 			'YOKUZANA':(13,10)
 			} #sumo constants (weight,energy)
 
-	window_width = 1280
-	window_height = 650
+	window_width = 1300
+	window_height = 655
+
+	#8x8 board
+	#board_width = 640
+	#board_height = 640 
 	
 	center_x,center_y = get_center_coordinates(window_width,window_height)
 
@@ -39,10 +43,12 @@ class Resources:
 	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
 	sprites['start_button']  		= center_image(image.load(join(res_path,'start_button.png')))
 	sprites['title_bg'] 			= center_image(image.load(join(res_path,'title_bg.png')))
-	sprites['player_bg'] 			= center_image(image.load(join(res_path,'player_bg1.jpg')))
+	sprites['player_bg'] 			= center_image(image.load(join(res_path,'player_bg.jpg')))
 	sprites['sumo']		    		= center_image(image.load(join(res_path,'sumo_title.gif')))
 	sprites['player1_avatar']		= center_image(image.load(join(res_path,'player1_avatar.png')))
 	sprites['player2_avatar']		= center_image(image.load(join(res_path,'player2_avatar.png')))
+	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
+	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 
 	sprites['BLACK_JONOKUCHI']		= center_image(image.load(join(res_path,'sumo_title.gif')))
 	sprites['KOMUSUBI']				= center_image(image.load(join(res_path,'sumo_title.gif')))

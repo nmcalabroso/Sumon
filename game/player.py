@@ -10,6 +10,13 @@ class Player(GameObject):
 		self.sumo_cards = []
 		self.active = False
 		self.visible = True
+		self.opacity = 180
+
+	def get_life_label(self):
+		return str(self.lives)
+
+	def get_mana_label(self):
+		return str(self.mana)
 
 	def set_life(self, n):
 		self.lives = n

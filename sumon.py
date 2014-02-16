@@ -1,14 +1,17 @@
 import pyglet
 from game.world import GameWorld
+from game.board import GameBoard
 from game.resources import Resources
 from game.gui import Button
 from game.gui import TextWidget
-from game.background import Background
+from game.gui import Background
 from game.player import Player
+from game.gui import MyRectangle
 
 game_window = pyglet.window.Window(Resources.window_width, Resources.window_height)
 game_window.set_caption("SUMOn")
 game_window.set_location(Resources.center_x,Resources.center_y)
+fps = pyglet.clock.ClockDisplay()
 
 # Object Batches per state #
 start_batch = pyglet.graphics.Batch()
@@ -35,10 +38,15 @@ def on_draw():
 		end_batch.draw()
 	else:
 		game_batch.draw()
+	fps.draw()
 
 def update(dt):
 	for obj in world.get_game_objects():
 		obj.update(dt)
+
+	for widget in world.get_widgets():
+		widget.update(dt)
+
 
 #--- STATES ----------------------------------------------------------------------------------------------------------------
 def title_screen():
@@ -60,14 +68,14 @@ def title_screen():
 	# End of specification #
 
 	# Importation section #
-	world.add_object(start_button)
+	world.add_widget(start_button)
 	# End of importation #
 
 def player_screen():
 	x1 = int((Resources.window_width*0.5)-200)
 	y1 = int((Resources.window_height*0.5)+50)
 
-	pyglet.text.Label(
+	input_p1 = pyglet.text.Label(
 					'Player 1:',
 					x = x1,
 					y = y1,
@@ -83,9 +91,10 @@ def player_screen():
 						batch = player_batch,
 						cursor = game_window.get_system_mouse_cursor('text'),
 						curr_state = 'PLAYER',
-						world = world)
+						world = world,
+						name = 'text_p1')
 	
-	pyglet.text.Label(
+	input_p2 = pyglet.text.Label(
 					'Player 2:',
 					x = x1,
 					y = y1-50,
@@ -101,7 +110,8 @@ def player_screen():
 						batch = player_batch,
 						cursor = game_window.get_system_mouse_cursor('text'),
 						curr_state = 'PLAYER',
-						world = world)
+						world = world,
+						name = 'text_p2')
 
 	play_button = Button(
 					name = 'play_button',
@@ -120,55 +130,143 @@ def player_screen():
 	# End of specification #
 
 	# Importation section #
-	world.add_object(play_button)
+	world.add_label(input_p1)
+	world.add_label(input_p2)
 	world.add_widget(text_p1)
 	world.add_widget(text_p2)
+	world.add_widget(play_button)
 	# End of importation #
 
 def game_screen():
-
+	# Declaration Section #
+	prog_board_p1 = MyRectangle(name = 'p1_board',curr_state = "GAME", x = 650, y = 330, img = Resources.sprites['programming_board'],batch = game_batch)
+	prog_board_p2 = MyRectangle(name = 'p2_board',curr_state = "GAME", x = 650, y = 5, img = Resources.sprites['programming_board'],batch = game_batch)
+	
 	player1 = Player(
 				actual_name = 'Player',
 				name = 'Player1',
-				img = Resources.sprites['player1_avatar'],
+				img = Resources.sprites['no_sprite'],
 				x = (Resources.window_width*0.5) - 150,
 				y = Resources.window_height*0.5,
 				batch = game_batch)
 
+
 	label_p1 =  pyglet.text.Label(
-								'Player1: ',
-								x = Resources.window_width*0.5 - 220,
-								y = Resources.window_height*0.5 + 185,
-								anchor_y = 'bottom',
+								text = 'Player1: ',
+								x = prog_board_p1.x+2,
+								y = prog_board_p1.y+prog_board_p1.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	lives_label_p1 =  pyglet.text.Label(
+								text = 'Lives: ',
+								x = prog_board_p1.x+prog_board_p1.width-150+2,
+								y = prog_board_p1.y+prog_board_p1.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	lives_p1 =  pyglet.text.Label(
+								text = player1.get_life_label(),
+								x = prog_board_p1.x+prog_board_p1.width-100+2,
+								y = prog_board_p1.y+prog_board_p1.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	mana_label_p1 =  pyglet.text.Label(
+								text = 'Mana: ',
+								x = prog_board_p1.x+prog_board_p1.width-80+2,
+								y = prog_board_p1.y+prog_board_p1.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	mana_p1 =  pyglet.text.Label(
+								text = player1.get_mana_label(),
+								x = prog_board_p1.x+prog_board_p1.width-30+2,
+								y = prog_board_p1.y+prog_board_p1.height-2,
+								anchor_y = 'top',
                               	color = (57, 255, 20, 255),
                               	batch = game_batch)
 
 	player2 = Player(
 				actual_name = 'Player',
 				name = 'Player2',
-				img = Resources.sprites['player2_avatar'],
+				img = Resources.sprites['no_sprite'],
 				x = Resources.window_width*0.5+100,
 				y = Resources.window_height*0.5,
 				batch = game_batch)
 
 	label_p2 =  pyglet.text.Label(
-								'Player2: ',
-								x = Resources.window_width*0.5 + 20,
-								y = Resources.window_height*0.5 + 185,
-								anchor_y = 'bottom',
+								text = 'Player2: ',
+								x = prog_board_p2.x+2,
+								y = prog_board_p2.y+prog_board_p2.height-2,
+								anchor_y = 'top',
                               	color = (57, 255, 20, 255),
                               	batch = game_batch)
+
+	lives_label_p2 =  pyglet.text.Label(
+								text = 'Lives: ',
+								x = prog_board_p2.x+prog_board_p2.width-150+2,
+								y = prog_board_p2.y+prog_board_p2.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	lives_p2 =  pyglet.text.Label(
+								text = player2.get_life_label(),
+								x = prog_board_p2.x+prog_board_p2.width-100+2,
+								y = prog_board_p2.y+prog_board_p2.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	mana_label_p2 =  pyglet.text.Label(
+								text = 'Mana: ',
+								x = prog_board_p2.x+prog_board_p2.width-80+2,
+								y = prog_board_p2.y+prog_board_p2.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	mana_p2 =  pyglet.text.Label(
+								text = player2.get_mana_label(),
+								x = prog_board_p2.x+prog_board_p2.width-30+2,
+								y = prog_board_p2.y+prog_board_p2.height-2,
+								anchor_y = 'top',
+                              	color = (57, 255, 20, 255),
+                              	batch = game_batch)
+
+	game_board = GameBoard(name = 'game_board',x = 5,y = 5, img = Resources.sprites['game_board'],batch = game_batch)
+	# End of Declaration #
 
 	# Handler specification #
 	game_window.push_handlers(player1)
 	game_window.push_handlers(player2)
+	game_window.push_handlers(game_board)
 	# End of specification #
 
 	# Importation section #
-	world.add_object(player1)
-	world.add_object(player2)
+	world.add_game_object(game_board)
+
+	world.add_game_object(prog_board_p1)
+	world.add_game_object(prog_board_p2)
+
+	world.add_game_object(player1)
 	world.add_label(label_p1)
+	world.add_label(lives_p1)
+	world.add_label(lives_label_p1)
+	world.add_label(mana_label_p1)
+	world.add_label(mana_p1)
+
+	world.add_game_object(player2)
 	world.add_label(label_p2)
+	world.add_label(lives_label_p2)
+	world.add_label(lives_p2)
+	world.add_label(mana_label_p2)
+	world.add_label(mana_p2)
 	# End of importation #
 
 def end_screen():
@@ -177,7 +275,7 @@ def end_screen():
 
 def main():
 	world.set_window(game_window)
-	world.add_object(my_bg)
+	world.add_widget(my_bg)
 	title_screen()
 	player_screen()
 	game_screen()
@@ -185,6 +283,7 @@ def main():
 	game_window.push_handlers(world)
 
 	pyglet.clock.schedule_interval(update, 1/120.0)
+	pyglet.clock.set_fps_limit(120)
 	pyglet.app.run()
 
 if __name__ == '__main__':
