@@ -6,8 +6,9 @@ class Player(GameObject):
 		self.actual_name = actual_name 
 		self.lives = 5
 		self.mana = 10
-		self.power_cards = []
-		self.sumo_cards = []
+		self.cards = []
+		#self.power_cards = []
+		#self.sumo_cards = []
 		self.active = False
 		self.visible = True
 		self.opacity = 180
@@ -30,8 +31,14 @@ class Player(GameObject):
 	def lose_mana(self, n):
 		self.mana -= n
 
-	def add_sumo_card(self, sumo_card):
-		self.sumo_cards.append(sumo_card)
+	def add_card(self, card):
+		self.cards.append(card)
 
-	def add_power_card(self, power_card):
-		self.power_card.append(power_card)
+	def reset_cards(self):
+		self.cards = []
+
+	#def add_sumo_card(self, sumo_card):
+	#	self.sumo_cards.append(sumo_card)
+
+	#def add_power_card(self, power_card):
+	#	self.power_card.append(power_card)

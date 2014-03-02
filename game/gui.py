@@ -1,5 +1,6 @@
 import pyglet
 from gameobject import GameObject
+from pyglet.text import Label
 from pyglet.window import mouse
 from resources import Resources
 
@@ -35,17 +36,29 @@ class Button(UIObject):
                         self.world.switch_to_game(self.batch)
 
     def on_mouse_motion(self, x, y, dx, dy):
-        #print self.world.focus
         if self.active and self.world.game_state == Resources.state[self.curr_state]:
             if self.hit_test(x,y):
                 print "Entering Button:",self.name
                 self.world.window.set_mouse_cursor(self.hand_cursor)
 
+class EndTurnButton(UIObject):
+    def __init__(self,name,curr_state,world,*args,**kwargs):
+        super(EndTurnButton,self).__init__(name = name, curr_state = curr_state, world = world,*args,**kwargs)
+
+    def hit_test(self,x,y):
+        if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
+            if y > (self.y - self.height*0.5) and y < (self.y + (self.height*0.5)):
+                return True
+
+class UILabel(Label):
+    def __init__(self,name,*args,**kwargs):
+        super(UILabel, self).__init__(*args,**kwargs)
+        self.name = name
+
 class MyRectangle(UIObject):
      def __init__(self,name,curr_state,*args,**kwargs):
         super(MyRectangle, self).__init__(name = name, curr_state = curr_state, world = None,*args,**kwargs)
         self.opacity = 180
-
 
 class Rectangle(object):
     '''Draws a rectangle into a batch.'''

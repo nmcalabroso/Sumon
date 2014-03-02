@@ -1,5 +1,8 @@
-from game.gameobject import GameObject
+from gameobject import GameObject
 from resources import Resources
+from cards import MoveCard
+from cards import WrestlerCard
+from random import randint
 
 class GameWorld(GameObject):
 
@@ -15,6 +18,8 @@ class GameWorld(GameObject):
 		self.cursor_name = 'default_cursor'
 		self.focus = None
 		self.set_focus(None)
+		self.round = 1
+		self.start_round = False
 
 	def switch_to_player(self,batch):
 		bg = self.find_widget('my_bg')
@@ -27,24 +32,49 @@ class GameWorld(GameObject):
 		bg.set_image(Resources.sprites['title_bg'])
 		self.set_player_names()
 		self.delete_widgets_by_batch(batch)
+		#print "before:",self.labels
 		self.delete_labels_by_batch(batch)
+		#print "after:",self.labels
 		self.game_state = Resources.state['GAME']
+		self.start_round = True
 
 	def switch_to_end(self):
 		pass
 
+	def generate_cards(self):
+		def randomize_card():
+			base = randint(0,100)
+			if base<=40:
+				return WrestlerCard()
+			elif base>=41 and base<=80:
+				return MoveCard()
+			else:
+				return MoveCard() #change this to powercard later
+
+		player_1 = self.find_game_object('Player1')
+		player_2 = self.find_game_object('Player2')
+		player_1.reset_cards()
+		player_2.reset_cards()
+
+		for i in range(10):
+			card = randomize_card()
+			card.x,card.y = Resources.card_pos1[i]
+			player_1.add_card(card)
+
+		for i in range(10):
+			card = randomize_card()
+			card.x,card.y = Resources.card_pos1[i]
+			player_2.add_card(card)
+
 	def set_player_names(self):
 		p1 = self.find_game_object('Player1')
-		p1.name = self.find_widget('text_p1').document.text
+		p1.actual_name = self.find_widget('text_p1').document.text
 		p2 = self.find_game_object('Player2')
-		p2.name = self.find_widget('text_p2').document.text
-
-		self.find_label('Player1: ').text += p1.name
-		self.find_label('Player2: ').text += p2.name
+		p2.actual_name = self.find_widget('text_p2').document.text
 
 		print "Player Names:"
-		print "Player1:",p1.name
-		print "Player2:",p2.name
+		print "Player1:",p1.actual_name
+		print "Player2:",p2.actual_name
 		
 	def set_window(self,window):
 		self.window = window
@@ -104,11 +134,10 @@ class GameWorld(GameObject):
 	def add_label(self,label):
 		self.labels.append(label)
 
-	def find_label(self,text):
+	def find_label(self,name):
 		for label in self.labels:
-			if label.text == text:
+			if label.name == name:
 				return label
-				break
 
 	def delete_label(self,text):
 		for i in range(len(self.labels)):
@@ -125,10 +154,15 @@ class GameWorld(GameObject):
 				new_labels.append(label)
 
 	def delete_labels_by_batch(self,batch):
+		delete_labels = []
 		for label in self.labels:
 			if label.batch is batch:
-				label.delete()
-				self.labels.remove(label)
+				delete_labels.append(label)
+
+		for label in delete_labels:
+			self.window.remove_handlers(label)
+			label.delete()
+			self.labels.remove(label)
 
 	def update_label(self,text,newtext):
 		label = self.find_label(text)
@@ -179,11 +213,49 @@ class GameWorld(GameObject):
 				break
 
 	def delete_widgets_by_batch(self,batch):
+		delete_widgets = []
 		for widget in self.widgets:
 			if widget.batch is batch and widget.name != 'my_bg':
-				self.window.remove_handlers(widget)
-				widget.delete()
-				self.widgets.remove(widget)
+				delete_widgets.append(widget)
+
+		for widget in delete_widgets:
+			self.window.remove_handlers(widget)
+			widget.delete()
+			self.widgets.remove(widget)
 
 	def on_mouse_motion(self,x,y,dx,dy):
 		self.window.set_mouse_cursor(None)
+
+	def change_player(self):
+		player1 = self.find_game_object('Player1')
+		player2 = self.find_game_object('Player2')
+		label_player = self.find_label('player')
+		name = self.find_label('player_name')
+		lives = self.find_label('lives')
+		mana = self.find_label('mana')
+
+		if self.round % 2 != 0:
+			player1.active = True
+			player2.active = False
+			label_player.text = "Player1:"
+			player = player1
+		else:
+			player1.active = False
+			player2.active = True
+			label_player.text = "Player2:"
+			name.text = player2.actual_name
+			player = player2
+
+		name.text = player.actual_name
+		lives.text = player.get_life_label()
+		mana.text = player.get_mana_label()
+			
+	def update(self,dt): #game logic loop
+		if self.game_state == Resources.state['GAME']:
+			if self.start_round:
+				self.generate_cards()
+				self.change_player()
+				self.start_round = False
+			self.round += 1
+
+
