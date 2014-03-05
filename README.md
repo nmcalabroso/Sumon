@@ -42,4 +42,4 @@ Clone our repository, and switch to that directory (make sure you've been added 
 $ git clone https://github.com/nmcalabroso/Sumon.git
 $ cd Sumon
 ```
-༼ つ ◕_◕ ༽つ GIFF ME MP2 <3z
+༼ つ ◕_◕ ༽つ GIFF ME MP2 <3

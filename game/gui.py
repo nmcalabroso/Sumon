@@ -126,23 +126,23 @@ class TextWidget(UIObject):
                 print 'Focusing TextWidget:',self.name
                 self.world.set_focus(self)
 
-        if self.world.focus:
+        if self.world.focus is self:
             self.world.focus.caret.on_mouse_press(x, y, button, modifiers)
 
     def on_mouse_drag(self, x, y, dx, dy, buttons, modifiers):
-        if self.world.focus:
+        if self.world.focus is self:
             self.world.focus.caret.on_mouse_drag(x, y, dx, dy, buttons, modifiers)
 
     def on_text(self, text):
-        if self.world.focus:
+        if self.world.focus is self:
             self.world.focus.caret.on_text(text)
 
     def on_text_motion(self, motion):
-        if self.world.focus:
+        if self.world.focus is self:
             self.world.focus.caret.on_text_motion(motion)
       
     def on_text_motion_select(self, motion):
-        if self.world.focus:
+        if self.world.focus is self:
             self.world.focus.caret.on_text_motion_select(motion)
 
 
