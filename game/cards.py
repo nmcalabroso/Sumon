@@ -11,6 +11,17 @@ class Card(GameObject):
 		self.mana = mana
 		self.active = True
 
+	def hit_test(self, x, y):
+		if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
+			if y > (self.y - self.height*0.5) and y < (self.y + (self.height*0.5)):
+				return True
+
+    # def on_mouse_press(self, x, y, button, modifiers):
+    # 	if(self.active and self.hit_test(x,y)):
+    # 		if(world.game_state == Resources.state['PLAYER1'] or world.game_state == Resources.state['PLAYER2'])
+    # 			world.program.append(self)
+
+
 class MoveCard(Card):
 	def __init__(self,*args,**kwargs):
 		tile_count = randint(1,5)

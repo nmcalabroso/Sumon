@@ -56,8 +56,8 @@ def update(dt):
 
 
 #--- STATES ----------------------------------------------------------------------------------------------------------------
+
 def title_screen():
-	# Instantiation section #
 	start_button = Button(
 						name = 'start_button',
 						curr_state = 'START',
@@ -67,16 +67,8 @@ def title_screen():
 						x = Resources.window_width*0.5,
 						y = Resources.window_height*0.5,
 						batch = start_batch)
-
-	# End of Instantiation #
-
-	# Handler specification #
 	game_window.push_handlers(start_button)
-	# End of specification #
-
-	# Importation section #
 	world.add_widget(start_button)
-	# End of importation #
 
 def player_screen():
 	x1 = int((Resources.window_width*0.5)-200)
@@ -118,29 +110,24 @@ def player_screen():
 
 	play_button = Button(name = 'play_button',
 						curr_state = 'PLAYER',
-						target_state = 'GAME',
+						target_state = 'SETUP',
 						world = world,
 						img = Resources.sprites['play_button'],
 					   	x = Resources.window_width * 0.5,
 						y = y1-115,
 					   	batch = player_batch)
 
-	# Handler specification #
 	game_window.push_handlers(play_button)
 	game_window.push_handlers(text_p1)
 	game_window.push_handlers(text_p2)
-	# End of specification #
 
-	# Importation section #
 	world.add_label(input_p1)
 	world.add_label(input_p2)
 	world.add_widget(text_p1)
 	world.add_widget(text_p2)
 	world.add_widget(play_button)
-	# End of importation #
 
 def game_screen():
-	# Declaration Section #
 	hand_board = MyRectangle(name = 'hand_board',curr_state = "GAME", x = 650, y = 330, img = Resources.sprites['programming_board'],batch = game_batch)
 	prog_board = MyRectangle(name = 'prog_board',curr_state = "GAME", x = 650, y = 5, img = Resources.sprites['programming_board'],batch = game_batch)
 
@@ -220,9 +207,8 @@ def game_screen():
                   	color = (57, 255, 20, 255),
                   	batch = game_batch)
 
-
 	end_turn_button = EndTurnButton(name = 'end_turn_button',
-									curr_state = 'GAME',
+									curr_state = 'SETUP',
 									world = world,
 									img = Resources.sprites['end_turn_button'],
 					   				x = mana.x,
@@ -230,16 +216,12 @@ def game_screen():
 					   				batch = game_batch)
 
 	game_board = GameBoard(name = 'game_board',x = 5,y = 5, img = Resources.sprites['game_board'])
-	# End of Declaration #
 
-	# Handler specification #
 	game_window.push_handlers(player1)
 	game_window.push_handlers(player2)
 	game_window.push_handlers(game_board)
 	game_window.push_handlers(end_turn_button)
-	# End of specification #
 
-	# Importation section #
 	world.add_game_object(game_board)
 	world.add_widget(hand_board)
 	world.add_widget(prog_board)
@@ -257,10 +239,9 @@ def game_screen():
 	world.add_label(label_mana)
 	world.add_label(mana)
 
-	# End of importation #
-
 def end_screen():
 	pass
+	
 #--- MAIN ----------------------------------------------------------------------------------------------------------------
 
 def main():

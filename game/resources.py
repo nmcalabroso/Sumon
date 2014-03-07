@@ -14,7 +14,19 @@ def center_image(image):
 	return image
 
 class Resources:
-	state = {'START':1,'PLAYER':2,'GAME':3,'END':4} #game states
+	#game states
+	state = {'START':1,
+			'PLAYER':2,
+			'SETUP':3,
+			'TRANSITION_PLAYER1':4,
+			'PLAYER1':5,
+			'TRANSITION_PLAYER2':6,
+			'PLAYER2':7,
+			'TRANSITION_BOARD':8,
+			'BOARD':9,
+			'END':10
+			} 
+	
 	player = {'RED':1,'BLUE':2} #player side
 	wrestlers = ['jonokuchi','komusubi','sekiwake','ozeki','yokuzana']
 	stype = {
@@ -60,19 +72,19 @@ class Resources:
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 
 	#Ability Cards
-	sprites['card_avatar']			= center_image(image.load(join(res_path,'card-avatar.jpg')))
-	sprites['card_fatup']			= center_image(image.load(join(res_path,'card-fatup.jpg')))
-	sprites['card_hex']				= center_image(image.load(join(res_path,'card-hex.jpg')))
-	sprites['card_jump']			= center_image(image.load(join(res_path,'card-jump.jpg')))
-	sprites['card_kamikaze']		= center_image(image.load(join(res_path,'card-kamikaze.jpg')))
-	sprites['card_reverse']			= center_image(image.load(join(res_path,'card-reverse.jpg')))
-	sprites['card_swap']			= center_image(image.load(join(res_path,'card-swap.jpg')))
-	sprites['card_takedown']		= center_image(image.load(join(res_path,'card-takedown.jpg')))
-	sprites['card_move']			= center_image(image.load(join(res_path,'card-move.jpg')))
+	sprites['card_avatar']			= center_image(image.load(join(res_path,'cards/avatar.jpg')))
+	sprites['card_fatup']			= center_image(image.load(join(res_path,'cards/fatup.jpg')))
+	sprites['card_hex']				= center_image(image.load(join(res_path,'cards/hex.jpg')))
+	sprites['card_jump']			= center_image(image.load(join(res_path,'cards/jump.jpg')))
+	sprites['card_kamikaze']		= center_image(image.load(join(res_path,'cards/kamikaze.jpg')))
+	sprites['card_reverse']			= center_image(image.load(join(res_path,'cards/reverse.jpg')))
+	sprites['card_swap']			= center_image(image.load(join(res_path,'cards/swap.jpg')))
+	sprites['card_takedown']		= center_image(image.load(join(res_path,'cards/takedown.jpg')))
+	sprites['card_move']			= center_image(image.load(join(res_path,'cards/move.jpg')))
 
 	#Wrestler Cards
-	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'card-jonokuchi.jpg')))
-	sprites['card_komusubi']		= center_image(image.load(join(res_path,'card-komusubi.jpg')))
-	sprites['card_sekiwake']		= center_image(image.load(join(res_path,'card-sekiwake.jpg')))
-	sprites['card_ozeki']			= center_image(image.load(join(res_path,'card-ozeki.jpg')))
-	sprites['card_yokuzana']		= center_image(image.load(join(res_path,'card-yokuzana.jpg')))
+	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/blue_jonokuchi.jpg')))
+	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/blue_komusubi.jpg')))
+	sprites['card_sekiwake']		= center_image(image.load(join(res_path,'cards/blue_jonokuchi.jpg')))
+	sprites['card_ozeki']			= center_image(image.load(join(res_path,'cards/blue_komusubi.jpg')))
+	sprites['card_yokuzana']		= center_image(image.load(join(res_path,'cards/blue_jonokuchi.jpg')))

@@ -20,6 +20,9 @@ class GameWorld(GameObject):
 		self.set_focus(None)
 		self.round = 1
 		self.start_round = False
+		self.program = []
+
+	# --- SWITCH ------------------------------------------------------------------------------------------------------
 
 	def switch_to_player(self,batch):
 		bg = self.find_widget('my_bg')
@@ -35,11 +38,13 @@ class GameWorld(GameObject):
 		#print "before:",self.labels
 		self.delete_labels_by_batch(batch)
 		#print "after:",self.labels
-		self.game_state = Resources.state['GAME']
+		self.game_state = Resources.state['SETUP']
 		self.start_round = True
 
 	def switch_to_end(self):
 		pass
+
+	# --- SETUP -------------------------------------------------------------------------------------------------------
 
 	def generate_cards(self):
 		def randomize_card():
@@ -91,6 +96,8 @@ class GameWorld(GameObject):
 			self.focus.caret.mark = 0
 			self.focus.caret.position = len(self.focus.document.text)
 
+	# --- SETUP: GAME OBJECTS -----------------------------------------------------------------------------------------
+
 	def add_game_object(self,obj):
 		obj.active = True
 		self.game_objects.append(obj)
@@ -131,6 +138,8 @@ class GameWorld(GameObject):
 				del self.game_objects[i]
 				break
 
+	# --- SETUP: LABELS -----------------------------------------------------------------------------------------------
+
 	def add_label(self,label):
 		self.labels.append(label)
 
@@ -167,6 +176,8 @@ class GameWorld(GameObject):
 	def update_label(self,text,newtext):
 		label = self.find_label(text)
 		label.text = newtext
+
+	# --- SETUP: WIDGETS ----------------------------------------------------------------------------------------------
 
 	def add_widget(self,widget):
 		widget.active = True
@@ -223,6 +234,8 @@ class GameWorld(GameObject):
 			widget.delete()
 			self.widgets.remove(widget)
 
+	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+
 	def on_mouse_motion(self,x,y,dx,dy):
 		self.window.set_mouse_cursor(None)
 
@@ -251,11 +264,14 @@ class GameWorld(GameObject):
 		mana.text = player.get_mana_label()
 			
 	def update(self,dt): #game logic loop
-		if self.game_state == Resources.state['GAME']:
+		if self.game_state == Resources.state['SETUP']:
 			if self.start_round:
+				self.round += 1
+				self.start_round = False
 				self.generate_cards()
 				self.change_player()
-				self.start_round = False
-			self.round += 1
-
+				self.game_state == Resources.state['PLAYER1']
+	
+		# elif self.game_state == Resources.state['SETUP']:
+	
 

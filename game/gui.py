@@ -32,7 +32,7 @@ class Button(UIObject):
                     print "Button: Proceeding to",self.target_game_state,"STATE."
                     if self.target_game_state == 'PLAYER':
                         self.world.switch_to_player(self.batch)
-                    elif self.target_game_state == 'GAME':
+                    elif self.target_game_state == 'SETUP':
                         self.world.switch_to_game(self.batch)
 
     def on_mouse_motion(self, x, y, dx, dy):
