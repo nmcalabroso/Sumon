@@ -43,12 +43,22 @@ class Button(UIObject):
 
 class EndTurnButton(UIObject):
     def __init__(self,name,curr_state,world,*args,**kwargs):
-        super(EndTurnButton,self).__init__(name = name, curr_state = curr_state, world = world,*args,**kwargs)
+        super(EndTurnButton,self).__init__(name = name,
+                                            curr_state = curr_state,
+                                            world = world,
+                                            *args,**kwargs)
 
     def hit_test(self,x,y):
         if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
             if y > (self.y - self.height*0.5) and y < (self.y + (self.height*0.5)):
                 return True
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if self.world.game_state == Resources.state['PLAYER1']:
+            if button == mouse.LEFT and self.hit_test(x,y):
+                    print "Button: Proceeding to TRANSITION STATE."
+                    self.world.game_state = Resources.state['TRANSITION_PLAYER2']
+
 
 class UILabel(Label):
     def __init__(self,name,*args,**kwargs):

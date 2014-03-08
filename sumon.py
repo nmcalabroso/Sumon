@@ -208,7 +208,7 @@ def game_screen():
                   	batch = game_batch)
 
 	end_turn_button = EndTurnButton(name = 'end_turn_button',
-									curr_state = 'SETUP',
+									curr_state = 'PLAYER1',
 									world = world,
 									img = Resources.sprites['end_turn_button'],
 					   				x = mana.x,

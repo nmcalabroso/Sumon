@@ -18,8 +18,13 @@ class Card(GameObject):
 
 	def on_mouse_press(self, x, y, button, modifiers):
 		if(self.active and self.hit_test(x,y)):
-			print 'click'
-			
+			if self.world.game_state == Resources.state['PLAYER1']:
+				self.world.program.append(self)
+
+			# elif self.world.game_state == Resources.state['PLAYER2']:
+			# 	print "Clicked: PLAYER2"
+			# 	self.world.game_state = Resources.state['PLAYER1']
+
 
   #   def on_mouse_press(self, x, y, button, modifiers):
 		# print 'click'
