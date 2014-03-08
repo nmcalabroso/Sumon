@@ -10,6 +10,7 @@ class Card(GameObject):
 		self.description = description
 		self.mana = mana
 		self.active = True
+		self.clicked = False
 
 	def hit_test(self, x, y):
 		if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
@@ -19,7 +20,11 @@ class Card(GameObject):
 	def on_mouse_press(self, x, y, button, modifiers):
 		if(self.active and self.hit_test(x,y)):
 			if self.world.game_state == Resources.state['PLAYER1']:
-				self.world.program.append(self)
+				if not self.clicked:
+					self.world.program.append(self)
+					print self.world.program
+					self.clicked = True
+					self.x,self.y = Resources.card_pos2[len(self.world.program)-1]
 
 			# elif self.world.game_state == Resources.state['PLAYER2']:
 			# 	print "Clicked: PLAYER2"

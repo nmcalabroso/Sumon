@@ -264,6 +264,7 @@ class GameWorld(GameObject):
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER1']:
 			if self.start_round:
+				
 				self.round += 1
 				self.start_round = False
 				self.generate_cards('Player1')
