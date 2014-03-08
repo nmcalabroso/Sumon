@@ -248,13 +248,13 @@ class GameWorld(GameObject):
 		mana = self.find_label('mana')
 
 		if self.round % 2 != 0:
-			player1.active = True
-			player2.active = False
+			player1.activate()
+			player2.deactivate()
 			label_player.text = "Player1:"
 			player = player1
 		else:
-			player1.active = False
-			player2.active = True
+			player1.activate()
+			player2.deactivate()
 			label_player.text = "Player2:"
 			name.text = player2.actual_name
 			player = player2
@@ -270,7 +270,7 @@ class GameWorld(GameObject):
 				self.start_round = False
 				self.generate_cards()
 				self.change_player()
-				self.game_state == Resources.state['PLAYER1']
+				self.game_state = Resources.state['PLAYER1']
 	
 		# elif self.game_state == Resources.state['SETUP']:
 	

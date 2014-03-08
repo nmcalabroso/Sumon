@@ -37,6 +37,16 @@ class Player(GameObject):
 	def reset_cards(self):
 		self.cards = []
 
+	def activate(self):
+		self.active = True
+		for card in self.cards:
+			card.active = True
+
+	def deactivate(self):
+		self.active = False
+		for card in self.cards:
+			card.active = False
+
 	#def add_sumo_card(self, sumo_card):
 	#	self.sumo_cards.append(sumo_card)
 
