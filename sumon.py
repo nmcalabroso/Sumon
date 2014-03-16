@@ -42,6 +42,7 @@ def on_draw():
 			obj.draw()
 			if obj.name == "Player1" or obj.name == "Player2":
 				for card in obj.cards:
+					game_window.push_handlers(card)
 					card.draw()
 	fps.draw()
 
@@ -53,7 +54,6 @@ def update(dt):
 
 	for widget in world.get_widgets():
 		widget.update(dt)
-
 
 #--- STATES ----------------------------------------------------------------------------------------------------------------
 
@@ -208,7 +208,7 @@ def game_screen():
                   	batch = game_batch)
 
 	end_turn_button = EndTurnButton(name = 'end_turn_button',
-									curr_state = 'SETUP',
+									curr_state = 'PLAYER1',
 									world = world,
 									img = Resources.sprites['end_turn_button'],
 					   				x = mana.x,

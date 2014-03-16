@@ -85,6 +85,6 @@ class Resources:
 	#Wrestler Cards
 	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/blue_jonokuchi.jpg')))
 	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/blue_komusubi.jpg')))
-	sprites['card_sekiwake']		= center_image(image.load(join(res_path,'cards/blue_jonokuchi.jpg')))
-	sprites['card_ozeki']			= center_image(image.load(join(res_path,'cards/blue_komusubi.jpg')))
-	sprites['card_yokuzana']		= center_image(image.load(join(res_path,'cards/blue_jonokuchi.jpg')))
+	sprites['card_sekiwake']		= center_image(image.load(join(res_path,'cards/blue_sekiwake.jpg')))
+	sprites['card_ozeki']			= center_image(image.load(join(res_path,'cards/blue_ozeki.jpg')))
+	sprites['card_yokuzana']		= center_image(image.load(join(res_path,'cards/blue_yokuzana.jpg')))

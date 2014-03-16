@@ -46,7 +46,7 @@ class GameWorld(GameObject):
 
 	# --- SETUP -------------------------------------------------------------------------------------------------------
 
-	def generate_cards(self):
+	def generate_cards(self, player):
 		def randomize_card():
 			base = randint(0,100)
 			if base<=40:
@@ -56,20 +56,14 @@ class GameWorld(GameObject):
 			else:
 				return MoveCard() #change this to powercard later
 
-		player_1 = self.find_game_object('Player1')
-		player_2 = self.find_game_object('Player2')
-		player_1.reset_cards()
-		player_2.reset_cards()
+		player = self.find_game_object(player)
+		player.reset_cards()
 
 		for i in range(10):
 			card = randomize_card()
 			card.x,card.y = Resources.card_pos1[i]
-			player_1.add_card(card)
-
-		for i in range(10):
-			card = randomize_card()
-			card.x,card.y = Resources.card_pos1[i]
-			player_2.add_card(card)
+			card.world = self
+			player.add_card(card)
 
 	def set_player_names(self):
 		p1 = self.find_game_object('Player1')
@@ -247,14 +241,15 @@ class GameWorld(GameObject):
 		lives = self.find_label('lives')
 		mana = self.find_label('mana')
 
-		if self.round % 2 != 0:
-			player1.active = True
-			player2.active = False
+		if self.game_state == Resources.state['TRANSITION_PLAYER1']:
+			player1.activate()
+			player2.deactivate()
 			label_player.text = "Player1:"
 			player = player1
+
 		else:
-			player1.active = False
-			player2.active = True
+			player2.activate()
+			player1.deactivate()
 			label_player.text = "Player2:"
 			name.text = player2.actual_name
 			player = player2
@@ -265,13 +260,38 @@ class GameWorld(GameObject):
 			
 	def update(self,dt): #game logic loop
 		if self.game_state == Resources.state['SETUP']:
+			self.game_state = Resources.state['TRANSITION_PLAYER1']
+
+		elif self.game_state == Resources.state['TRANSITION_PLAYER1']:
 			if self.start_round:
+				
 				self.round += 1
 				self.start_round = False
-				self.generate_cards()
+				self.generate_cards('Player1')
 				self.change_player()
-				self.game_state == Resources.state['PLAYER1']
+				self.game_state = Resources.state['PLAYER1']
 	
-		# elif self.game_state == Resources.state['SETUP']:
+
+		elif self.game_state == Resources.state['PLAYER1']:
+			self.start_round = True
+			# print "==== PROGRAM ===="
+			# for card in self.program:
+			# 	print card.x
+			# print "==== PROGRAM ===="
+
+		elif self.game_state == Resources.state['TRANSITION_PLAYER2']:
+			if self.start_round:
+				self.start_round = False
+				self.generate_cards('Player2')
+				self.change_player()
+				self.game_state = Resources.state['PLAYER2']
 	
+		elif self.game_state == Resources.state['PLAYER2']:
+			self.start_round = True
+			# print "STATE PLAYER2"
+		# 	if self.start_round:
+		# 		self.generate_cards('Player2')
+		# 		self.change_player()
+		# 		self.round += 1
+		# 		self.start_rount = False
 

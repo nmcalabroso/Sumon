@@ -10,16 +10,32 @@ class Card(GameObject):
 		self.description = description
 		self.mana = mana
 		self.active = True
+		self.clicked = False
 
 	def hit_test(self, x, y):
 		if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
 			if y > (self.y - self.height*0.5) and y < (self.y + (self.height*0.5)):
 				return True
 
-    # def on_mouse_press(self, x, y, button, modifiers):
-    # 	if(self.active and self.hit_test(x,y)):
-    # 		if(world.game_state == Resources.state['PLAYER1'] or world.game_state == Resources.state['PLAYER2'])
-    # 			world.program.append(self)
+	def on_mouse_press(self, x, y, button, modifiers):
+		if(self.active and self.hit_test(x,y)):
+			if self.world.game_state == Resources.state['PLAYER1']:
+				if not self.clicked:
+					self.world.program.append(self)
+					print self.world.program
+					self.clicked = True
+					self.x,self.y = Resources.card_pos2[len(self.world.program)-1]
+
+			# elif self.world.game_state == Resources.state['PLAYER2']:
+			# 	print "Clicked: PLAYER2"
+			# 	self.world.game_state = Resources.state['PLAYER1']
+
+
+  #   def on_mouse_press(self, x, y, button, modifiers):
+		# print 'click'
+    	# if(self.active and self.hit_test(x,y)):
+    	# 	if(world.game_state == Resources.state['PLAYER1'] or world.game_state == Resources.state['PLAYER2'])
+    	# 		world.program.append(self)
 
 
 class MoveCard(Card):
@@ -53,3 +69,4 @@ class WrestlerCard(Card):
 		self.image = Resources.sprites['card_'+self.title]
 		self.weight,self.mana = Resources.stype[self.title.upper()]
 		self.description = "Summons a "+self.title.upper()+" wrestler."
+
