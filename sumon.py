@@ -44,6 +44,11 @@ def on_draw():
 				for card in obj.cards:
 					game_window.push_handlers(card)
 					card.draw()
+			"""elif obj.name == "game_board": //di na pala natin kailangan idrawing yung mga tiles haha
+				for i in range(len(obj.my_grid)):
+					for j in range(len(obj.my_grid[i])):
+						if obj.my_grid[i][j].content != None://idadrawing ko sana yung laman ng tiles
+							obj.my_grid[i][j].content.draw()"""
 	fps.draw()
 
 def update(dt):
@@ -215,7 +220,7 @@ def game_screen():
 									y = label_prog_card.y,
 					   				batch = game_batch)
 
-	game_board = GameBoard(name = 'game_board',x = 5,y = 5, img = Resources.sprites['game_board'])
+	game_board = GameBoard(name = 'game_board',world = world,x = 5,y = 7,img = Resources.sprites['game_board'])
 
 	game_window.push_handlers(player1)
 	game_window.push_handlers(player2)

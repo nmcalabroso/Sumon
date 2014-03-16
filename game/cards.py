@@ -40,7 +40,6 @@ class Card(GameObject):
 						self.clicked = True
 						self.x,self.y = Resources.card_pos2[len(self.world.program2)-1]
 
-
 class MoveCard(Card):
 	def __init__(self,*args,**kwargs):
 		tile_count = randint(1,5)

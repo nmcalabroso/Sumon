@@ -26,7 +26,6 @@ class Resources:
 			'BOARD':9,
 			'END':10
 			} 
-	
 	player = {'RED':1,'BLUE':2} #player side
 	wrestlers = ['jonokuchi','komusubi','sekiwake','ozeki','yokuzana']
 	stype = {
@@ -36,6 +35,8 @@ class Resources:
 			'OZEKI':(7,6),
 			'YOKUZANA':(13,10)
 			} #sumo constants (weight,energy)
+
+	board_grid = [[(5+i*80,7+j*80) for i in range(8)] for j in range(8)]
 
 	#(x,y) positions for the cards at card_at_hand board
 	card_pos1 = [(720,555),(845,555),(970,555),(1095,555),(1220,555),
@@ -68,7 +69,7 @@ class Resources:
 	sprites['end_turn_button']		= center_image(image.load(join(res_path,'end_turn_button.png')))
 	sprites['title_bg'] 			= center_image(image.load(join(res_path,'title_bg.png')))
 	sprites['player_bg'] 			= center_image(image.load(join(res_path,'player_bg.jpg')))
-	sprites['game_board']			= image.load(join(res_path,'game_board.jpg'))
+	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
 	sprites['tile']					= image.load(join(res_path,'tile.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 
