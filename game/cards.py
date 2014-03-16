@@ -18,24 +18,27 @@ class Card(GameObject):
 				return True
 
 	def on_mouse_press(self, x, y, button, modifiers):
-		if(self.active and self.hit_test(x,y)):
+		if self.active and self.hit_test(x,y):
 			if self.world.game_state == Resources.state['PLAYER1']:
 				if not self.clicked:
-					self.world.program.append(self)
-					print self.world.program
-					self.clicked = True
-					self.x,self.y = Resources.card_pos2[len(self.world.program)-1]
-
-			# elif self.world.game_state == Resources.state['PLAYER2']:
-			# 	print "Clicked: PLAYER2"
-			# 	self.world.game_state = Resources.state['PLAYER1']
-
-
-  #   def on_mouse_press(self, x, y, button, modifiers):
-		# print 'click'
-    	# if(self.active and self.hit_test(x,y)):
-    	# 	if(world.game_state == Resources.state['PLAYER1'] or world.game_state == Resources.state['PLAYER2'])
-    	# 		world.program.append(self)
+					player = self.world.find_game_object('Player1')
+					if player.mana > self.mana:
+						player.mana -= self.mana
+						mana = self.world.find_label('mana')
+						mana.text = player.get_mana_label()
+						self.world.program1.append(self)
+						self.clicked = True
+						self.x,self.y = Resources.card_pos2[len(self.world.program1)-1]
+			elif self.world.game_state == Resources.state['PLAYER2']:
+				if not self.clicked:
+					player = self.world.find_game_object('Player2')
+					if player.mana > self.mana:
+						player.mana -= self.mana
+						mana = self.world.find_label('mana')
+						mana.text = player.get_mana_label()
+						self.world.program2.append(self)
+						self.clicked = True
+						self.x,self.y = Resources.card_pos2[len(self.world.program2)-1]
 
 
 class MoveCard(Card):

@@ -54,10 +54,13 @@ class EndTurnButton(UIObject):
                 return True
 
     def on_mouse_press(self, x, y, button, modifiers):
-        if self.world.game_state == Resources.state['PLAYER1']:
-            if button == mouse.LEFT and self.hit_test(x,y):
-                    print "Button: Proceeding to TRANSITION STATE."
-                    self.world.game_state = Resources.state['TRANSITION_PLAYER2']
+        if button == mouse.LEFT and self.hit_test(x,y):
+            if self.world.game_state == Resources.state['PLAYER1']:
+                print "Button: Proceeding to TRANSITION STATE."
+                self.world.game_state = Resources.state['TRANSITION_PLAYER2']
+            elif self.world.game_state == Resources.state['PLAYER2']:
+                print "Button: Proceeding to TRANSITION STATE."
+                self.world.game_state = Resources.state['TRANSITION_BOARD']
 
 
 class UILabel(Label):
