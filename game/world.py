@@ -20,7 +20,8 @@ class GameWorld(GameObject):
 		self.set_focus(None)
 		self.round = 1
 		self.start_round = False
-		self.program = []
+		self.program1 = []
+		self.program2 = []
 
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
 
@@ -274,10 +275,6 @@ class GameWorld(GameObject):
 
 		elif self.game_state == Resources.state['PLAYER1']:
 			self.start_round = True
-			# print "==== PROGRAM ===="
-			# for card in self.program:
-			# 	print card.x
-			# print "==== PROGRAM ===="
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER2']:
 			if self.start_round:
@@ -288,10 +285,27 @@ class GameWorld(GameObject):
 	
 		elif self.game_state == Resources.state['PLAYER2']:
 			self.start_round = True
-			# print "STATE PLAYER2"
-		# 	if self.start_round:
-		# 		self.generate_cards('Player2')
-		# 		self.change_player()
-		# 		self.round += 1
-		# 		self.start_rount = False
+
+		elif self.game_state == Resources.state['TRANSITION_BOARD']:
+			self.game_state = Resources.state['BOARD']
+			player1 = self.find_game_object('Player1')
+			player2 = self.find_game_object('Player2')
+			player1.deactivate()
+			player2.deactivate()
+
+			label_player = self.find_label('player')
+			name = self.find_label('player_name')
+			lives = self.find_label('lives')
+			mana = self.find_label('mana')
+
+			label_player.text = ''
+			name.text = ''
+			lives.text = ''
+			mana.text = ''
+
+
+		# elif self.game_state == Resources.state['BOARD']:
+		# 	print "BOARD STATE"
+
+
 
