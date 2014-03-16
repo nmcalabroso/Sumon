@@ -68,7 +68,8 @@ class Resources:
 	sprites['end_turn_button']		= center_image(image.load(join(res_path,'end_turn_button.png')))
 	sprites['title_bg'] 			= center_image(image.load(join(res_path,'title_bg.png')))
 	sprites['player_bg'] 			= center_image(image.load(join(res_path,'player_bg.jpg')))
-	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
+	sprites['game_board']			= image.load(join(res_path,'game_board.jpg'))
+	sprites['tile']					= image.load(join(res_path,'tile.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 
 	#Ability Cards
