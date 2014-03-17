@@ -76,7 +76,7 @@ class Resources:
 	sprites['start_button']  		= center_image(image.load(join(res_path,'start_button.png')))
 	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
 	sprites['end_turn_button']		= center_image(image.load(join(res_path,'end_turn_button.png')))
-	sprites['title_bg'] 			= center_image(image.load(join(res_path,'title_bg.png')))
+	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
 	sprites['player_bg'] 			= center_image(image.load(join(res_path,'player_bg.jpg')))
 	sprites['game_board']			= image.load(join(res_path,'board.jpg'))
 	sprites['tile']					= image.load(join(res_path,'tile.png'))

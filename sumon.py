@@ -13,7 +13,8 @@ from game.player import Player
 game_window = pyglet.window.Window(Resources.window_width, Resources.window_height)
 game_window.set_caption("SUMOn")
 game_window.set_location(Resources.center_x,Resources.center_y)
-fps = pyglet.clock.ClockDisplay()
+game_window.set_vsync(True)
+#fps = pyglet.clock.ClockDisplay()
 
 # Object Batches per state #
 start_batch = pyglet.graphics.Batch()
@@ -49,7 +50,7 @@ def on_draw():
 					for j in range(len(obj.my_grid[i])):
 						if obj.my_grid[i][j].content != None://idadrawing ko sana yung laman ng tiles
 							obj.my_grid[i][j].content.draw()"""
-	fps.draw()
+	#fps.draw()
 
 def update(dt):
 	world.update(dt)
@@ -70,7 +71,7 @@ def title_screen():
 						world = world,
 						img = Resources.sprites['start_button'],
 						x = Resources.window_width*0.5,
-						y = Resources.window_height*0.5,
+						y = Resources.window_height*0.5-110,
 						batch = start_batch)
 	game_window.push_handlers(start_button)
 	world.add_widget(start_button)
