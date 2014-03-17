@@ -26,6 +26,7 @@ class Resources:
 			'BOARD':9,
 			'END':10
 			} 
+
 	player = {'RED':1,'BLUE':2} #player side
 	wrestlers = ['jonokuchi','komusubi','sekiwake','ozeki','yokuzana']
 	stype = {
@@ -35,6 +36,12 @@ class Resources:
 			'OZEKI':(7,6),
 			'YOKUZANA':(13,10)
 			} #sumo constants (weight,energy)
+
+	card_priority = {
+					'summon':3,
+					'move':2,
+					'card':1
+					}
 
 	board_grid = [[(5+i*80,7+j*80) for i in range(8)] for j in range(8)]
 
@@ -69,7 +76,7 @@ class Resources:
 	sprites['end_turn_button']		= center_image(image.load(join(res_path,'end_turn_button.png')))
 	sprites['title_bg'] 			= center_image(image.load(join(res_path,'title_bg.png')))
 	sprites['player_bg'] 			= center_image(image.load(join(res_path,'player_bg.jpg')))
-	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
+	sprites['game_board']			= image.load(join(res_path,'board.jpg'))
 	sprites['tile']					= image.load(join(res_path,'tile.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 
@@ -85,8 +92,8 @@ class Resources:
 	sprites['card_move']			= center_image(image.load(join(res_path,'cards/move.jpg')))
 
 	#Wrestler Cards
-	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/blue_jonokuchi.jpg')))
-	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/blue_komusubi.jpg')))
-	sprites['card_sekiwake']		= center_image(image.load(join(res_path,'cards/blue_sekiwake.jpg')))
-	sprites['card_ozeki']			= center_image(image.load(join(res_path,'cards/blue_ozeki.jpg')))
-	sprites['card_yokuzana']		= center_image(image.load(join(res_path,'cards/blue_yokuzana.jpg')))
+	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/coh_level1-blue.jpg')))
+	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/coh_level2-blue.jpg')))
+	sprites['card_sekiwake']		= center_image(image.load(join(res_path,'cards/coh_level3-blue.jpg')))
+	sprites['card_ozeki']			= center_image(image.load(join(res_path,'cards/coh_level4-blue.jpg')))
+	sprites['card_yokuzana']		= center_image(image.load(join(res_path,'cards/coh_level5-blue.jpg')))

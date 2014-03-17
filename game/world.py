@@ -231,6 +231,10 @@ class GameWorld(GameObject):
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
 
+	def execute(self, action):
+		print "====================="
+		print action
+
 	def on_mouse_motion(self,x,y,dx,dy):
 		self.window.set_mouse_cursor(None)
 
@@ -260,34 +264,41 @@ class GameWorld(GameObject):
 		mana.text = player.get_mana_label()
 			
 	def update(self,dt): #game logic loop
+		# Tranisition states are for setting up the next state. SETUP is also a transition state.
+		# Use boolean self.start_round to execute once during any state.
+		# Player input should be in their respective classes.
+		# (e.g what to do when clicking a card should be seen in cards.py)
+
 		if self.game_state == Resources.state['SETUP']:
+			self.start_round = True
 			self.game_state = Resources.state['TRANSITION_PLAYER1']
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER1']:
 			if self.start_round:
-				
 				self.round += 1
 				self.start_round = False
 				self.generate_cards('Player1')
 				self.change_player()
 				self.game_state = Resources.state['PLAYER1']
-	
+				self.player_program = open("player1_program.txt", "w")
 
 		elif self.game_state == Resources.state['PLAYER1']:
 			self.start_round = True
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER2']:
 			if self.start_round:
+				self.player_program.close()
 				self.start_round = False
 				self.generate_cards('Player2')
 				self.change_player()
 				self.game_state = Resources.state['PLAYER2']
+				self.player_program = open("player2_program.txt", "w")
 	
 		elif self.game_state == Resources.state['PLAYER2']:
 			self.start_round = True
 
 		elif self.game_state == Resources.state['TRANSITION_BOARD']:
-			self.game_state = Resources.state['BOARD']
+			self.player_program.close()
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
 			player1.deactivate()
@@ -302,10 +313,77 @@ class GameWorld(GameObject):
 			name.text = ''
 			lives.text = ''
 			mana.text = ''
+			self.game_state = Resources.state['BOARD']
+
+		elif self.game_state == Resources.state['BOARD']:
+			# format: <card_type> <mana> <parameters>
+			# example: move 5 row col
+			# example: summon 1 jonokuchi row col
+
+			if self.start_round:
+				self.start_round = False
+				program1 = []
+				program2 = []
+
+				#get commands from both programs
+				player_program1 = open("player1_program.txt", "r")
+				player_program2 = open("player2_program.txt", "r")
+				program1 = player_program1.readlines()
+				program2 = player_program2.readlines()
+				player_program1.close()
+				player_program2.close()
+
+				#get max number of commands
+				if len(program1) > len(program2):
+					max = len(program1)
+				else:
+					max = len(program2)
+
+				#for each command
+				for i in range(max):
+					action1 = None
+					action2 = None
+
+					#get command from program1
+					if i < len(program1):
+						action1 = program1[i]
+						action1 = action1.split()
+	
+					#get command from program2
+					if i < len(program2):
+						action2 = program2[i]
+						action2 = action2.split()
+
+					# compare priorities and do both commands (assumes action1 and action2 are not null)
+					if action1 != None and action2 != None:
+						if Resources.card_priority[action1[0]] > Resources.card_priority[action2[0]]:
+							sequence = (action1, action2)
+						elif Resources.card_priority[action1[0]] < Resources.card_priority[action2[0]]:
+							sequence = (action2, action1)
+						else: # equal priority; compare mana
+							if action1[1] > action2[1]:
+								sequence = (action1, action2)
+							if action1[1] < action2[1]:
+								sequence = (action2, action1)
+							else: #random
+								rand = randint(0,100)
+								if rand < 50:
+									sequence = (action1, action2)
+								else:
+									sequence = (action2, action1)
+
+					# else if one is null
+					elif action1 != None:
+						sequence = (action1,)
+					else:
+						sequence = (action2,)
+
+					# execute commands
+					for action in sequence:
+						self.execute(action)
 
 
-		# elif self.game_state == Resources.state['BOARD']:
-		# 	print "BOARD STATE"
+
 
 
 
