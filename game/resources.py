@@ -78,7 +78,7 @@ class Resources:
 	sprites['end_turn_button']		= center_image(image.load(join(res_path,'end_turn_button.png')))
 	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
 	sprites['main_bg'] 				= image.load(join(res_path,'main_bg.png'))
-	sprites['game_board']			= image.load(join(res_path,'board.jpg'))
+	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
 	sprites['tile']					= image.load(join(res_path,'tile.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 
