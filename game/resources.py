@@ -24,7 +24,9 @@ class Resources:
 			'PLAYER2':7,
 			'TRANSITION_BOARD':8,
 			'BOARD':9,
-			'END':10
+			'END':10,
+			'TILE1':11,
+			'TILE2':12
 			} 
 
 	player = {'RED':1,'BLUE':2} #player side

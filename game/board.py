@@ -23,6 +23,7 @@ class GameBoard(GameObject):
 				x = Tile(name = "Tile"+str(i)+str(j),
 							row = i,
 							col = j,
+							world = self.world,
 							x = Resources.board_grid[i][j][0],
 							y = Resources.board_grid[i][j][1])
 				row.append(x)
@@ -56,10 +57,13 @@ class GameBoard(GameObject):
 		pass
 
 class Tile(GameObject):
-	def __init__(self,name,row,col,*args,**kwargs):
+	def __init__(self,name,row,col,world,*args,**kwargs):
 		super(Tile,self).__init__(name = name, img = Resources.sprites['tile'], *args,**kwargs)
 		self.location = (row,col)
 		self.wrestler = None
+		self.world = world
+		self.row = row
+		self.col = col
 
 	def set_content(self,obj):
 		self.wrestler = obj
@@ -75,4 +79,10 @@ class Tile(GameObject):
 
 	def on_mouse_press(self,x,y,button,modifiers):
 		if self.hit_test(x,y):
-			print "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
+			# print "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
+			self.world.player_program.write(" " + str(self.row) + " " + str(self.col) + "\n")
+			if self.world.game_state == Resources.state['TILE1']:
+				self.world.game_state = Resources.state['PLAYER1']
+			elif self.world.game_state == Resources.state['TILE2']:
+				self.world.game_state = Resources.state['PLAYER2']
+
