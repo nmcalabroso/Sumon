@@ -69,6 +69,7 @@ class MoveCard(Card):
 									*args,
 									**kwargs)
 		self.tile_count = tile_count
+		self.type = 'move'
 		self.command = "move " + str(self.tile_count)
 
 	def set_tile_count(self):
@@ -84,6 +85,7 @@ class WrestlerCard(Card):
 										*args,
 										**kwargs)
 		self.set_card()
+		self.type = 'wrestler'
 		self.command = "summon " + str(self.mana) + ' ' + self.title
 
 	def set_card(self):
