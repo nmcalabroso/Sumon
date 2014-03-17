@@ -35,6 +35,7 @@ class Card(GameObject):
 						self.x,self.y = Resources.card_pos2[len(self.world.program1)-1]
 
 						# write command to file
+						self.world.player_program.write('blue ')
 						self.world.player_program.write(self.command)
 						
 						#prompt for player to input row and col
@@ -53,6 +54,7 @@ class Card(GameObject):
 						self.x,self.y = Resources.card_pos2[len(self.world.program2)-1]
 
 						# write command to file
+						self.world.player_program.write('red ')
 						self.world.player_program.write(self.command)
 						
 						#prompt for player to input row and col

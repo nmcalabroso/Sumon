@@ -1,2 +1,2 @@
-summon 1 jonokuchi 0 7
-move 5 0 7
+red summon 3 sekiwake 6 7
+red move 4 6 7
