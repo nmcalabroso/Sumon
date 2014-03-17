@@ -21,10 +21,11 @@ class GameBoard(GameObject):
 			row = []
 			for j in range(8):
 				x = Tile(name = "Tile"+str(i)+str(j),
-							row = i,
-							col = j,
-							x = Resources.board_grid[i][j][0],
-							y = Resources.board_grid[i][j][1])
+						row = i,
+						col = j,
+						x = Resources.board_grid[i][j][0],
+						y = Resources.board_grid[i][j][1],
+						world = self.world)
 				row.append(x)
 				self.world.window.push_handlers(x)
 			grid.append(row)
@@ -56,10 +57,11 @@ class GameBoard(GameObject):
 		pass
 
 class Tile(GameObject):
-	def __init__(self,name,row,col,*args,**kwargs):
+	def __init__(self,name,row,col,world,*args,**kwargs):
 		super(Tile,self).__init__(name = name, img = Resources.sprites['tile'], *args,**kwargs)
 		self.location = (row,col)
 		self.wrestler = None
+		self.world = world
 
 	def set_content(self,obj):
 		self.wrestler = obj
