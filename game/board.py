@@ -2,7 +2,6 @@ from gameobject import GameObject
 from resources import Resources
 
 class GameBoard(GameObject):
-
 	def __init__(self,name,world,*args,**kwargs):
 		super(GameBoard,self).__init__(name = name, *args, **kwargs)
 		self.world = world
@@ -64,7 +63,8 @@ class Tile(GameObject):
 		self.world = world
 		self.row = row
 		self.col = col
-		
+		self.content = False
+
 	def set_content(self,obj):
 		self.wrestler = obj
 

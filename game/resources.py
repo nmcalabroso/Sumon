@@ -14,7 +14,7 @@ def center_image(image):
 	return image
 
 class Resources:
-	#game states
+	# game states
 	state = {'START':1,
 			'PLAYER':2,
 			'SETUP':3,
@@ -29,7 +29,7 @@ class Resources:
 			'TILE2':12
 			} 
 
-	player = {'RED':1,'BLUE':2} #player side
+	player = {'RED':1,'BLUE':2} # player side
 	wrestlers = ['jonokuchi','komusubi','sekiwake','ozeki','yokuzana']
 	stype = {
 			'JONOKUCHI':(1,1),
@@ -37,7 +37,7 @@ class Resources:
 			'SEKIWAKE':(4,3),
 			'OZEKI':(7,6),
 			'YOKUZANA':(13,10)
-			} #sumo constants (weight,energy)
+			} # sumo constants (weight,energy)
 
 	card_priority = {
 					'summon':3,
@@ -58,9 +58,9 @@ class Resources:
 	window_width = 1300
 	window_height = 655
 
-	#8x8 board
-	#board_width = 640
-	#board_height = 640 
+	# 8x8 board
+	# board_width = 640
+	# board_height = 640 
 	
 	center_x,center_y = get_center_coordinates(window_width,window_height)
 
@@ -68,7 +68,7 @@ class Resources:
 	sprites = {}
 	res_path = './assets/img'
 
-	#UI Elements
+	# UI Elements
 	sprites['no_sprite'] 			= image.load(join(res_path,'blank.png'))
 	sprites['default_cursor'] 		= image.load(join(res_path,'default_cursor.PNG'))
 	sprites['active_cursor'] 		= image.load(join(res_path,'active_cursor.PNG'))
@@ -82,7 +82,7 @@ class Resources:
 	sprites['tile']					= image.load(join(res_path,'tile.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 
-	#Ability Cards
+	# Ability Cards
 	sprites['card_avatar']			= center_image(image.load(join(res_path,'cards/avatar.jpg')))
 	sprites['card_fatup']			= center_image(image.load(join(res_path,'cards/fatup.jpg')))
 	sprites['card_hex']				= center_image(image.load(join(res_path,'cards/hex.jpg')))
@@ -93,9 +93,33 @@ class Resources:
 	sprites['card_takedown']		= center_image(image.load(join(res_path,'cards/takedown.jpg')))
 	sprites['card_move']			= center_image(image.load(join(res_path,'cards/move.jpg')))
 
-	#Wrestler Cards
+	# Wrestler Cards
 	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/coh_level1-blue.jpg')))
 	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/coh_level2-blue.jpg')))
 	sprites['card_sekiwake']		= center_image(image.load(join(res_path,'cards/coh_level3-blue.jpg')))
 	sprites['card_ozeki']			= center_image(image.load(join(res_path,'cards/coh_level4-blue.jpg')))
 	sprites['card_yokuzana']		= center_image(image.load(join(res_path,'cards/coh_level5-blue.jpg')))
+
+	sprites['card_jonokuchi_red']		= center_image(image.load(join(res_path,'cards/coh_level1-red.jpg')))
+	sprites['card_komusubi_red']		= center_image(image.load(join(res_path,'cards/coh_level2-red.jpg')))
+	sprites['card_sekiwake_red']		= center_image(image.load(join(res_path,'cards/coh_level3-red.jpg')))
+	sprites['card_ozeki_red']			= center_image(image.load(join(res_path,'cards/coh_level4-red.jpg')))
+	sprites['card_yokuzana_red']		= center_image(image.load(join(res_path,'cards/coh_level5-red.jpg')))
+
+	# Wrestler Sprites
+	sprites['wrestler_jonokuchi_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
+	sprites['wrestler_komusubi_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
+	sprites['wrestler_sekiwake_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
+	sprites['wrestler_ozeki_blue']		= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
+	sprites['wrestler_yokuzana_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
+
+	sprites['wrestler_jonokuchi_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
+	sprites['wrestler_komusubi_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
+	sprites['wrestler_sekiwake_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
+	sprites['wrestler_ozeki_red']		= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
+	sprites['wrestler_yokuzana_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
+
+
+
+
+

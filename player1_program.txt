@@ -1,1 +1,1 @@
-summon 3 sekiwake
+move 1

@@ -56,8 +56,9 @@ class GameWorld(GameObject):
 			elif base>=41 and base<=80:
 				return MoveCard()
 			else:
-				return MoveCard() #change this to powercard later
+				return MoveCard() # change this to power card later
 
+		player_title = player
 		player = self.find_game_object(player)
 		player.reset_cards()
 
@@ -65,6 +66,8 @@ class GameWorld(GameObject):
 			card = randomize_card()
 			card.x,card.y = Resources.card_pos1[i]
 			card.world = self
+			if player_title == 'Player2' and card.type == 'wrestler':
+				card.image = Resources.sprites['card_'+card.title+'_red']
 			player.add_card(card)
 
 	def set_player_names(self):
@@ -235,6 +238,16 @@ class GameWorld(GameObject):
 	def execute(self, action):
 		print "====================="
 		print action
+
+		action_type = action[0]
+		action_mana = action[1]
+
+		if action_type == 'summon':
+			print "SUMMON"
+		elif action_type == 'move':
+			print "MOVE"
+		elif action_type == 'ability':
+			print "ABILITY"
 
 	def on_mouse_motion(self,x,y,dx,dy):
 		self.window.set_mouse_cursor(None)
