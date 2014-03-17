@@ -26,14 +26,6 @@ class Card(GameObject):
 				if not self.clicked:
 					player = self.world.find_game_object('Player1')
 					if player.mana > self.mana:
-						# write command to file
-						self.world.player_program.write(self.command)
-						
-						#prompt for player to input row and col
-						row, col = self.set_pos(0,0)
-						self.world.player_program.write(' ' + str(row) + ' ' + str(col))
-						self.world.player_program.write('\n')
-
 						# change labels
 						player.mana -= self.mana
 						mana = self.world.find_label('mana')
@@ -42,18 +34,16 @@ class Card(GameObject):
 						self.clicked = True
 						self.x,self.y = Resources.card_pos2[len(self.world.program1)-1]
 
-			elif self.world.game_state == Resources.state['PLAYER2']:
-				if not self.clicked:
-					player = self.world.find_game_object('Player2')
-					if player.mana > self.mana:
 						# write command to file
 						self.world.player_program.write(self.command)
 						
 						#prompt for player to input row and col
-						row, col = self.set_pos(0,0)
-						self.world.player_program.write(' ' + str(row) + ' ' + str(col))
-						self.world.player_program.write('\n')
+						self.world.game_state = Resources.state['TILE1']
 
+			elif self.world.game_state == Resources.state['PLAYER2']:
+				if not self.clicked:
+					player = self.world.find_game_object('Player2')
+					if player.mana > self.mana:
 						# change labels
 						player.mana -= self.mana
 						mana = self.world.find_label('mana')
@@ -61,6 +51,12 @@ class Card(GameObject):
 						self.world.program2.append(self)
 						self.clicked = True
 						self.x,self.y = Resources.card_pos2[len(self.world.program2)-1]
+
+						# write command to file
+						self.world.player_program.write(self.command)
+						
+						#prompt for player to input row and col
+						self.world.game_state = Resources.state['TILE2']
 
 class MoveCard(Card):
 	def __init__(self,*args,**kwargs):

@@ -1,2 +1,0 @@
-summon 1 jonokuchi 5 7
-summon 1 jonokuchi 5 7

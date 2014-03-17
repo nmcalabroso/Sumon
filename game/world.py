@@ -20,6 +20,7 @@ class GameWorld(GameObject):
 		self.set_focus(None)
 		self.round = 1
 		self.start_round = False
+		self.tile_clicked = False
 		self.program1 = []
 		self.program2 = []
 

@@ -1,3 +1,2 @@
-summon 1 jonokuchi 5 7
-move 3 5 7
-move 5 5 7
+summon 1 jonokuchi 0 7
+move 5 0 7

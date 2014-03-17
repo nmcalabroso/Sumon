@@ -23,9 +23,9 @@ class GameBoard(GameObject):
 				x = Tile(name = "Tile"+str(i)+str(j),
 						row = i,
 						col = j,
+						world = self.world,
 						x = Resources.board_grid[i][j][0],
-						y = Resources.board_grid[i][j][1],
-						world = self.world)
+						y = Resources.board_grid[i][j][1])
 				row.append(x)
 				self.world.window.push_handlers(x)
 			grid.append(row)
@@ -62,7 +62,9 @@ class Tile(GameObject):
 		self.location = (row,col)
 		self.wrestler = None
 		self.world = world
-
+		self.row = row
+		self.col = col
+		
 	def set_content(self,obj):
 		self.wrestler = obj
 
@@ -77,4 +79,12 @@ class Tile(GameObject):
 
 	def on_mouse_press(self,x,y,button,modifiers):
 		if self.hit_test(x,y):
-			print "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
+			# print "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
+			if self.world.game_state == Resources.state['TILE1']:
+				self.world.player_program.write(" " + str(self.row) + " " + str(self.col) + "\n")
+				self.world.game_state = Resources.state['PLAYER1']
+
+			elif self.world.game_state == Resources.state['TILE2']:
+				self.world.player_program.write(" " + str(self.row) + " " + str(self.col) + "\n")
+				self.world.game_state = Resources.state['PLAYER2']
+
