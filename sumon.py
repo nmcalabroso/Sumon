@@ -45,11 +45,11 @@ def on_draw():
 				for card in obj.cards:
 					game_window.push_handlers(card)
 					card.draw()
-			"""elif obj.name == "game_board": //di na pala natin kailangan idrawing yung mga tiles haha
+			elif obj.name == "game_board":
 				for i in range(len(obj.my_grid)):
 					for j in range(len(obj.my_grid[i])):
-						if obj.my_grid[i][j].content != None://idadrawing ko sana yung laman ng tiles
-							obj.my_grid[i][j].content.draw()"""
+						if obj.my_grid[i][j].wrestler != None:
+							obj.my_grid[i][j].wrestler.draw()
 	#fps.draw()
 
 def update(dt):

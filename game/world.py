@@ -3,6 +3,7 @@ from resources import Resources
 from cards import MoveCard
 from cards import WrestlerCard
 from random import randint
+from board import GameBoard
 
 class Wrestler(GameObject):
 	def __init__(self,title,sprite_color,name,*args,**kwargs):
@@ -248,7 +249,7 @@ class GameWorld(GameObject):
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
 
-	def execute(self, action):
+	def execute(self, action, board):
 		print "====================="
 		print action
 
@@ -258,10 +259,13 @@ class GameWorld(GameObject):
 
 		if action_type == 'summon':
 			wrestler_type = action[3]
-			row = action[4]
-			col = action[5]
+			row = int(action[4])
+			col = int(action[5])
 			sumo = Wrestler(sprite_color = action_color, title = wrestler_type, name = 'Wrestler')
-			print "SUMMON " + sumo.title + ' ' + sumo.sprite_color + ' ' + str(sumo.weight)
+			tile = board.my_grid[row][col]
+			tile.set_content(sumo)
+			tile.wrestler.x = tile.x+40
+			tile.wrestler.y = tile.y+40
 
 
 		# elif action_type == 'move':
@@ -413,8 +417,9 @@ class GameWorld(GameObject):
 						sequence = (action2,)
 
 					# execute commands
+					board = self.find_game_object('game_board')
 					for action in sequence:
-						self.execute(action)
+						self.execute(action,board)
 
 
 

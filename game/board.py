@@ -63,7 +63,6 @@ class Tile(GameObject):
 		self.world = world
 		self.row = row
 		self.col = col
-		self.content = False
 
 	def set_content(self,obj):
 		self.wrestler = obj
