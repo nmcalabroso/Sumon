@@ -27,14 +27,14 @@ class GameWorld(GameObject):
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
 
 	def switch_to_player(self,batch):
-		bg = self.find_widget('my_bg')
-		bg.set_image(Resources.sprites['title_bg'])
+		#bg = self.find_widget('my_bg')
+		#bg.set_image(Resources.sprites['title_bg'])
 		self.delete_widgets_by_batch(batch)
 		self.game_state = Resources.state['PLAYER']
 
 	def switch_to_game(self,batch):
 		bg = self.find_widget('my_bg')
-		bg.set_image(Resources.sprites['title_bg'])
+		bg.set_image(Resources.sprites['main_bg'])
 		self.set_player_names()
 		self.delete_widgets_by_batch(batch)
 		#print "before:",self.labels

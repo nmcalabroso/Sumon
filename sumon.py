@@ -71,14 +71,14 @@ def title_screen():
 						world = world,
 						img = Resources.sprites['start_button'],
 						x = Resources.window_width*0.5,
-						y = Resources.window_height*0.5-110,
+						y = Resources.window_height*0.5-100,
 						batch = start_batch)
 	game_window.push_handlers(start_button)
 	world.add_widget(start_button)
 
 def player_screen():
 	x1 = int((Resources.window_width*0.5)-200)
-	y1 = int((Resources.window_height*0.5)+50)
+	y1 = int((Resources.window_height*0.5 - 80))
 
 	input_p1 = pyglet.text.Label('Player 1:',
 						x = x1,
@@ -120,7 +120,7 @@ def player_screen():
 						world = world,
 						img = Resources.sprites['play_button'],
 					   	x = Resources.window_width * 0.5,
-						y = y1-115,
+						y = y1-90,
 					   	batch = player_batch)
 
 	game_window.push_handlers(play_button)
