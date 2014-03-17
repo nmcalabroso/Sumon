@@ -58,10 +58,10 @@ class EndTurnButton(UIObject):
             if self.world.game_state == Resources.state['PLAYER1']:
                 print "Button: Proceeding to TRANSITION STATE."
                 self.world.game_state = Resources.state['TRANSITION_PLAYER2']
+                
             elif self.world.game_state == Resources.state['PLAYER2']:
                 print "Button: Proceeding to TRANSITION STATE."
                 self.world.game_state = Resources.state['TRANSITION_BOARD']
-
 
 class UILabel(Label):
     def __init__(self,name,*args,**kwargs):
@@ -157,7 +157,6 @@ class TextWidget(UIObject):
     def on_text_motion_select(self, motion):
         if self.world.focus is self:
             self.world.focus.caret.on_text_motion_select(motion)
-
 
 class Background(GameObject):
     def __init__(self,name,*args, **kwargs):

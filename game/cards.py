@@ -22,7 +22,6 @@ class Card(GameObject):
 
 	def on_mouse_press(self, x, y, button, modifiers):
 		if self.active and self.hit_test(x,y):
-			print "PLAYER1 STATE"
 			if self.world.game_state == Resources.state['PLAYER1']:
 				if not self.clicked:
 					player = self.world.find_game_object('Player1')
