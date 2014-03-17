@@ -71,9 +71,9 @@ class Resources:
 
 	# UI Elements
 	sprites['no_sprite'] 			= image.load(join(res_path,'blank.png'))
-	sprites['default_cursor'] 		= image.load(join(res_path,'default_cursor.PNG'))
-	sprites['active_cursor'] 		= image.load(join(res_path,'active_cursor.PNG'))
-	sprites['hand_cursor'] 			= image.load(join(res_path,'hand_cursor.PNG'))
+	#sprites['default_cursor'] 		= image.load(join(res_path,'default_cursor.PNG'))
+	#sprites['active_cursor'] 		= image.load(join(res_path,'active_cursor.PNG'))
+	#sprites['hand_cursor'] 		= image.load(join(res_path,'hand_cursor.PNG'))
 	sprites['start_button']  		= center_image(image.load(join(res_path,'start_button.png')))
 	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
 	sprites['end_turn_button']		= center_image(image.load(join(res_path,'end_turn_button.png')))

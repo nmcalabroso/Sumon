@@ -71,7 +71,7 @@ class UILabel(Label):
 class MyRectangle(UIObject):
      def __init__(self,name,curr_state,*args,**kwargs):
         super(MyRectangle, self).__init__(name = name, curr_state = curr_state, world = None,*args,**kwargs)
-        self.opacity = 180
+        self.opacity = 255
 
 class Rectangle(object):
     '''Draws a rectangle into a batch.'''
