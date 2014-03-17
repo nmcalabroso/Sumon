@@ -1,0 +1,2 @@
+summon sekiwake 5 7
+move 4 5 7
