@@ -37,6 +37,8 @@ class GameWorld(GameObject):
 		self.tile_clicked = False
 		self.program1 = []
 		self.program2 = []
+		self.additional_mana1 = 0
+		self.additional_mana2 = 0
 
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
 
@@ -255,7 +257,7 @@ class GameWorld(GameObject):
 
 		action_color = action[0]
 		action_type = action[1]
-		action_mana = action[2]
+		action_mana = int(action[2])
 
 		if action_type == 'summon':
 			wrestler_type = action[3]
@@ -268,8 +270,23 @@ class GameWorld(GameObject):
 			tile.wrestler.y = tile.y+40
 
 
-		# elif action_type == 'move':
-		# 	print "MOVE"
+		elif action_type == 'move':
+			row = int(action[3])
+			col = int(action[4])
+			tile = board.my_grid[row][col]
+			sumo = tile.wrestler
+			tile.remove_content()
+
+			if action_color == 'blue':
+				tile = board.my_grid[row-action_mana][col]
+			else:
+				tile = board.my_grid[row+action_mana][col]
+
+			tile.set_content(sumo)
+			tile.wrestler.x = tile.x+40
+			tile.wrestler.y = tile.y+40
+
+
 		# elif action_type == 'power':
 		# 	print "POWER"
 
@@ -309,6 +326,8 @@ class GameWorld(GameObject):
 
 		if self.game_state == Resources.state['SETUP']:
 			self.start_round = True
+			self.program1 = []
+			self.program2 = []
 			self.game_state = Resources.state['TRANSITION_PLAYER1']
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER1']:
@@ -358,71 +377,75 @@ class GameWorld(GameObject):
 			# example: move 5 row col
 			# example: summon 1 jonokuchi row col
 
-			if self.start_round:
-				self.start_round = False
-				program1 = []
-				program2 = []
+			self.start_round = False
+			self.program1 = []
+			self.program2 = []
 
-				#get commands from both programs
-				player_program1 = open("player1_program.txt", "r")
-				player_program2 = open("player2_program.txt", "r")
-				program1 = player_program1.readlines()
-				program2 = player_program2.readlines()
-				player_program1.close()
-				player_program2.close()
+			#get commands from both programs
+			player_program1 = open("player1_program.txt", "r")
+			player_program2 = open("player2_program.txt", "r")
+			self.program1 = player_program1.readlines()
+			self.program2 = player_program2.readlines()
+			player_program1.close()
+			player_program2.close()
 
-				#get max number of commands
-				if len(program1) > len(program2):
-					max = len(program1)
-				else:
-					max = len(program2)
+			#get max number of commands
+			if len(self.program1) > len(self.program2):
+				max = len(self.program1)
+			else:
+				max = len(self.program2)
 
-				#for each command
-				for i in range(max):
-					action1 = None
-					action2 = None
+			#for each command
+			for i in range(max):
+				action1 = None
+				action2 = None
 
-					#get command from program1
-					if i < len(program1):
-						action1 = program1[i]
-						action1 = action1.split()
-	
-					#get command from program2
-					if i < len(program2):
-						action2 = program2[i]
-						action2 = action2.split()
+				#get command from self.program1
+				if i < len(self.program1):
+					action1 = self.program1[i]
+					action1 = action1.split()
 
-					# compare priorities and do both commands (assumes action1 and action2 are not null)
-					if action1 != None and action2 != None:
-						if Resources.card_priority[action1[1]] > Resources.card_priority[action2[1]]:
+				#get command from self.program2
+				if i < len(self.program2):
+					action2 = self.program2[i]
+					action2 = action2.split()
+
+				# compare priorities and do both commands (assumes action1 and action2 are not null)
+				if action1 != None and action2 != None:
+					if Resources.card_priority[action1[1]] > Resources.card_priority[action2[1]]:
+						sequence = (action1, action2)
+					elif Resources.card_priority[action1[1]] < Resources.card_priority[action2[1]]:
+						sequence = (action2, action1)
+					else: # equal priority; compare mana
+						if action1[2] > action2[2]:
 							sequence = (action1, action2)
-						elif Resources.card_priority[action1[1]] < Resources.card_priority[action2[1]]:
+						if action1[2] < action2[2]:
 							sequence = (action2, action1)
-						else: # equal priority; compare mana
-							if action1[2] > action2[2]:
+						else: #random
+							rand = randint(0,100)
+							if rand < 50:
 								sequence = (action1, action2)
-							if action1[2] < action2[2]:
+							else:
 								sequence = (action2, action1)
-							else: #random
-								rand = randint(0,100)
-								if rand < 50:
-									sequence = (action1, action2)
-								else:
-									sequence = (action2, action1)
 
-					# else if one is null
-					elif action1 != None:
-						sequence = (action1,)
-					else:
-						sequence = (action2,)
+				# else if one is null
+				elif action1 != None:
+					sequence = (action1,)
+				else:
+					sequence = (action2,)
 
-					# execute commands
-					board = self.find_game_object('game_board')
-					for action in sequence:
-						self.execute(action,board)
+				# execute commands
+				board = self.find_game_object('game_board')
+				for action in sequence:
+					self.execute(action,board)
 
+				self.game_state = Resources.state['REPLENISH']
 
-
-
+		elif self.game_state == Resources.state['REPLENISH']:
+			player1 = self.find_game_object('Player1')
+			player2 = self.find_game_object('Player2')
+			player1.mana += 5
+			player2.mana += 5
+			self.game_state = Resources.state['SETUP']
 
 

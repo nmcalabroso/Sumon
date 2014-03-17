@@ -26,7 +26,8 @@ class Resources:
 			'BOARD':9,
 			'END':10,
 			'TILE1':11,
-			'TILE2':12
+			'TILE2':12,
+			'REPLENISH':13,
 			} 
 
 	player = {'RED':1,'BLUE':2} # player side

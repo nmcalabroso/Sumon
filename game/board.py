@@ -67,7 +67,7 @@ class Tile(GameObject):
 	def set_content(self,obj):
 		self.wrestler = obj
 
-	def remove_content(self,obj):
+	def remove_content(self):
 		self.wrestler = None
 
 	def hit_test(self,x,y):

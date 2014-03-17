@@ -1,2 +1,0 @@
-red summon 3 sekiwake 6 7
-red move 4 6 7
