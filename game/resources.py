@@ -38,9 +38,9 @@ class Resources:
 			} #sumo constants (weight,energy)
 
 	card_priority = {
-					'summon':1,
+					'summon':3,
 					'move':2,
-					'card':3
+					'card':1
 					}
 
 	board_grid = [[(5+i*80,7+j*80) for i in range(8)] for j in range(8)]

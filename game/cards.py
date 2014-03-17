@@ -46,8 +46,15 @@ class Card(GameObject):
 				if not self.clicked:
 					player = self.world.find_game_object('Player2')
 					if player.mana > self.mana:
+						# write command to file
 						self.world.player_program.write(self.command)
+						
+						#prompt for player to input row and col
+						row, col = self.set_pos(0,0)
+						self.world.player_program.write(' ' + str(row) + ' ' + str(col))
 						self.world.player_program.write('\n')
+
+						# change labels
 						player.mana -= self.mana
 						mana = self.world.find_label('mana')
 						mana.text = player.get_mana_label()
@@ -81,7 +88,7 @@ class WrestlerCard(Card):
 										*args,
 										**kwargs)
 		self.set_card()
-		self.command = "summon " + self.title
+		self.command = "summon " + str(self.mana) + ' ' + self.title
 
 	def set_card(self):
 		self.title = choice(Resources.wrestlers)

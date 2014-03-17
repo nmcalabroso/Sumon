@@ -1,2 +1,4 @@
-summon sekiwake 5 7
-move 4 5 7
+summon 2 komusubi 5 7
+move 1 5 7
+move 2 5 7
+move 1 5 7

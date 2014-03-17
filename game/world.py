@@ -231,6 +231,10 @@ class GameWorld(GameObject):
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
 
+	def execute(self, action):
+		print "====================="
+		print action
+
 	def on_mouse_motion(self,x,y,dx,dy):
 		self.window.set_mouse_cursor(None)
 
@@ -312,6 +316,10 @@ class GameWorld(GameObject):
 			self.game_state = Resources.state['BOARD']
 
 		elif self.game_state == Resources.state['BOARD']:
+			# format: <card_type> <mana> <parameters>
+			# example: move 5 row col
+			# example: summon 1 jonokuchi row col
+
 			if self.start_round:
 				self.start_round = False
 				program1 = []
@@ -339,21 +347,40 @@ class GameWorld(GameObject):
 					#get command from program1
 					if i < len(program1):
 						action1 = program1[i]
-
+						action1 = action1.split()
+	
 					#get command from program2
 					if i < len(program2):
 						action2 = program2[i]
-					
+						action2 = action2.split()
 
+					# compare priorities and do both commands (assumes action1 and action2 are not null)
+					if action1 != None and action2 != None:
+						if Resources.card_priority[action1[0]] > Resources.card_priority[action2[0]]:
+							sequence = (action1, action2)
+						elif Resources.card_priority[action1[0]] < Resources.card_priority[action2[0]]:
+							sequence = (action2, action1)
+						else: # equal priority; compare mana
+							if action1[1] > action2[1]:
+								sequence = (action1, action2)
+							if action1[1] < action2[1]:
+								sequence = (action2, action1)
+							else: #random
+								rand = randint(0,100)
+								if rand < 50:
+									sequence = (action1, action2)
+								else:
+									sequence = (action2, action1)
 
-					# #compare priorities and do both commands
-					# if action1 != None and action2 != None:
-					# 	#do both
-					# elif action1 != None:
-					# 	#do action1
-					# else:
-					# 	#do action2
+					# else if one is null
+					elif action1 != None:
+						sequence = (action1,)
+					else:
+						sequence = (action2,)
 
+					# execute commands
+					for action in sequence:
+						self.execute(action)
 
 
 

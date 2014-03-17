@@ -1,2 +1,3 @@
-summon sekiwake
-move 4
+summon 1 jonokuchi 5 7
+move 3 5 7
+move 5 5 7
