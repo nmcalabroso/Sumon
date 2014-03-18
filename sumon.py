@@ -48,8 +48,19 @@ def on_draw():
 			elif obj.name == "game_board":
 				for i in range(len(obj.my_grid)):
 					for j in range(len(obj.my_grid[i])):
+						obj.my_grid[i][j].draw()
 						if obj.my_grid[i][j].wrestler != None:
 							obj.my_grid[i][j].wrestler.draw()
+						
+						if world.game_state == Resources.state['TILE1'] or world.game_state == Resources.state['TILE2']:
+							if obj.my_grid[i][j].glow is True:
+								g = world.find_widget('glow')
+								g.set_position(obj.my_grid[i][j].x,obj.my_grid[i][j].y)
+								g.draw()
+
+		if world.game_state == Resources.state['TILE1'] or world.game_state == Resources.state['TILE2']:
+			b = world.find_widget('blocker')
+			b.draw()
 	#fps.draw()
 
 def update(dt):
@@ -134,8 +145,8 @@ def player_screen():
 	world.add_widget(play_button)
 
 def game_screen():
-	hand_board = MyRectangle(name = 'hand_board',curr_state = "GAME", x = 650, y = 330, img = Resources.sprites['programming_board'],batch = game_batch)
-	prog_board = MyRectangle(name = 'prog_board',curr_state = "GAME", x = 650, y = 5, img = Resources.sprites['programming_board'],batch = game_batch)
+	hand_board = MyRectangle(name = 'hand_board',curr_state = "GAME",opacity = 255, x = 650, y = 330, img = Resources.sprites['programming_board'],batch = game_batch)
+	prog_board = MyRectangle(name = 'prog_board',curr_state = "GAME",opacity = 255, x = 650, y = 5, img = Resources.sprites['programming_board'],batch = game_batch)
 
 	player1 = Player(actual_name = 'Player',
 					name = 'Player1',
@@ -222,6 +233,10 @@ def game_screen():
 					   				batch = game_batch)
 
 	game_board = GameBoard(name = 'game_board',world = world,x = 5,y = 7,img = Resources.sprites['game_board'])
+	blocker = MyRectangle(name = 'blocker',curr_state = "GAME",opacity = 200, x = 650, y = 5, img = Resources.sprites['blocker'])
+	glow = MyRectangle(name = 'glow',curr_state = "GAME",opacity = 255, x = 0,y = 0, img = Resources.sprites['tile_glow'])
+	glow.image.anchor_x += 20
+	glow.image.anchor_y += 20
 
 	game_window.push_handlers(player1)
 	game_window.push_handlers(player2)
@@ -231,6 +246,8 @@ def game_screen():
 	world.add_game_object(game_board)
 	world.add_widget(hand_board)
 	world.add_widget(prog_board)
+	world.add_widget(blocker)
+	world.add_widget(glow)
 	world.add_widget(end_turn_button)
 
 	world.add_game_object(player1)

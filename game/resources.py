@@ -83,8 +83,9 @@ class Resources:
 	sprites['main_bg'] 				= image.load(join(res_path,'main_bg.png'))
 	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
 	sprites['tile']					= image.load(join(res_path,'tile.png'))
+	sprites['tile_glow']			= image.load(join(res_path,'tile_glow.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
-
+	sprites['blocker']				= image.load(join(res_path,'blocker.png'))
 	# Ability Cards
 	sprites['card_avatar']			= center_image(image.load(join(res_path,'cards/avatar.jpg')))
 	sprites['card_fatup']			= center_image(image.load(join(res_path,'cards/fatup.jpg')))

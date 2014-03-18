@@ -5,12 +5,6 @@ class GameBoard(GameObject):
 	def __init__(self,name,world,*args,**kwargs):
 		super(GameBoard,self).__init__(name = name, *args, **kwargs)
 		self.world = world
-		"""self.my_grid = [[Tile(name = "Tile"+str(i)+str(j),
-							row = i,
-							col = j,
-							x = Resources.board_grid[i][j][0],
-							y = Resources.board_grid[i][j][1])
-						for i in range(8)] for j in range(8)] #initial 8x8 logical grid"""
 		self.my_grid = None
 		self.set_grid()
 
@@ -63,6 +57,7 @@ class Tile(GameObject):
 		self.world = world
 		self.row = row
 		self.col = col
+		self.glow = False
 
 	def set_content(self,obj):
 		self.wrestler = obj
@@ -78,7 +73,7 @@ class Tile(GameObject):
 
 	def on_mouse_press(self,x,y,button,modifiers):
 		if self.hit_test(x,y):
-			# print "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
+			#lprint "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
 			if self.world.game_state == Resources.state['TILE1']:
 				self.world.player_program.write(" " + str(self.row) + " " + str(self.col) + "\n")
 				self.world.game_state = Resources.state['PLAYER1']
@@ -87,3 +82,9 @@ class Tile(GameObject):
 				self.world.player_program.write(" " + str(self.row) + " " + str(self.col) + "\n")
 				self.world.game_state = Resources.state['PLAYER2']
 
+	def on_mouse_motion(self,x,y,dx,dy):
+		if self.hit_test(x,y):
+			if self.world.game_state == Resources.state['TILE1'] or self.world.game_state == Resources.state['TILE2']:
+				self.glow = True
+				return
+		self.glow = False
