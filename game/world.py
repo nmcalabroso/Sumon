@@ -305,17 +305,9 @@ class GameWorld(GameObject):
 			if lane_pass > 0:
 				tile.remove_content()
 				if lane_pass == 1:
-					player2.lives -= action_mana
+					player2.lives -= sumo.weight
 				else:
-					player1.lives -= action_mana
-
-				if player1.lives < 0:
-					self.game_state = Resources.state['END']
-					return
-
-				if player2.lives < 0:
-					self.game_state = Resources.state['END']
-					return
+					player1.lives -= sumo.weight
 
 			else:
 				tile.set_content(sumo)
@@ -477,6 +469,17 @@ class GameWorld(GameObject):
 			self.game_state = Resources.state['EXECUTE']
 
 		elif self.game_state == Resources.state['EXECUTE']:
+			player1 = self.find_game_object('Player1')
+			player2 = self.find_game_object('Player2')
+			if player1.lives < 0:
+				self.game_state = Resources.state['END']
+				return
+
+			if player2.lives < 0:
+				self.game_state = Resources.state['END']
+				return
+
+
 			if self.sequence == []:
 				self.game_state = Resources.state['REPLENISH']
 
