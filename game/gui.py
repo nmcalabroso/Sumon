@@ -29,7 +29,7 @@ class Button(UIObject):
         if self.active and self.world.game_state == Resources.state[self.curr_state]:
             if button == mouse.LEFT:
                 if self.hit_test(x,y):
-                    print "Button: Proceeding to",self.target_game_state,"STATE."
+                    # print "Button: Proceeding to",self.target_game_state,"STATE."
                     if self.target_game_state == 'PLAYER':
                         self.world.switch_to_player(self.batch)
                     elif self.target_game_state == 'SETUP':
@@ -38,7 +38,7 @@ class Button(UIObject):
     def on_mouse_motion(self, x, y, dx, dy):
         if self.active and self.world.game_state == Resources.state[self.curr_state]:
             if self.hit_test(x,y):
-                print "Entering Button:",self.name
+                # print "Entering Button:",self.name
                 self.world.window.set_mouse_cursor(self.hand_cursor)
 
 class EndTurnButton(UIObject):
@@ -56,11 +56,9 @@ class EndTurnButton(UIObject):
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
             if self.world.game_state == Resources.state['PLAYER1']:
-                print "Button: Proceeding to TRANSITION STATE."
                 self.world.game_state = Resources.state['TRANSITION_PLAYER2']
                 
             elif self.world.game_state == Resources.state['PLAYER2']:
-                print "Button: Proceeding to TRANSITION STATE."
                 self.world.game_state = Resources.state['TRANSITION_BOARD']
 
             elif self.world.game_state == Resources.state['WAIT']:
@@ -133,13 +131,13 @@ class TextWidget(UIObject):
 
     def on_mouse_motion(self, x, y, dx, dy):
         if self.hit_test(x, y):
-            print 'Hovering TextWidget:',self.name
+            # print 'Hovering TextWidget:',self.name
             self.world.window.set_mouse_cursor(self.text_cursor)
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT:
             if self.hit_test(x, y):
-                print 'Focusing TextWidget:',self.name
+                # print 'Focusing TextWidget:',self.name
                 self.world.set_focus(self)
 
         if self.world.focus is self:

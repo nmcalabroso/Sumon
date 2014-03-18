@@ -252,12 +252,13 @@ class GameWorld(GameObject):
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
 
-	def execute(self, action, board):
+	def execute(self, action, board, player1, player2):
 		# print "====================="
 		# print action
 		action_color = action[0]
 		action_type = action[1]
 		action_mana = int(action[2])
+		lane_pass = 0
 
 		if action_type == 'summon':
 			wrestler_type = action[3]
@@ -269,7 +270,6 @@ class GameWorld(GameObject):
 			tile.wrestler.x = tile.x+40
 			tile.wrestler.y = tile.y+40
 
-
 		elif action_type == 'move':
 			row = int(action[3])
 			col = int(action[4])
@@ -277,15 +277,50 @@ class GameWorld(GameObject):
 			sumo = tile.wrestler
 			tile.remove_content()
 
+			# get tile positions
 			if action_color == 'blue':
-				tile = board.my_grid[row-action_mana][col]
+				for i in range(1,action_mana+1):
+					if row-i < 0:
+						print "PASS"
+						lane_pass = 1
+						break
+					tile = board.my_grid[row-i][col]
+					if tile.wrestler != None:
+						print "BLOCK"
+						tile = board.my_grid[row-i+1][col]
+						break
+
 			else:
-				tile = board.my_grid[row+action_mana][col]
+				for i in range(1,action_mana+1):
+					if row+i > 7:
+						print "PASS"
+						lane_pass = 2
+						break
+					tile = board.my_grid[row+i][col]
+					if tile.wrestler != None:
+						print "BLOCK"
+						tile = board.my_grid[row+i-1][col]
+						break
 
-			tile.set_content(sumo)
-			tile.wrestler.x = tile.x+40
-			tile.wrestler.y = tile.y+40
+			if lane_pass > 0:
+				tile.remove_content()
+				if lane_pass == 1:
+					player2.lives -= action_mana
+				else:
+					player1.lives -= action_mana
 
+				if player1.lives < 0:
+					self.game_state = Resources.state['END']
+					return
+
+				if player2.lives < 0:
+					self.game_state = Resources.state['END']
+					return
+
+			else:
+				tile.set_content(sumo)
+				tile.wrestler.x = tile.x+40
+				tile.wrestler.y = tile.y+40
 
 		# elif action_type == 'power':
 		# 	print "POWER"
@@ -446,10 +481,12 @@ class GameWorld(GameObject):
 				self.game_state = Resources.state['REPLENISH']
 
 			else:
+				player1 = self.find_game_object('Player1')
+				player2 = self.find_game_object('Player2')
 				board = self.find_game_object('game_board')
 				turn = self.sequence.pop(0)
 				for action in turn:
-					self.execute(action,board)
+					self.execute(action, board, player1, player2)
 
 		elif self.game_state == Resources.state['REPLENISH']:
 			player1 = self.find_game_object('Player1')
@@ -458,4 +495,11 @@ class GameWorld(GameObject):
 			player2.mana += 5
 			self.game_state = Resources.state['SETUP']
 
+		elif self.game_state == Resources.state['END']:
+			player1 = self.find_game_object('Player1')
+			print "GAME OVER"
+			if player1.lives < 0:
+				print "PLAYER 2 WINS!!"
+			else:
+				print "PLAYER 1 WINS!!"	
 
