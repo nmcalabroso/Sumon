@@ -63,6 +63,9 @@ class EndTurnButton(UIObject):
                 print "Button: Proceeding to TRANSITION STATE."
                 self.world.game_state = Resources.state['TRANSITION_BOARD']
 
+            elif self.world.game_state == Resources.state['WAIT']:
+                self.world.game_state = Resources.state['EXECUTE']
+
 class UILabel(Label):
     def __init__(self,name,*args,**kwargs):
         super(UILabel, self).__init__(*args,**kwargs)

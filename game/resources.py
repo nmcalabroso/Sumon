@@ -20,15 +20,17 @@ class Resources:
 			'SETUP':3,
 			'TRANSITION_PLAYER1':4,
 			'PLAYER1':5,
-			'TRANSITION_PLAYER2':6,
-			'PLAYER2':7,
-			'TRANSITION_BOARD':8,
-			'BOARD':9,
-			'END':10,
-			'TILE1':11,
-			'TILE2':12,
-			'REPLENISH':13,
-			} 
+			'TILE1':6,
+			'TRANSITION_PLAYER2':7,
+			'PLAYER2':8,
+			'TILE2':9,
+			'TRANSITION_BOARD':10,
+			'BOARD':11,
+			'EXECUTE':12,
+			'WAIT':13,
+			'REPLENISH':14,
+			'END':15
+			}
 
 	player = {'RED':1,'BLUE':2} # player side
 	wrestlers = ['jonokuchi','komusubi','sekiwake','ozeki','yokuzana']
