@@ -78,9 +78,11 @@ class Resources:
 	#sprites['hand_cursor'] 		= image.load(join(res_path,'hand_cursor.PNG'))
 	sprites['start_button']  		= center_image(image.load(join(res_path,'start_button.png')))
 	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
-	sprites['end_turn_button']		= center_image(image.load(join(res_path,'end_turn_button.png')))
+	sprites['end_turn_button']		= image.load(join(res_path,'endturn_button.png'))
+	sprites['end_turn_button2']		= image.load(join(res_path,'endturn_button_active.png'))
 	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
 	sprites['main_bg'] 				= image.load(join(res_path,'main_bg.png'))
+	sprites['game_over'] 			= image.load(join(res_path,'game_over.png'))
 	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
 	sprites['tile']					= image.load(join(res_path,'tile.png'))
 	sprites['tile_glow']			= image.load(join(res_path,'tile_glow.png'))
@@ -111,17 +113,17 @@ class Resources:
 	sprites['card_yokuzana_red']		= center_image(image.load(join(res_path,'cards/coh_level5-red.jpg')))
 
 	# Wrestler Sprites
-	sprites['wrestler_jonokuchi_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
-	sprites['wrestler_komusubi_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
-	sprites['wrestler_sekiwake_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
-	sprites['wrestler_ozeki_blue']		= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
-	sprites['wrestler_yokuzana_blue']	= center_image(image.load(join(res_path,'wrestlers/sumo-blue.png')))
+	sprites['wrestler_jonokuchi_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
+	sprites['wrestler_komusubi_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
+	sprites['wrestler_sekiwake_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
+	sprites['wrestler_ozeki_blue']		= image.load(join(res_path,'wrestlers/sumo-blue.png'))
+	sprites['wrestler_yokuzana_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
 
-	sprites['wrestler_jonokuchi_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
-	sprites['wrestler_komusubi_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
-	sprites['wrestler_sekiwake_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
-	sprites['wrestler_ozeki_red']		= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
-	sprites['wrestler_yokuzana_red']	= center_image(image.load(join(res_path,'wrestlers/sumo-red.png')))
+	sprites['wrestler_jonokuchi_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
+	sprites['wrestler_komusubi_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
+	sprites['wrestler_sekiwake_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
+	sprites['wrestler_ozeki_red']		= image.load(join(res_path,'wrestlers/sumo-red.png'))
+	sprites['wrestler_yokuzana_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
 
 
 

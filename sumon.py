@@ -228,8 +228,8 @@ def game_screen():
 									curr_state = 'PLAYER1',
 									world = world,
 									img = Resources.sprites['end_turn_button'],
-					   				x = mana.x,
-									y = label_prog_card.y,
+					   				x = mana.x - 46,
+									y = label_prog_card.y - 20,
 					   				batch = game_batch)
 
 	game_board = GameBoard(name = 'game_board',world = world,x = 5,y = 7,img = Resources.sprites['game_board'])
@@ -263,8 +263,55 @@ def game_screen():
 	world.add_label(mana)
 
 def end_screen():
-	pass
+	game_over = MyRectangle(name = 'game_over_logo',curr_state = "END",opacity = 255, x = 650-428, y = 290, img = Resources.sprites['game_over'],batch = end_batch)
 	
+	player_end =  UILabel(name = 'player_end',
+						text = 'PLAYERX WINS!',
+						x = game_over.x + game_over.width/3 + 55,
+						y = game_over.y - 35,
+						anchor_y = 'top',
+                  		color = (57, 255, 20, 255),
+                  		batch = end_batch)
+
+	label_mana =  UILabel(name = 'label_mana_end',
+						text = 'MANA USED:',
+						x = player_end.x,
+						y = player_end.y - 20,
+						anchor_y = 'top',
+                  		color = (57, 255, 20, 255),
+                  		batch = end_batch)
+
+	mana =  UILabel(name = 'mana_end',
+						text = '6969',
+						x = label_mana.x + 105,
+						y = label_mana.y,
+						anchor_y = 'top',
+                  		color = (57, 255, 20, 255),
+                  		batch = end_batch)
+
+	label_rounds =  UILabel(name = 'label_rounds_end',
+						text = 'ROUNDS:',
+						x = label_mana.x,
+						y = label_mana.y - 20,
+						anchor_y = 'top',
+                  		color = (57, 255, 20, 255),
+                  		batch = end_batch)
+
+	rounds =  UILabel(name = 'rounds_end',
+						text = '6969',
+						x = mana.x,
+						y = label_rounds.y,
+						anchor_y = 'top',
+                  		color = (57, 255, 20, 255),
+                  		batch = end_batch)
+
+	world.add_widget(game_over)
+	world.add_label(player_end)
+	world.add_label(label_mana)
+	world.add_label(mana)
+	world.add_label(label_rounds)
+	world.add_label(rounds)
+
 #--- MAIN ----------------------------------------------------------------------------------------------------------------
 
 def main():
@@ -273,9 +320,8 @@ def main():
 	title_screen()
 	player_screen()
 	game_screen()
-	#end_screen()
+	end_screen()
 	game_window.push_handlers(world)
-
 	pyglet.clock.schedule_interval(update, 1/120.0)
 	pyglet.clock.set_fps_limit(120)
 	pyglet.app.run()

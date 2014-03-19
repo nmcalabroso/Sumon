@@ -2,22 +2,8 @@ from gameobject import GameObject
 from resources import Resources
 from cards import MoveCard
 from cards import WrestlerCard
+from sumo import Wrestler
 from random import randint
-from board import GameBoard
-
-class Wrestler(GameObject):
-	def __init__(self,title,sprite_color,name,*args,**kwargs):
-		super(Wrestler,self).__init__(name = name, 
-									img = Resources.sprites['no_sprite'],
-									*args,
-									**kwargs)
-		self.title = title
-		self.sprite_color = sprite_color
-		self.set_wrestler()
-
-	def set_wrestler(self):
-		self.image = Resources.sprites['wrestler_' + self.title + '_' + self.sprite_color]
-		self.weight,self.mana = Resources.stype[self.title.upper()]	
 
 class GameWorld(GameObject):
 	def __init__(self,*args,**kwargs):
@@ -40,9 +26,10 @@ class GameWorld(GameObject):
 		self.sequence = []
 		self.additional_mana1 = 0
 		self.additional_mana2 = 0
+		self.current_summon = None
+		self.virtual_list = []
 
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
-
 	def switch_to_player(self,batch):
 		#bg = self.find_widget('my_bg')
 		#bg.set_image(Resources.sprites['title_bg'])
@@ -61,8 +48,12 @@ class GameWorld(GameObject):
 		self.start_round = True
 
 	def switch_to_end(self):
-		pass
-
+		o = self.find_game_object('end_turn_button')
+		batch = o.batch
+		self.delete_widgets_by_batch(batch)
+		self.delete_labels_by_batch(batch)
+		self.game_state = Resources.state['END']
+		
 	# --- SETUP -------------------------------------------------------------------------------------------------------
 
 	def generate_cards(self, player):
@@ -251,6 +242,9 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+	def reset_virtual_list(self):
+		for tile in self.virtual_list:
+			tile.image = Resources.sprites['no_sprite']
 
 	def execute(self, action, board, player1, player2):
 		# print "====================="
@@ -267,8 +261,8 @@ class GameWorld(GameObject):
 			sumo = Wrestler(sprite_color = action_color, title = wrestler_type, name = 'Wrestler')
 			tile = board.my_grid[row][col]
 			tile.set_content(sumo)
-			tile.wrestler.x = tile.x+40
-			tile.wrestler.y = tile.y+40
+			tile.wrestler.x = tile.x
+			tile.wrestler.y = tile.y
 
 		elif action_type == 'move':
 			row = int(action[3])
@@ -311,8 +305,8 @@ class GameWorld(GameObject):
 
 			else:
 				tile.set_content(sumo)
-				tile.wrestler.x = tile.x+40
-				tile.wrestler.y = tile.y+40
+				tile.wrestler.x = tile.x
+				tile.wrestler.y = tile.y
 
 		# elif action_type == 'power':
 		# 	print "POWER"
@@ -348,7 +342,7 @@ class GameWorld(GameObject):
 		mana.text = player.get_mana_label()
 			
 	def update(self,dt): #game logic loop
-		# Tranisition states are for setting up the next state. SETUP is also a transition state.
+		# Transition states are for setting up the next state. SETUP is also a transition state.
 		# Use boolean self.start_round to execute once during any state.
 		# Player input should be in their respective classes.
 		# (e.g what to do when clicking a card should be seen in cards.py)
@@ -361,6 +355,7 @@ class GameWorld(GameObject):
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER1']:
 			if self.start_round:
+				self.virtual_list = []
 				self.round += 1
 				self.start_round = False
 				self.generate_cards('Player1')
@@ -373,6 +368,8 @@ class GameWorld(GameObject):
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER2']:
 			if self.start_round:
+				self.reset_virtual_list()
+				self.virtual_list = []
 				self.player_program.close()
 				self.start_round = False
 				self.generate_cards('Player2')
@@ -384,6 +381,7 @@ class GameWorld(GameObject):
 			self.start_round = True
 
 		elif self.game_state == Resources.state['TRANSITION_BOARD']:
+			self.reset_virtual_list()
 			self.player_program.close()
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
@@ -471,18 +469,17 @@ class GameWorld(GameObject):
 		elif self.game_state == Resources.state['EXECUTE']:
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
+
 			if player1.lives < 0:
-				self.game_state = Resources.state['END']
+				self.switch_to_end()
 				return
 
 			if player2.lives < 0:
-				self.game_state = Resources.state['END']
+				self.switch_to_end()
 				return
-
 
 			if self.sequence == []:
 				self.game_state = Resources.state['REPLENISH']
-
 			else:
 				player1 = self.find_game_object('Player1')
 				player2 = self.find_game_object('Player2')

@@ -11,6 +11,7 @@ class Card(GameObject):
 		self.mana = mana
 		self.active = True
 		self.clicked = False
+		self.type = None
 
 	def hit_test(self, x, y):
 		if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
@@ -38,6 +39,8 @@ class Card(GameObject):
 						self.world.player_program.write('blue ')
 						self.world.player_program.write(self.command)
 						
+						if self.type == "wrestler":
+							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
 						#prompt for player to input row and col
 						self.world.game_state = Resources.state['TILE1']
 
@@ -56,6 +59,9 @@ class Card(GameObject):
 						# write command to file
 						self.world.player_program.write('red ')
 						self.world.player_program.write(self.command)
+
+						if self.type == "wrestler":
+							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_red']
 						
 						#prompt for player to input row and col
 						self.world.game_state = Resources.state['TILE2']
@@ -96,3 +102,9 @@ class WrestlerCard(Card):
 		self.weight,self.mana = Resources.stype[self.title.upper()]
 		self.description = "Summons a "+self.title.upper()+" wrestler."
 
+	"""def on_mouse_press(self,x,y,button,modifiers):
+		super(WrestlerCard,self).on_mouse_press(x,y,button,modifiers)
+		if self.active and self.hit_test(x,y):
+			if self.world.game_state == Resources.state['PLAYER1']:
+				if not 
+			elif self.world.game_state == Resources.state['PLAYER2']:"""
