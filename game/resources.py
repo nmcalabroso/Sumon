@@ -97,8 +97,12 @@ class Resources:
 	sprites['card_reverse']			= center_image(image.load(join(res_path,'cards/reverse.jpg')))
 	sprites['card_swap']			= center_image(image.load(join(res_path,'cards/swap.jpg')))
 	sprites['card_takedown']		= center_image(image.load(join(res_path,'cards/takedown.jpg')))
-	sprites['card_move']			= center_image(image.load(join(res_path,'cards/move.jpg')))
-
+	# Move Cards
+	sprites['card_move_1']			= center_image(image.load(join(res_path,'cards/coh_move-1.jpg')))
+	sprites['card_move_2']			= center_image(image.load(join(res_path,'cards/coh_move-2.jpg')))
+	sprites['card_move_3']			= center_image(image.load(join(res_path,'cards/coh_move-3.jpg')))
+	sprites['card_move_4']			= center_image(image.load(join(res_path,'cards/coh_move-4.jpg')))
+	sprites['card_move_5']			= center_image(image.load(join(res_path,'cards/coh_move-5.jpg')))
 	# Wrestler Cards
 	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/coh_level1-blue.jpg')))
 	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/coh_level2-blue.jpg')))

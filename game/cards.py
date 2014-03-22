@@ -73,7 +73,7 @@ class MoveCard(Card):
 		super(MoveCard,self).__init__(title = "Move",
 									description = description,
 									mana = tile_count,
-									img = Resources.sprites['card_move'],
+									img = Resources.sprites['card_move_'+str(tile_count)],
 									*args,
 									**kwargs)
 		self.tile_count = tile_count
