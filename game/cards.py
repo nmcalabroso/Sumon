@@ -37,7 +37,8 @@ class Card(GameObject):
 
 						# write command to file
 						# self.world.player_program.write('blue ')
-						self.world.player_program.write(self.command)
+						# self.world.player_program.write(self.command)
+						self.world.commands1.append(self.command)
 						
 						if self.type == "wrestler":
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
@@ -59,7 +60,8 @@ class Card(GameObject):
 
 						# write command to file
 						# self.world.player_program.write('red ')
-						self.world.player_program.write(self.command)
+						# self.world.player_program.write(self.command)
+						self.world.commands2.append(self.command)
 
 						if self.type == "wrestler":
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_red']

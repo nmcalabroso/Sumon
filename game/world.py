@@ -24,6 +24,8 @@ class GameWorld(GameObject):
 		self.tile_clicked = False
 		self.program1 = []
 		self.program2 = []
+		self.commands1 = []
+		self.commands2 = []
 		self.sequence = []
 		self.additional_mana1 = 0
 		self.additional_mana2 = 0
@@ -438,7 +440,8 @@ class GameWorld(GameObject):
 				self.start_round = False
 				self.generate_cards('Player1')
 				self.change_player()
-				self.player_program = open("player1_program.txt", "w")
+				self.commands1 = []
+				self.commands2 = []
 				self.game_state = Resources.state['PLAYER1']
 
 		elif self.game_state == Resources.state['PLAYER1']:
@@ -448,11 +451,15 @@ class GameWorld(GameObject):
 			if self.start_round:
 				self.reset_virtual_list()
 				self.virtual_list = []
-				self.player_program.close()
 				self.start_round = False
 				self.generate_cards('Player2')
 				self.change_player()
-				self.player_program = open("player2_program.txt", "w")
+
+				self.player_program = open("player1_program.txt", "w")
+				for command in self.commands1:
+					self.player_program.write(command)
+				self.player_program.close()
+
 				self.game_state = Resources.state['PLAYER2']
 	
 		elif self.game_state == Resources.state['PLAYER2']:
@@ -460,11 +467,15 @@ class GameWorld(GameObject):
 
 		elif self.game_state == Resources.state['TRANSITION_BOARD']:
 			self.reset_virtual_list()
-			self.player_program.close()
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
 			player1.deactivate()
 			player2.deactivate()
+
+			self.player_program = open("player2_program.txt", "w")
+			for command in self.commands2:
+				self.player_program.write(command)
+			self.player_program.close()
 
 			label_player = self.find_label('player')
 			name = self.find_label('player_name')

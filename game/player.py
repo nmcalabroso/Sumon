@@ -4,7 +4,7 @@ class Player(GameObject):
 	def __init__(self,actual_name,name,*args,**kwargs):
 		super(Player,self).__init__(name = name,*args,**kwargs)
 		self.actual_name = actual_name 
-		self.lives = 50
+		self.lives = 20
 		self.mana = 10
 		self.cards = []
 		#self.power_cards = []
