@@ -249,11 +249,20 @@ class GameWorld(GameObject):
 		for tile in self.virtual_list:
 			tile.image = Resources.sprites['no_sprite']
 
+	def move_wrestler(self, tile, sumo):
+		tile.set_content(sumo)
+		tile.wrestler.x = tile.x
+		tile.wrestler.y = tile.y
+
 	def execute(self, action, board, player1, player2):
 		action_color = action[0]
 		action_type = action[1]
 		action_mana = int(action[2])
+		wrestler_list = []
+		total_weight = 0
 		lane_pass = 0
+		temp = None
+		wrestler = None
 
 		if action_type == 'summon':
 			wrestler_type = action[3]
@@ -275,39 +284,62 @@ class GameWorld(GameObject):
 			# get tile positions
 			if action_color == 'blue':
 				for i in range(1,action_mana+1):
+					wrestler_list = []
+					total_weight = 0
 					if row-i < 0:
 						# print "PASS"
 						lane_pass = 1
-						break
+						tile.remove_content()
+						player2.lives -= sumo.weight
+						return
+					
 					tile = board.my_grid[row-i][col]
 					if tile.wrestler != None:
-						# print "BLOCK"
-						tile = board.my_grid[row-i+1][col]
-						break
+						for j in range(action_mana-i+2):
+							temp = board.my_grid[row-i-j][col]
+							if temp.wrestler == None:
+								break
+							total_weight += temp.wrestler.weight
+							wrestler_list.append(temp.wrestler)
+							temp.remove_content()
+
+						if total_weight < sumo.weight: # move all forward by one tile
+							self.move_wrestler(tile,sumo)
+							j = 1
+							for wrestler in wrestler_list:
+								temp = board.my_grid[row-i-j][col]
+								self.move_wrestler(temp,wrestler)
+								j += 1
+
+						else: # stay in position
+							tile = board.my_grid[row-i+1][col]
+							self.move_wrestler(tile,sumo)
+							j = 0
+							for wrestler in wrestler_list:
+								temp = board.my_grid[row-i-j][col]
+								self.move_wrestler(temp,wrestler)
+								j += 1
+							return
 
 			else:
 				for i in range(1,action_mana+1):
 					if row+i > 7:
 						# print "PASS"
 						lane_pass = 2
-						break
+						tile.remove_content()
+						player1.lives -= sumo.weight
+						return
+
 					tile = board.my_grid[row+i][col]
 					if tile.wrestler != None:
 						# print "BLOCK"
 						tile = board.my_grid[row+i-1][col]
-						break
+						self.move_wrestler(tile,sumo)
+						return
 
-			if lane_pass > 0:
-				tile.remove_content()
-				if lane_pass == 1:
-					player2.lives -= sumo.weight
-				else:
-					player1.lives -= sumo.weight
 
-			else:
-				tile.set_content(sumo)
-				tile.wrestler.x = tile.x
-				tile.wrestler.y = tile.y
+			# if lane_pass == 0
+			self.move_wrestler(tile,sumo)
 
 		# elif action_type == 'power':
 		# 	print "POWER"
