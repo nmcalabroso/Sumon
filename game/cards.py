@@ -123,6 +123,6 @@ class SpecialCard(Card):
 
 	def set_card(self):
 		self.title = choice(Resources.special_cards)
-		self.image = Resources.sprites['card_'+self.title]
+		self.image = Resources.sprites['card_'+self.title.replace(" ","")]
 		self.mana,self.description = Resources.special_cards_det[self.title.upper()]
 		self.command = None #subject to syntax sync
