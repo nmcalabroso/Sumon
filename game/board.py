@@ -76,15 +76,15 @@ class Tile(GameObject):
 			#lprint "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
 			if self.world.game_state == Resources.state['TILE1']:
 				self.world.player_program.write(" " + str(self.row) + " " + str(self.col) + "\n")
-				self.world.game_state = Resources.state['PLAYER1']
 				self.image = self.world.current_summon
 				self.world.virtual_list.append(self)
+				self.world.game_state = Resources.state['PLAYER1']
 
 			elif self.world.game_state == Resources.state['TILE2']:
 				self.world.player_program.write(" " + str(self.row) + " " + str(self.col) + "\n")
-				self.world.game_state = Resources.state['PLAYER2']
 				self.image = self.world.current_summon
 				self.world.virtual_list.append(self)
+				self.world.game_state = Resources.state['PLAYER2']
 
 	def on_mouse_motion(self,x,y,dx,dy):
 		if self.hit_test(x,y):

@@ -19,7 +19,7 @@ class GameWorld(GameObject):
 		self.cursor_name = 'default_cursor'
 		self.focus = None
 		self.set_focus(None)
-		self.round = 1
+		self.round = 0
 		self.start_round = False
 		self.tile_clicked = False
 		self.program1 = []
@@ -31,6 +31,7 @@ class GameWorld(GameObject):
 		self.virtual_list = []
 
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
+
 	def switch_to_player(self,batch):
 		#bg = self.find_widget('my_bg')
 		#bg.set_image(Resources.sprites['title_bg'])
@@ -243,13 +244,12 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+	
 	def reset_virtual_list(self):
 		for tile in self.virtual_list:
 			tile.image = Resources.sprites['no_sprite']
 
 	def execute(self, action, board, player1, player2):
-		# print "====================="
-		# print action
 		action_color = action[0]
 		action_type = action[1]
 		action_mana = int(action[2])
@@ -276,24 +276,24 @@ class GameWorld(GameObject):
 			if action_color == 'blue':
 				for i in range(1,action_mana+1):
 					if row-i < 0:
-						print "PASS"
+						# print "PASS"
 						lane_pass = 1
 						break
 					tile = board.my_grid[row-i][col]
 					if tile.wrestler != None:
-						print "BLOCK"
+						# print "BLOCK"
 						tile = board.my_grid[row-i+1][col]
 						break
 
 			else:
 				for i in range(1,action_mana+1):
 					if row+i > 7:
-						print "PASS"
+						# print "PASS"
 						lane_pass = 2
 						break
 					tile = board.my_grid[row+i][col]
 					if tile.wrestler != None:
-						print "BLOCK"
+						# print "BLOCK"
 						tile = board.my_grid[row+i-1][col]
 						break
 
@@ -347,8 +347,8 @@ class GameWorld(GameObject):
 		# Use boolean self.start_round to execute once during any state.
 		# Player input should be in their respective classes.
 		# (e.g what to do when clicking a card should be seen in cards.py)
-
 		if self.game_state == Resources.state['SETUP']:
+			self.round+=1
 			self.start_round = True
 			self.program1 = []
 			self.program2 = []
@@ -361,8 +361,8 @@ class GameWorld(GameObject):
 				self.start_round = False
 				self.generate_cards('Player1')
 				self.change_player()
-				self.game_state = Resources.state['PLAYER1']
 				self.player_program = open("player1_program.txt", "w")
+				self.game_state = Resources.state['PLAYER1']
 
 		elif self.game_state == Resources.state['PLAYER1']:
 			self.start_round = True
@@ -375,8 +375,8 @@ class GameWorld(GameObject):
 				self.start_round = False
 				self.generate_cards('Player2')
 				self.change_player()
-				self.game_state = Resources.state['PLAYER2']
 				self.player_program = open("player2_program.txt", "w")
+				self.game_state = Resources.state['PLAYER2']
 	
 		elif self.game_state == Resources.state['PLAYER2']:
 			self.start_round = True
@@ -433,11 +433,13 @@ class GameWorld(GameObject):
 				if i < len(self.program1):
 					action1 = self.program1[i]
 					action1 = action1.split()
+					action1.insert(0, 'blue')
 
 				#get command from self.program2
 				if i < len(self.program2):
 					action2 = self.program2[i]
 					action2 = action2.split()
+					action2.insert(0, 'red')
 
 				# compare priorities and do both commands (assumes action1 and action2 are not null)
 				if action1 != None and action2 != None:
@@ -470,10 +472,11 @@ class GameWorld(GameObject):
 		elif self.game_state == Resources.state['EXECUTE']:
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
-			self.round+=1
+
 			if player1.lives <= 0 or player2.lives <=0:
 				self.switch_to_end()
 				return
+
 
 			if self.sequence == []:
 				self.game_state = Resources.state['REPLENISH']
@@ -495,7 +498,7 @@ class GameWorld(GameObject):
 		elif self.game_state == Resources.state['END']:
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
-			print "game_objects:",self.game_objects
+
 			print "GAME OVER!"
 			if player1.lives <= 0:
 				winner = player2.actual_name
@@ -504,10 +507,11 @@ class GameWorld(GameObject):
 				winner = player1.actual_name
 				mana_left = player1.get_mana_label()
 			
+			rounds = str(self.round-1)
+
 			print winner+" WINS!"
 			self.update_label("player_end",winner+" WINS!")
 			print "Mana left: "+mana_left
 			self.update_label("mana_end",mana_left)
-			print "Total Rounds: "+str(self.round)
-			self.update_label("rounds_end",str(self.round))
-
+			print "Total Rounds: "+rounds
+			self.update_label("rounds_end",rounds)
