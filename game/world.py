@@ -31,6 +31,7 @@ class GameWorld(GameObject):
 		self.virtual_list = []
 
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
+
 	def switch_to_player(self,batch):
 		#bg = self.find_widget('my_bg')
 		#bg.set_image(Resources.sprites['title_bg'])
@@ -243,13 +244,12 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+	
 	def reset_virtual_list(self):
 		for tile in self.virtual_list:
 			tile.image = Resources.sprites['no_sprite']
 
 	def execute(self, action, board, player1, player2):
-		# print "====================="
-		# print action
 		action_color = action[0]
 		action_type = action[1]
 		action_mana = int(action[2])
@@ -361,8 +361,8 @@ class GameWorld(GameObject):
 				self.start_round = False
 				self.generate_cards('Player1')
 				self.change_player()
-				self.game_state = Resources.state['PLAYER1']
 				self.player_program = open("player1_program.txt", "w")
+				self.game_state = Resources.state['PLAYER1']
 
 		elif self.game_state == Resources.state['PLAYER1']:
 			self.start_round = True
@@ -375,8 +375,8 @@ class GameWorld(GameObject):
 				self.start_round = False
 				self.generate_cards('Player2')
 				self.change_player()
-				self.game_state = Resources.state['PLAYER2']
 				self.player_program = open("player2_program.txt", "w")
+				self.game_state = Resources.state['PLAYER2']
 	
 		elif self.game_state == Resources.state['PLAYER2']:
 			self.start_round = True

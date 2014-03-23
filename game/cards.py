@@ -26,7 +26,7 @@ class Card(GameObject):
 			if self.world.game_state == Resources.state['PLAYER1']:
 				if not self.clicked:
 					player = self.world.find_game_object('Player1')
-					if player.mana > self.mana:
+					if player.mana >= self.mana:
 						# change labels
 						player.mana -= self.mana
 						mana = self.world.find_label('mana')
@@ -41,13 +41,14 @@ class Card(GameObject):
 						
 						if self.type == "wrestler":
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
+
 						#prompt for player to input row and col
 						self.world.game_state = Resources.state['TILE1']
 
 			elif self.world.game_state == Resources.state['PLAYER2']:
 				if not self.clicked:
 					player = self.world.find_game_object('Player2')
-					if player.mana > self.mana:
+					if player.mana >= self.mana:
 						# change labels
 						player.mana -= self.mana
 						mana = self.world.find_label('mana')
