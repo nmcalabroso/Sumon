@@ -36,7 +36,7 @@ class Card(GameObject):
 						self.x,self.y = Resources.card_pos2[len(self.world.program1)-1]
 
 						# write command to file
-						self.world.player_program.write('blue ')
+						# self.world.player_program.write('blue ')
 						self.world.player_program.write(self.command)
 						
 						if self.type == "wrestler":
@@ -58,7 +58,7 @@ class Card(GameObject):
 						self.x,self.y = Resources.card_pos2[len(self.world.program2)-1]
 
 						# write command to file
-						self.world.player_program.write('red ')
+						# self.world.player_program.write('red ')
 						self.world.player_program.write(self.command)
 
 						if self.type == "wrestler":
@@ -124,6 +124,6 @@ class SpecialCard(Card):
 
 	def set_card(self):
 		self.title = choice(Resources.special_cards)
-		self.image = Resources.sprites['card_'+self.title]
+		self.image = Resources.sprites['card_'+self.title.replace(" ","")]
 		self.mana,self.description = Resources.special_cards_det[self.title.upper()]
 		self.command = None #subject to syntax sync

@@ -276,24 +276,24 @@ class GameWorld(GameObject):
 			if action_color == 'blue':
 				for i in range(1,action_mana+1):
 					if row-i < 0:
-						print "PASS"
+						# print "PASS"
 						lane_pass = 1
 						break
 					tile = board.my_grid[row-i][col]
 					if tile.wrestler != None:
-						print "BLOCK"
+						# print "BLOCK"
 						tile = board.my_grid[row-i+1][col]
 						break
 
 			else:
 				for i in range(1,action_mana+1):
 					if row+i > 7:
-						print "PASS"
+						# print "PASS"
 						lane_pass = 2
 						break
 					tile = board.my_grid[row+i][col]
 					if tile.wrestler != None:
-						print "BLOCK"
+						# print "BLOCK"
 						tile = board.my_grid[row+i-1][col]
 						break
 
@@ -433,11 +433,13 @@ class GameWorld(GameObject):
 				if i < len(self.program1):
 					action1 = self.program1[i]
 					action1 = action1.split()
+					action1.insert(0, 'blue')
 
 				#get command from self.program2
 				if i < len(self.program2):
 					action2 = self.program2[i]
 					action2 = action2.split()
+					action2.insert(0, 'red')
 
 				# compare priorities and do both commands (assumes action1 and action2 are not null)
 				if action1 != None and action2 != None:
@@ -471,11 +473,11 @@ class GameWorld(GameObject):
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
 
-			if player1.lives < 0:
+			if player1.lives <= 0:
 				self.switch_to_end()
 				return
 
-			if player2.lives < 0:
+			if player2.lives <= 0:
 				self.switch_to_end()
 				return
 
