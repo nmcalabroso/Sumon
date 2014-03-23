@@ -270,9 +270,8 @@ class GameWorld(GameObject):
 			col = int(action[5])
 			sumo = Wrestler(sprite_color = action_color, title = wrestler_type, name = 'Wrestler')
 			tile = board.my_grid[row][col]
-			tile.set_content(sumo)
-			tile.wrestler.x = tile.x
-			tile.wrestler.y = tile.y
+			if tile.wrestler == None:
+				self.move_wrestler(tile, sumo)
 
 		elif action_type == 'move':
 			row = int(action[3])
@@ -306,23 +305,29 @@ class GameWorld(GameObject):
 							temp.remove_content()
 
 						if total_weight < sumo.weight: # move all forward by one tile
-							self.move_wrestler(tile,sumo)
+							if tile.wrestler == None:
+								self.move_wrestler(tile,sumo)
+
 							j = 1
 							for wrestler in wrestler_list:
 								if row-i-j < 0:
 									player2.lives -= wrestler.weight
 								else:
 									temp = board.my_grid[row-i-j][col]
-									self.move_wrestler(temp,wrestler)
+									if temp.wrestler == None:
+										self.move_wrestler(temp,wrestler)
 								j += 1
 
 						else: # stay in position
 							tile = board.my_grid[row-i+1][col]
-							self.move_wrestler(tile,sumo)
+							if tile.wrestler == None:
+								self.move_wrestler(tile,sumo)
+
 							j = 0
 							for wrestler in wrestler_list:
 								temp = board.my_grid[row-i-j][col]
-								self.move_wrestler(temp,wrestler)
+								if temp.wrestler == None:
+									self.move_wrestler(temp,wrestler)
 								j += 1
 							return
 
@@ -350,24 +355,31 @@ class GameWorld(GameObject):
 							temp.remove_content()
 
 						if total_weight < sumo.weight: # move all forward by one tile
-							self.move_wrestler(tile,sumo)
+							if tile.wrestler == None:
+								self.move_wrestler(tile,sumo)
+
 							j = 1
 							for wrestler in wrestler_list:
 								if row+i+j > 7:
 									player1.lives -= wrestler.weight
 								else:
 									temp = board.my_grid[row+i+j][col]
-									self.move_wrestler(temp,wrestler)
+									if temp.wrestler == None:
+										self.move_wrestler(temp,wrestler)
 								j += 1
 
 						else: # stay in position
 							tile = board.my_grid[row+i-1][col]
-							self.move_wrestler(tile,sumo)
+							if tile.wrestler == None:
+								self.move_wrestler(tile,sumo)
+
 							j = 0
 							for wrestler in wrestler_list:
 								temp = board.my_grid[row+i+j][col]
-								self.move_wrestler(temp,wrestler)
+								if temp.wrestler == None:
+									self.move_wrestler(temp,wrestler)
 								j += 1
+
 							return
 
 
