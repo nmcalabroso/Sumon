@@ -82,7 +82,7 @@ def title_screen():
 						world = world,
 						img = Resources.sprites['start_button'],
 						x = Resources.window_width*0.5,
-						y = Resources.window_height*0.5-100,
+						y = Resources.window_height*0.5-125,
 						batch = start_batch)
 	game_window.push_handlers(start_button)
 	world.add_widget(start_button)
