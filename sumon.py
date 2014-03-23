@@ -194,7 +194,7 @@ def game_screen():
 
 	label_lives =  UILabel(name = 'label_lives',
 						text = 'Lives: ',
-						x = hand_board.x+hand_board.width-150+2,
+						x = hand_board.x+hand_board.width-170,
 						y = hand_board.y+hand_board.height-2,
 						anchor_y = 'top',
                   		color = (57, 255, 20, 255),
@@ -202,8 +202,8 @@ def game_screen():
 
 	lives =  UILabel(name = 'lives',
 					text = player1.get_life_label(),
-					x = hand_board.x+hand_board.width-100+2,
-					y = hand_board.y+hand_board.height-2,
+					x = label_lives.x+55,
+					y = label_lives.y,
 					anchor_y = 'top',
                   	color = (57, 255, 20, 255),
                   	batch = game_batch)
