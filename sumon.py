@@ -274,7 +274,7 @@ def end_screen():
                   		batch = end_batch)
 
 	label_mana =  UILabel(name = 'label_mana_end',
-						text = 'MANA USED:',
+						text = 'MANA LEFT:',
 						x = player_end.x,
 						y = player_end.y - 20,
 						anchor_y = 'top',
