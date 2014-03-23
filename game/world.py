@@ -2,6 +2,7 @@ from gameobject import GameObject
 from resources import Resources
 from cards import MoveCard
 from cards import WrestlerCard
+from cards import SpecialCard
 from sumo import Wrestler
 from random import randint
 
@@ -64,7 +65,7 @@ class GameWorld(GameObject):
 			elif base>=41 and base<=80:
 				return MoveCard()
 			else:
-				return MoveCard() # change this to power card later
+				return SpecialCard()
 
 		player_title = player
 		player = self.find_game_object(player)

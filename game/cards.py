@@ -108,3 +108,21 @@ class WrestlerCard(Card):
 			if self.world.game_state == Resources.state['PLAYER1']:
 				if not 
 			elif self.world.game_state == Resources.state['PLAYER2']:"""
+
+class SpecialCard(Card):
+	def __init__(self,*args,**kwargs):
+		super(SpecialCard,self).__init__(title = "None",
+										description = "None",
+										mana = 0,
+										img = Resources.sprites['no_sprite'],
+										*args,
+										**kwargs)
+		self.set_card()
+		self.type = "special"
+		#self.command = None #subject to syntax sync
+
+	def set_card(self):
+		self.title = choice(Resources.special_cards)
+		self.image = Resources.sprites['card_'+self.title]
+		self.mana,self.description = Resources.special_cards_det[self.title.upper()]
+		self.command = None #subject to syntax sync

@@ -42,6 +42,17 @@ class Resources:
 			'YOKUZANA':(13,10)
 			} # sumo constants (weight,energy)
 
+	special_cards = ['avatar','fat up','hex','jump','kamikaze','reverse','swap','take down']
+	special_cards_det = {'AVATAR':(6,"Allied wrestler will become invulnerable to any enemy. This will last until the round ends."),
+						 'FAT UP':(3,"Increases weight of an allied wrestler by a random value between [0,5]"),
+						 'HEX':(7,"Turns an enemy wrestler in to an animal lowering its weight to 0."),
+						 'JUMP':(3,"Allied wrestler jumps and skips one tile within the lane."),
+						 'KAMIKAZE':(5, "Allied wrestler commits suicide while also killing all the adjacent enemy wrestlers."),
+						 'REVERSE':(4, "Reverses the current direction of any wrestler."),
+						 'SWAP':(7,"Swaps an allied wrestler with an enemy wrestler."),
+						 'TAKE DOWN':(4,"Disables all the power cards and moves applied to the enemy wrestler.")
+						}
+
 	card_priority = {
 					'summon':3,
 					'move':2,
@@ -89,14 +100,14 @@ class Resources:
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 	sprites['blocker']				= image.load(join(res_path,'blocker.png'))
 	# Ability Cards
-	sprites['card_avatar']			= center_image(image.load(join(res_path,'cards/avatar.jpg')))
-	sprites['card_fatup']			= center_image(image.load(join(res_path,'cards/fatup.jpg')))
-	sprites['card_hex']				= center_image(image.load(join(res_path,'cards/hex.jpg')))
-	sprites['card_jump']			= center_image(image.load(join(res_path,'cards/jump.jpg')))
-	sprites['card_kamikaze']		= center_image(image.load(join(res_path,'cards/kamikaze.jpg')))
-	sprites['card_reverse']			= center_image(image.load(join(res_path,'cards/reverse.jpg')))
-	sprites['card_swap']			= center_image(image.load(join(res_path,'cards/swap.jpg')))
-	sprites['card_takedown']		= center_image(image.load(join(res_path,'cards/takedown.jpg')))
+	sprites['card_avatar']			= center_image(image.load(join(res_path,'cards/coh_sp-avatar.jpg')))
+	sprites['card_fatup']			= center_image(image.load(join(res_path,'cards/coh_sp-fatup.jpg')))
+	sprites['card_hex']				= center_image(image.load(join(res_path,'cards/coh_sp-hex.jpg')))
+	sprites['card_jump']			= center_image(image.load(join(res_path,'cards/coh_sp-jump.jpg')))
+	sprites['card_kamikaze']		= center_image(image.load(join(res_path,'cards/coh_sp-kamikaze.jpg')))
+	sprites['card_reverse']			= center_image(image.load(join(res_path,'cards/coh_sp-reverse.jpg')))
+	sprites['card_swap']			= center_image(image.load(join(res_path,'cards/coh_sp-swap.jpg')))
+	sprites['card_takedown']		= center_image(image.load(join(res_path,'cards/coh_sp-takedown.jpg')))
 	# Move Cards
 	sprites['card_move_1']			= center_image(image.load(join(res_path,'cards/coh_move-1.jpg')))
 	sprites['card_move_2']			= center_image(image.load(join(res_path,'cards/coh_move-2.jpg')))
