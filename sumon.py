@@ -27,6 +27,9 @@ world = GameWorld() #instantiate the main world
 my_bg = Background(name = 'my_bg',
 					img =  Resources.sprites['title_bg'])
 
+music = Resources.audio['ost']
+music.play()
+
 @game_window.event
 def on_draw():
 	game_window.clear()
