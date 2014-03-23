@@ -296,6 +296,8 @@ class GameWorld(GameObject):
 					tile = board.my_grid[row-i][col]
 					if tile.wrestler != None:
 						for j in range(action_mana-i+2):
+							if row-i-j < 0:
+								break
 							temp = board.my_grid[row-i-j][col]
 							if temp.wrestler == None:
 								break
@@ -307,8 +309,11 @@ class GameWorld(GameObject):
 							self.move_wrestler(tile,sumo)
 							j = 1
 							for wrestler in wrestler_list:
-								temp = board.my_grid[row-i-j][col]
-								self.move_wrestler(temp,wrestler)
+								if row-i-j < 0:
+									player2.lives -= wrestler.weight
+								else:
+									temp = board.my_grid[row-i-j][col]
+									self.move_wrestler(temp,wrestler)
 								j += 1
 
 						else: # stay in position
@@ -335,6 +340,8 @@ class GameWorld(GameObject):
 					tile = board.my_grid[row+i][col]
 					if tile.wrestler != None:
 						for j in range(action_mana-i+2):
+							if row+i+j > 7:
+								break
 							temp = board.my_grid[row+i+j][col]
 							if temp.wrestler == None:
 								break
@@ -346,8 +353,11 @@ class GameWorld(GameObject):
 							self.move_wrestler(tile,sumo)
 							j = 1
 							for wrestler in wrestler_list:
-								temp = board.my_grid[row+i+j][col]
-								self.move_wrestler(temp,wrestler)
+								if row+i+j > 7:
+									player1.lives -= wrestler.weight
+								else:
+									temp = board.my_grid[row+i+j][col]
+									self.move_wrestler(temp,wrestler)
 								j += 1
 
 						else: # stay in position
@@ -359,7 +369,6 @@ class GameWorld(GameObject):
 								self.move_wrestler(temp,wrestler)
 								j += 1
 							return
-
 
 
 			# if lane_pass == 0
