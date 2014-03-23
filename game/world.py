@@ -323,6 +323,8 @@ class GameWorld(GameObject):
 
 			else:
 				for i in range(1,action_mana+1):
+					wrestler_list = []
+					total_weight = 0
 					if row+i > 7:
 						# print "PASS"
 						lane_pass = 2
@@ -332,10 +334,32 @@ class GameWorld(GameObject):
 
 					tile = board.my_grid[row+i][col]
 					if tile.wrestler != None:
-						# print "BLOCK"
-						tile = board.my_grid[row+i-1][col]
-						self.move_wrestler(tile,sumo)
-						return
+						for j in range(action_mana-i+2):
+							temp = board.my_grid[row+i+j][col]
+							if temp.wrestler == None:
+								break
+							total_weight += temp.wrestler.weight
+							wrestler_list.append(temp.wrestler)
+							temp.remove_content()
+
+						if total_weight < sumo.weight: # move all forward by one tile
+							self.move_wrestler(tile,sumo)
+							j = 1
+							for wrestler in wrestler_list:
+								temp = board.my_grid[row+i+j][col]
+								self.move_wrestler(temp,wrestler)
+								j += 1
+
+						else: # stay in position
+							tile = board.my_grid[row+i-1][col]
+							self.move_wrestler(tile,sumo)
+							j = 0
+							for wrestler in wrestler_list:
+								temp = board.my_grid[row+i+j][col]
+								self.move_wrestler(temp,wrestler)
+								j += 1
+							return
+
 
 
 			# if lane_pass == 0
