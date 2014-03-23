@@ -19,7 +19,7 @@ class GameWorld(GameObject):
 		self.cursor_name = 'default_cursor'
 		self.focus = None
 		self.set_focus(None)
-		self.round = 1
+		self.round = 0
 		self.start_round = False
 		self.tile_clicked = False
 		self.program1 = []
@@ -50,7 +50,7 @@ class GameWorld(GameObject):
 		self.start_round = True
 
 	def switch_to_end(self):
-		o = self.find_game_object('end_turn_button')
+		o = self.find_widget('end_turn_button')
 		batch = o.batch
 		self.delete_widgets_by_batch(batch)
 		self.delete_labels_by_batch(batch)
@@ -182,8 +182,8 @@ class GameWorld(GameObject):
 			label.delete()
 			self.labels.remove(label)
 
-	def update_label(self,text,newtext):
-		label = self.find_label(text)
+	def update_label(self,name,newtext):
+		label = self.find_label(name)
 		label.text = newtext
 
 	# --- SETUP: WIDGETS ----------------------------------------------------------------------------------------------
@@ -403,8 +403,8 @@ class GameWorld(GameObject):
 		# Use boolean self.start_round to execute once during any state.
 		# Player input should be in their respective classes.
 		# (e.g what to do when clicking a card should be seen in cards.py)
-
 		if self.game_state == Resources.state['SETUP']:
+			self.round+=1
 			self.start_round = True
 			self.program1 = []
 			self.program2 = []
@@ -529,13 +529,10 @@ class GameWorld(GameObject):
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
 
-			if player1.lives <= 0:
+			if player1.lives <= 0 or player2.lives <=0:
 				self.switch_to_end()
 				return
 
-			if player2.lives <= 0:
-				self.switch_to_end()
-				return
 
 			if self.sequence == []:
 				self.game_state = Resources.state['REPLENISH']
@@ -556,9 +553,21 @@ class GameWorld(GameObject):
 
 		elif self.game_state == Resources.state['END']:
 			player1 = self.find_game_object('Player1')
-			print "GAME OVER"
-			if player1.lives < 0:
-				print "PLAYER 2 WINS!!"
-			else:
-				print "PLAYER 1 WINS!!"	
+			player2 = self.find_game_object('Player2')
 
+			print "GAME OVER!"
+			if player1.lives <= 0:
+				winner = player2.actual_name
+				mana_left = player2.get_mana_label()
+			else:
+				winner = player1.actual_name
+				mana_left = player1.get_mana_label()
+			
+			rounds = str(self.round-1)
+
+			print winner+" WINS!"
+			self.update_label("player_end",winner+" WINS!")
+			print "Mana left: "+mana_left
+			self.update_label("mana_end",mana_left)
+			print "Total Rounds: "+rounds
+			self.update_label("rounds_end",rounds)

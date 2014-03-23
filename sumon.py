@@ -82,7 +82,7 @@ def title_screen():
 						world = world,
 						img = Resources.sprites['start_button'],
 						x = Resources.window_width*0.5,
-						y = Resources.window_height*0.5-100,
+						y = Resources.window_height*0.5-125,
 						batch = start_batch)
 	game_window.push_handlers(start_button)
 	world.add_widget(start_button)
@@ -274,7 +274,7 @@ def end_screen():
                   		batch = end_batch)
 
 	label_mana =  UILabel(name = 'label_mana_end',
-						text = 'MANA USED:',
+						text = 'MANA LEFT:',
 						x = player_end.x,
 						y = player_end.y - 20,
 						anchor_y = 'top',
