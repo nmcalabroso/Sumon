@@ -252,9 +252,10 @@ class GameWorld(GameObject):
 			tile.image = Resources.sprites['no_sprite']
 
 	def move_wrestler(self, tile, sumo):
-		tile.set_content(sumo)
-		tile.wrestler.x = tile.x
-		tile.wrestler.y = tile.y
+		if sumo != None:
+			tile.set_content(sumo)
+			tile.wrestler.x = tile.x
+			tile.wrestler.y = tile.y
 
 	def execute(self, action, board, player1, player2):
 		action_color = action[0]
@@ -262,7 +263,6 @@ class GameWorld(GameObject):
 		action_mana = int(action[2])
 		wrestler_list = []
 		total_weight = 0
-		lane_pass = 0
 		temp = None
 		wrestler = None
 
@@ -280,6 +280,8 @@ class GameWorld(GameObject):
 			col = int(action[4])
 			tile = board.my_grid[row][col]
 			sumo = tile.wrestler
+			if sumo == None:
+				pass
 			tile.remove_content()
 
 			# get tile positions
@@ -289,7 +291,6 @@ class GameWorld(GameObject):
 					total_weight = 0
 					if row-i < 0:
 						# print "PASS"
-						lane_pass = 1
 						tile.remove_content()
 						player2.lives -= sumo.weight
 						return
@@ -339,7 +340,6 @@ class GameWorld(GameObject):
 					total_weight = 0
 					if row+i > 7:
 						# print "PASS"
-						lane_pass = 2
 						tile.remove_content()
 						player1.lives -= sumo.weight
 						return
@@ -385,8 +385,8 @@ class GameWorld(GameObject):
 							return
 
 
-			# if lane_pass == 0
-			self.move_wrestler(tile,sumo)
+			if tile.wrestler == None:
+				self.move_wrestler(tile,sumo)
 
 		# elif action_type == 'power':
 		# 	print "POWER"
