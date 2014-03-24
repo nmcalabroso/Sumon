@@ -118,6 +118,7 @@ class Resources:
 	sprites['tile_glow']			= image.load(join(res_path,'tile_glow.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 	sprites['blocker']				= image.load(join(res_path,'blocker.png'))
+
 	# Ability Cards
 	sprites['card_avatar']			= center_image(image.load(join(res_path,'cards/coh_sp-avatar.jpg')))
 	sprites['card_fatup']			= center_image(image.load(join(res_path,'cards/coh_sp-fatup.jpg')))
@@ -127,12 +128,14 @@ class Resources:
 	sprites['card_reverse']			= center_image(image.load(join(res_path,'cards/coh_sp-reverse.jpg')))
 	sprites['card_swap']			= center_image(image.load(join(res_path,'cards/coh_sp-swap.jpg')))
 	sprites['card_takedown']		= center_image(image.load(join(res_path,'cards/coh_sp-takedown.jpg')))
+
 	# Move Cards
 	sprites['card_move_1']			= center_image(image.load(join(res_path,'cards/coh_move-1.jpg')))
 	sprites['card_move_2']			= center_image(image.load(join(res_path,'cards/coh_move-2.jpg')))
 	sprites['card_move_3']			= center_image(image.load(join(res_path,'cards/coh_move-3.jpg')))
 	sprites['card_move_4']			= center_image(image.load(join(res_path,'cards/coh_move-4.jpg')))
 	sprites['card_move_5']			= center_image(image.load(join(res_path,'cards/coh_move-5.jpg')))
+
 	# Wrestler Cards
 	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/coh_level1-blue.jpg')))
 	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/coh_level2-blue.jpg')))
@@ -147,19 +150,20 @@ class Resources:
 	sprites['card_yokuzana_red']		= center_image(image.load(join(res_path,'cards/coh_level5-red.jpg')))
 
 	# Wrestler Sprites
-	sprites['wrestler_jonokuchi_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
-	sprites['wrestler_komusubi_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
-	sprites['wrestler_sekiwake_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
-	sprites['wrestler_ozeki_blue']		= image.load(join(res_path,'wrestlers/sumo-blue.png'))
-	sprites['wrestler_yokuzana_blue']	= image.load(join(res_path,'wrestlers/sumo-blue.png'))
+	sprites['wrestler_jonokuchi_blue']	= image.load(join(res_path,'wrestlers/icon_level1-blue.png'))
+	sprites['wrestler_komusubi_blue']	= image.load(join(res_path,'wrestlers/icon_level2-blue.png'))
+	sprites['wrestler_sekiwake_blue']	= image.load(join(res_path,'wrestlers/icon_level3-blue.png'))
+	sprites['wrestler_ozeki_blue']		= image.load(join(res_path,'wrestlers/icon_level4-blue.png'))
+	sprites['wrestler_yokuzana_blue']	= image.load(join(res_path,'wrestlers/icon_level5-blue.png'))
 
-	sprites['wrestler_jonokuchi_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
-	sprites['wrestler_komusubi_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
-	sprites['wrestler_sekiwake_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
-	sprites['wrestler_ozeki_red']		= image.load(join(res_path,'wrestlers/sumo-red.png'))
-	sprites['wrestler_yokuzana_red']	= image.load(join(res_path,'wrestlers/sumo-red.png'))
+	sprites['wrestler_jonokuchi_red']	= image.load(join(res_path,'wrestlers/icon_level1-red.png'))
+	sprites['wrestler_komusubi_red']	= image.load(join(res_path,'wrestlers/icon_level2-red.png'))
+	sprites['wrestler_sekiwake_red']	= image.load(join(res_path,'wrestlers/icon_level3-red.png'))
+	sprites['wrestler_ozeki_red']		= image.load(join(res_path,'wrestlers/icon_level4-red.png'))
+	sprites['wrestler_yokuzana_red']	= image.load(join(res_path,'wrestlers/icon_level5-red.png'))
 
-
+	sprites['wrestler_temp_blue']		= image.load(join(res_path,'wrestlers/icon_hex-blue.png'))
+	sprites['wrestler_temp_red']		= image.load(join(res_path,'wrestlers/icon_hex-red.png'))
 
 
 

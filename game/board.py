@@ -73,7 +73,6 @@ class Tile(GameObject):
 
 	def on_mouse_press(self,x,y,button,modifiers):
 		if self.hit_test(x,y):
-			#lprint "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
 			if self.world.game_state == Resources.state['TILE1']:
 				command = self.world.commands1.pop(-1)
 				command = command + " " + str(self.row) + " " + str(self.col) + "\n"
