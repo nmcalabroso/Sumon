@@ -292,7 +292,6 @@ class GameWorld(GameObject):
 					wrestler_list = []
 					total_weight = 0
 					if row-i < 0:
-						# print "PASS"
 						tile.remove_content()
 						player2.lives -= sumo.weight
 						return
@@ -341,8 +340,9 @@ class GameWorld(GameObject):
 					wrestler_list = []
 					total_weight = 0
 					if row+i > 7:
-						# print "PASS"
+						print tile.row, tile.col
 						tile.remove_content()
+						print tile.wrestler
 						player1.lives -= sumo.weight
 						return
 
@@ -386,12 +386,10 @@ class GameWorld(GameObject):
 
 							return
 
-
 			if tile.wrestler == None:
 				self.move_wrestler(tile,sumo)
 
-		# elif action_type == 'power':
-		# 	print "POWER"
+		# elif action_type == 'special':
 
 		self.game_state = Resources.state['WAIT']
 
@@ -436,18 +434,17 @@ class GameWorld(GameObject):
 			self.game_state = Resources.state['TRANSITION_PLAYER1']
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER1']:
-			if self.start_round:
-				self.virtual_list = []
-				self.round += 1
-				self.start_round = False
-				self.generate_cards('Player1')
-				self.change_player()
-				self.commands1 = []
-				self.commands2 = []
-				self.game_state = Resources.state['PLAYER1']
+			self.virtual_list = []
+			self.round += 1
+			self.start_round = False
+			self.generate_cards('Player1')
+			self.change_player()
+			self.commands1 = []
+			self.commands2 = []
+			self.game_state = Resources.state['PLAYER1']
 
-		elif self.game_state == Resources.state['PLAYER1']:
-			self.start_round = True
+		# elif self.game_state == Resources.state['PLAYER1']:
+		# 	self.start_round = True
 
 		elif self.game_state == Resources.state['DELETE1']:
 			for i, card in enumerate(self.program1):
@@ -456,22 +453,21 @@ class GameWorld(GameObject):
 			self.game_state = Resources.state['PLAYER1']
 
 		elif self.game_state == Resources.state['TRANSITION_PLAYER2']:
-			if self.start_round:
-				self.reset_virtual_list()
-				self.virtual_list = []
-				self.start_round = False
-				self.generate_cards('Player2')
-				self.change_player()
+			self.reset_virtual_list()
+			self.virtual_list = []
+			self.start_round = False
+			self.generate_cards('Player2')
+			self.change_player()
 
-				self.player_program = open("player1_program.txt", "w")
-				for command in self.commands1:
-					self.player_program.write(command)
-				self.player_program.close()
+			self.player_program = open("player1_program.txt", "w")
+			for command in self.commands1:
+				self.player_program.write(command)
+			self.player_program.close()
 
-				self.game_state = Resources.state['PLAYER2']
+			self.game_state = Resources.state['PLAYER2']
 	
-		elif self.game_state == Resources.state['PLAYER2']:
-			self.start_round = True
+		# elif self.game_state == Resources.state['PLAYER2']:
+		# 	self.start_round = True
 
 		elif self.game_state == Resources.state['DELETE2']:
 			for i, card in enumerate(self.program2):
@@ -600,7 +596,7 @@ class GameWorld(GameObject):
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
 
-			print "GAME OVER!"
+			# print "GAME OVER!"
 			if player1.lives <= 0:
 				winner = player2.actual_name
 				mana_left = player2.get_mana_label()
@@ -610,9 +606,9 @@ class GameWorld(GameObject):
 			
 			rounds = str(self.round-1)
 
-			print winner+" WINS!"
+			# print winner+" WINS!"
 			self.update_label("player_end",winner+" WINS!")
-			print "Mana left: "+mana_left
+			# print "Mana left: "+mana_left
 			self.update_label("mana_end",mana_left)
-			print "Total Rounds: "+rounds
+			# print "Total Rounds: "+rounds
 			self.update_label("rounds_end",rounds)
