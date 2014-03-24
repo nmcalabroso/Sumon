@@ -22,15 +22,17 @@ class Resources:
 			'TRANSITION_PLAYER1':4,
 			'PLAYER1':5,
 			'TILE1':6,
-			'TRANSITION_PLAYER2':7,
-			'PLAYER2':8,
-			'TILE2':9,
-			'TRANSITION_BOARD':10,
-			'BOARD':11,
-			'EXECUTE':12,
-			'WAIT':13,
-			'REPLENISH':14,
-			'END':15
+			'DELETE1':7,
+			'TRANSITION_PLAYER2':8,
+			'PLAYER2':9,
+			'TILE2':10,
+			'DELETE2':11,
+			'TRANSITION_BOARD':12,
+			'BOARD':13,
+			'EXECUTE':14,
+			'WAIT':15,
+			'REPLENISH':16,
+			'END':17
 			}
 
 	player = {'RED':1,'BLUE':2} # player side
@@ -46,12 +48,23 @@ class Resources:
 	special_cards = ['avatar','fat up','hex','jump','kamikaze','reverse','swap','take down']
 	special_cards_det = {'AVATAR':(6,"Allied wrestler will become invulnerable to any enemy. This will last until the round ends."),
 						 'FAT UP':(3,"Increases weight of an allied wrestler by a random value between [0,5]"),
-						 'HEX':(7,"Turns an enemy wrestler in to an animal lowering its weight to 0."),
+						 'HEX':(7,"Turns an enemy wrestler into an animal, lowering its weight to 0."),
 						 'JUMP':(3,"Allied wrestler jumps and skips one tile within the lane."),
 						 'KAMIKAZE':(5, "Allied wrestler commits suicide while also killing all the adjacent enemy wrestlers."),
 						 'REVERSE':(4, "Reverses the current direction of any wrestler."),
 						 'SWAP':(7,"Swaps an allied wrestler with an enemy wrestler."),
 						 'TAKE DOWN':(4,"Disables all the power cards and moves applied to the enemy wrestler.")
+						}
+
+	# format: special <mana> <number of parameters> 
+	special_cards_comm = {'AVATAR':"special 6 1",
+						 'FAT UP':"special 3 1",
+						 'HEX':"special 7 1",
+						 'JUMP':"special 3 1",
+						 'KAMIKAZE':"special 5 1",
+						 'REVERSE':"special 4 1",
+						 'SWAP':"special 7 1",
+						 'TAKE DOWN':"special 4 1"
 						}
 
 	card_priority = {

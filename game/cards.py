@@ -18,49 +18,80 @@ class Card(GameObject):
 			if y > (self.y - self.height*0.5) and y < (self.y + (self.height*0.5)):
 				return True
 
-	def set_pos(self, row, col):
-		return (5+0*80,7+0*80)
-
 	def on_mouse_press(self, x, y, button, modifiers):
 		if self.active and self.hit_test(x,y):
 			if self.world.game_state == Resources.state['PLAYER1']:
+				# if not yet programmed
+				player = self.world.find_game_object('Player1')
 				if not self.clicked:
-					player = self.world.find_game_object('Player1')
 					if player.mana >= self.mana:
 						# change labels
 						player.mana -= self.mana
 						mana = self.world.find_label('mana')
 						mana.text = player.get_mana_label()
 						self.world.program1.append(self)
+
+						# update position tracker
+						for i, card in enumerate(player.cards):
+							if card == self:
+								player.card_pos[i] = 0
+								break
+
 						self.clicked = True
 						self.x,self.y = Resources.card_pos2[len(self.world.program1)-1]
 
 						# write command to file
-						# self.world.player_program.write('blue ')
-						# self.world.player_program.write(self.command)
 						self.world.commands1.append(self.command)
-						
+
 						if self.type == "wrestler":
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
 
 						#prompt for player to input row and col
 						self.world.game_state = Resources.state['TILE1']
 
+				# delete card from program and put back to player
+				elif self.clicked:
+					self.clicked = False
+					player.mana += self.mana
+					mana = self.world.find_label('mana')
+					mana.text = player.get_mana_label()
+
+					# delete from program
+					for i, card in enumerate(self.world.program1):
+						if card == self:
+							self.world.commands1.pop(i)
+							self.world.program1.pop(i)
+							break
+
+					# return deleted card to player
+					for i in range(len(player.cards)):
+						if player.card_pos[i] == 0:
+							player.card_pos[i] = 1
+							self.x, self.y = Resources.card_pos1[i]
+							break
+
+					self.world.game_state = Resources.state['DELETE1']
+
 			elif self.world.game_state == Resources.state['PLAYER2']:
+				player = self.world.find_game_object('Player2')
 				if not self.clicked:
-					player = self.world.find_game_object('Player2')
 					if player.mana >= self.mana:
 						# change labels
 						player.mana -= self.mana
 						mana = self.world.find_label('mana')
 						mana.text = player.get_mana_label()
 						self.world.program2.append(self)
+
+						# update position tracker
+						for i, card in enumerate(player.cards):
+							if card == self:
+								player.card_pos[i] = 0
+								break
+
 						self.clicked = True
 						self.x,self.y = Resources.card_pos2[len(self.world.program2)-1]
 
 						# write command to file
-						# self.world.player_program.write('red ')
-						# self.world.player_program.write(self.command)
 						self.world.commands2.append(self.command)
 
 						if self.type == "wrestler":
@@ -68,6 +99,30 @@ class Card(GameObject):
 						
 						#prompt for player to input row and col
 						self.world.game_state = Resources.state['TILE2']
+
+				# delete card from program and put back to player
+				elif self.clicked:
+					self.clicked = False
+					player.mana += self.mana
+					mana = self.world.find_label('mana')
+					mana.text = player.get_mana_label()
+
+					# delete from program
+					for i, card in enumerate(self.world.program2):
+						if card == self:
+							self.world.commands2.pop(i)
+							self.world.program2.pop(i)
+							break
+
+					# return deleted card to player
+					for i in range(len(player.cards)):
+						if player.card_pos[i] == 0:
+							player.card_pos[i] = 1
+							self.x, self.y = Resources.card_pos1[i]
+							break
+
+					self.world.game_state = Resources.state['DELETE2']
+
 
 class MoveCard(Card):
 	def __init__(self,*args,**kwargs):

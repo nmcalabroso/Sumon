@@ -82,6 +82,8 @@ class GameWorld(GameObject):
 				card.image = Resources.sprites['card_'+card.title+'_red']
 			player.add_card(card)
 
+		player.card_pos = [1]*10
+
 	def set_player_names(self):
 		p1 = self.find_game_object('Player1')
 		p1.actual_name = self.find_widget('text_p1').document.text
@@ -447,6 +449,12 @@ class GameWorld(GameObject):
 		elif self.game_state == Resources.state['PLAYER1']:
 			self.start_round = True
 
+		elif self.game_state == Resources.state['DELETE1']:
+			for i, card in enumerate(self.program1):
+				card.x, card.y = Resources.card_pos2[i]
+			
+			self.game_state = Resources.state['PLAYER1']
+
 		elif self.game_state == Resources.state['TRANSITION_PLAYER2']:
 			if self.start_round:
 				self.reset_virtual_list()
@@ -464,6 +472,12 @@ class GameWorld(GameObject):
 	
 		elif self.game_state == Resources.state['PLAYER2']:
 			self.start_round = True
+
+		elif self.game_state == Resources.state['DELETE2']:
+			for i, card in enumerate(self.program2):
+				card.x, card.y = Resources.card_pos2[i]
+			
+			self.game_state = Resources.state['PLAYER2']
 
 		elif self.game_state == Resources.state['TRANSITION_BOARD']:
 			self.reset_virtual_list()
@@ -564,7 +578,6 @@ class GameWorld(GameObject):
 			if player1.lives <= 0 or player2.lives <=0:
 				self.switch_to_end()
 				return
-
 
 			if self.sequence == []:
 				self.game_state = Resources.state['REPLENISH']

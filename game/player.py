@@ -7,11 +7,10 @@ class Player(GameObject):
 		self.lives = 20
 		self.mana = 10
 		self.cards = []
-		#self.power_cards = []
-		#self.sumo_cards = []
 		self.active = False
 		self.visible = True
 		self.opacity = 180
+		self.card_pos = []
 
 	def get_life_label(self):
 		return str(self.lives)

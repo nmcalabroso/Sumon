@@ -28,7 +28,7 @@ my_bg = Background(name = 'my_bg',
 					img =  Resources.sprites['title_bg'])
 
 music = Resources.audio['ost']
-music.play()
+# music.play()
 
 @game_window.event
 def on_draw():
