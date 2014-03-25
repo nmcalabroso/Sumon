@@ -1,4 +1,5 @@
 import pyglet
+from pyglet.media import Player as MediaPlayer
 from game.resources import Resources
 from game.world import GameWorld
 from game.board import GameBoard
@@ -30,11 +31,8 @@ end_batch = pyglet.graphics.Batch()
 # End of Batches
 
 world = GameWorld() #instantiate the main world
-my_bg = Background(name = 'my_bg',
-					img =  Resources.sprites['title_bg'])
-
-music = Resources.audio['ost']
-# music.play()
+my_bg = Background(name = 'my_bg',img =  Resources.sprites['title_bg'])
+mp = MediaPlayer()
 
 @game_window.event
 def on_draw():
@@ -84,6 +82,7 @@ def update(dt):
 #--- STATES ----------------------------------------------------------------------------------------------------------------
 
 def title_screen():
+	mp.queue(Resources.audio['title_bgm'])
 	start_button = Button(
 						name = 'start_button',
 						curr_state = 'START',
@@ -154,6 +153,7 @@ def player_screen():
 	world.add_widget(play_button)
 
 def game_screen():
+	mp.queue(Resources.audio['game_bgm'])
 	hand_board = MyRectangle(name = 'hand_board',curr_state = "GAME",opacity = 255, x = 650, y = 330, img = Resources.sprites['hand_board'],batch = game_batch)
 	prog_board = MyRectangle(name = 'prog_board',curr_state = "GAME",opacity = 255, x = 650, y = 5, img = Resources.sprites['programming_board'],batch = game_batch)
 
@@ -380,6 +380,7 @@ def end_screen():
 
 def main():
 	world.set_window(game_window)
+	world.set_media_player(mp)
 	world.add_widget(my_bg)
 	title_screen()
 	player_screen()

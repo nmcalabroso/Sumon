@@ -13,6 +13,7 @@ class GameWorld(GameObject):
 		self.game_objects = [] #gameobject pool
 		self.widgets = [] #gui pool
 		self.labels = [] #label pool
+		self.media = None
 		self.window = None #game window
 		self.active = True
 		self.visible = False
@@ -39,6 +40,7 @@ class GameWorld(GameObject):
 		#bg = self.find_widget('my_bg')
 		#bg.set_image(Resources.sprites['title_bg'])
 		self.delete_widgets_by_batch(batch)
+		#self.media.queue(Resources.audio['game_bgm'])
 		self.game_state = Resources.state['PLAYER']
 
 	def switch_to_game(self,batch):
@@ -50,6 +52,8 @@ class GameWorld(GameObject):
 		self.delete_labels_by_batch(batch)
 		#print "after:",self.labels
 		self.game_state = Resources.state['SETUP']
+		#self.media.queue(Resources.audio['game_bgm'])
+		self.media.next()
 		self.start_round = True
 
 	def switch_to_end(self):
@@ -104,6 +108,11 @@ class GameWorld(GameObject):
 		
 	def set_window(self,window):
 		self.window = window
+
+	def set_media_player(self,mp):
+		self.media = mp
+		self.media.volume = 0.75
+		self.media.play()
 
 	def set_focus(self,focus):
 		if self.focus:
@@ -260,6 +269,8 @@ class GameWorld(GameObject):
 	def normal_phase(self):
 		bg = self.find_widget('prog_board')
 		bg.set_image(Resources.sprites['programming_board'])
+		terminal = self.find_widget('terminal')
+		terminal.clear()
 
 	def programming_phase(self):
 		bg = self.find_widget('prog_board')
