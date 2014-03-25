@@ -254,6 +254,7 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+
 	def normal_phase(self):
 		bg = self.find_widget('prog_board')
 		bg.set_image(Resources.sprites['programming_board'])
@@ -286,12 +287,12 @@ class GameWorld(GameObject):
 
 		if function == 'summon':
 			wrestler_type = action[2]
-			# if color == "blue":
-			# 	row = 7
-			# elif color == "red":
-			# 	row = 0
-			row = int(action[3])
-			col = int(action[4])
+			if color == "blue":
+				row = 7
+			elif color == "red":
+				row = 0
+			# row = int(action[3])
+			col = int(action[3])
 			sumo = Wrestler(sprite_color = color, title = wrestler_type, name = 'Wrestler')
 			tile = board.my_grid[row][col]
 			if tile.wrestler == None:
@@ -548,8 +549,8 @@ class GameWorld(GameObject):
 		mana.text = player.get_mana_label()
 			
 	def update(self,dt): #game logic loop
+
 		# Transition states are for setting up the next state. SETUP is also a transition state.
-		# Use boolean self.start_round to execute once during any state.
 		# Player input should be in their respective classes.
 		# (e.g what to do when clicking a card should be seen in cards.py)
 
