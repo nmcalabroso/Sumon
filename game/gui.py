@@ -20,6 +20,7 @@ class Button(UIObject):
         self.name = name
         self.hand_cursor = world.window.get_system_mouse_cursor('hand')
         self.target_game_state = target_state
+        self.fx = Resources.audio['button']
 
     def hit_test(self,x,y):
         if x > (self.x - (self.width*0.5)) and x < (self.x + (self.width*0.5)):
@@ -31,6 +32,7 @@ class Button(UIObject):
             if button == mouse.LEFT:
                 if self.hit_test(x,y):
                     # print "Button: Proceeding to",self.target_game_state,"STATE."
+                    self.fx.play()
                     if self.target_game_state == 'PLAYER':
                         self.world.switch_to_player(self.batch)
                     elif self.target_game_state == 'SETUP':
@@ -254,6 +256,10 @@ class Terminal(UIObject):
         txt = name+"@sumon:"+msg+"\n"
         self.doc.insert_text(-1,txt)
         self.layout.view_y = -self.layout.content_height
+
+    def clear(self):
+        text = 'admin@sumon:Start Round'+"\n"+"\n"
+        self.doc.text = text
 
 class ReturnButton(UIObject):
     def __init__(self,name,curr_state,world,*args,**kwargs):
