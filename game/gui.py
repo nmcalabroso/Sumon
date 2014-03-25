@@ -313,11 +313,7 @@ class ReturnButton(UIObject):
                 return False
 
         elif words[0] == 'special':
-            print words
-            print words[1]
-            print words[1] == 'swap'
             if words[1] == 'swap':
-                print "here"
                 if len(words) != 6:
                     return False
 
@@ -342,18 +338,20 @@ class ReturnButton(UIObject):
                 words = textx.document.text.split(" ")
                 if not (len(textx.document.text) > 0 and self.correct_syntax(words)):
                     terminal.add_message("admin","Syntax or Semantic Error")
-
-                mana_cost = self.get_mana_cost(words)
-                if mana_cost <= player1.mana:
-                    player1.mana -= mana_cost
-                    mana = self.world.find_label('mana')
-                    mana.text = player1.get_mana_label()
-                    self.world.commands1.append(textx.document.text + "\n")
-                    terminal.add_message(player1.actual_name,textx.document.text)
-                    textx.document.text = ""
+                    pass
 
                 else:
-                    terminal.add_message("admin","Syntax or Semantic Error")
+                    mana_cost = self.get_mana_cost(words)
+                    if mana_cost <= player1.mana:
+                        player1.mana -= mana_cost
+                        mana = self.world.find_label('mana')
+                        mana.text = player1.get_mana_label()
+                        self.world.commands1.append(textx.document.text + "\n")
+                        terminal.add_message(player1.actual_name,textx.document.text)
+                        textx.document.text = ""
+
+                    else:
+                        terminal.add_message("admin","Syntax or Semantic Error")
 
             elif self.world.game_state == Resources.state['PROGRAMMING2']:
                 terminal = self.world.find_widget('terminal')
@@ -363,19 +361,20 @@ class ReturnButton(UIObject):
                 words = textx.document.text.split(" ")
                 if not (len(textx.document.text) > 0 and self.correct_syntax(words)):
                     terminal.add_message("admin","Syntax or Semantic Error")
-
-                mana_cost = self.get_mana_cost(words)
-
-                if mana_cost <= player2.mana:
-                    player2.mana -= mana_cost
-                    mana = self.world.find_label('mana')
-                    mana.text = player2.get_mana_label()
-                    self.world.commands2.append(textx.document.text + "\n")
-                    terminal.add_message(player2.actual_name,textx.document.text)
-                    textx.document.text = ""
+                    pass
 
                 else:
-                    terminal.add_message("admin","Syntax or Semantic Error")
+                    mana_cost = self.get_mana_cost(words)
+                    if mana_cost <= player2.mana:
+                        player2.mana -= mana_cost
+                        mana = self.world.find_label('mana')
+                        mana.text = player2.get_mana_label()
+                        self.world.commands2.append(textx.document.text + "\n")
+                        terminal.add_message(player2.actual_name,textx.document.text)
+                        textx.document.text = ""
+
+                    else:
+                        terminal.add_message("admin","Syntax or Semantic Error")
                 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
