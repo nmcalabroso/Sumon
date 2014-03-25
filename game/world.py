@@ -268,7 +268,7 @@ class GameWorld(GameObject):
 		wrestler = None
 
 		if function == 'summon':
-			wrestler_type = action[2].lower()
+			wrestler_type = action[2]
 			row = int(action[3])
 			col = int(action[4])
 			sumo = Wrestler(sprite_color = color, title = wrestler_type, name = 'Wrestler')
@@ -387,7 +387,26 @@ class GameWorld(GameObject):
 			if tile.wrestler == None:
 				self.move_wrestler(tile,sumo)
 
-		# elif function == 'special':
+		elif function == 'special':
+			special_type = action[2]
+			row = int(action[3])
+			col = int(action[4])
+
+			if special_type == 'jump':
+				tile = board.my_grid[row][col]
+
+				if color == 'blue':
+					jump_to = board.my_grid[row-2][col]
+
+				elif color == 'red':
+					jump_to = board.my_grid[row+2][col]
+
+				if jump_to.wrestler == None:
+					sumo = tile.wrestler
+					tile.remove_content()
+					self.move_wrestler(jump_to,sumo)
+
+
 
 		self.game_state = Resources.state['WAIT']
 
