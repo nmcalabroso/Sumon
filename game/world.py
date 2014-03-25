@@ -273,6 +273,10 @@ class GameWorld(GameObject):
 
 		if function == 'summon':
 			wrestler_type = action[2]
+			# if color == "blue":
+			# 	row = 7
+			# elif color == "red":
+			# 	row = 0
 			row = int(action[3])
 			col = int(action[4])
 			sumo = Wrestler(sprite_color = color, title = wrestler_type, name = 'Wrestler')
