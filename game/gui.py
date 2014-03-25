@@ -286,10 +286,8 @@ class ReturnButton(UIObject):
             return Resources.stype[words[1].upper()][1]
         elif words[0] == 'move':
             return int(words[1])
-            print mana_cost
         elif words[0] == 'special':
             return Resources.special_cards_det[words[1].upper()][0]
-
         return 0
 
     def correct_syntax(self, words):
@@ -337,9 +335,7 @@ class ReturnButton(UIObject):
 
                 words = textx.document.text.split(" ")
                 if not (len(textx.document.text) > 0 and self.correct_syntax(words)):
-                    terminal.add_message("admin","Syntax or Semantic Error")
-                    pass
-
+                    terminal.add_message("admin","Syntax Error")
                 else:
                     mana_cost = self.get_mana_cost(words)
                     if mana_cost <= player1.mana:
@@ -349,9 +345,8 @@ class ReturnButton(UIObject):
                         self.world.commands1.append(textx.document.text + "\n")
                         terminal.add_message(player1.actual_name,textx.document.text)
                         textx.document.text = ""
-
                     else:
-                        terminal.add_message("admin","Syntax or Semantic Error")
+                        terminal.add_message("admin","Not enough mana")
 
             elif self.world.game_state == Resources.state['PROGRAMMING2']:
                 terminal = self.world.find_widget('terminal')
@@ -360,9 +355,7 @@ class ReturnButton(UIObject):
 
                 words = textx.document.text.split(" ")
                 if not (len(textx.document.text) > 0 and self.correct_syntax(words)):
-                    terminal.add_message("admin","Syntax or Semantic Error")
-                    pass
-
+                    terminal.add_message("admin","Syntax Error")
                 else:
                     mana_cost = self.get_mana_cost(words)
                     if mana_cost <= player2.mana:
@@ -372,9 +365,8 @@ class ReturnButton(UIObject):
                         self.world.commands2.append(textx.document.text + "\n")
                         terminal.add_message(player2.actual_name,textx.document.text)
                         textx.document.text = ""
-
                     else:
-                        terminal.add_message("admin","Syntax or Semantic Error")
+                        terminal.add_message("admin","Not enough mana")
                 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
