@@ -335,6 +335,8 @@ def end_screen():
 						y = game_over.y - 35,
 						anchor_y = 'top',
                   		color = (57, 255, 20, 255),
+                  		bold = True,
+                  		font_size = 15.0,
                   		batch = end_batch)
 
 	label_mana =  UILabel(name = 'label_mana_end',

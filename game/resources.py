@@ -92,6 +92,8 @@ class Resources:
 	audio['title_bgm']				= media.load(join(sfx_path,'title_bgm.mp3'))
 	audio['game_bgm']				= media.load(join(sfx_path,'game_bgm.mp3'))
 	audio['button']					= media.load(join(sfx_path,'button.wav'),streaming = False)
+	audio['button2']				= media.load(join(sfx_path,'button2.wav'),streaming = False)
+	audio['glass']					= media.load(join(sfx_path,'glass.mp3'),streaming = False)
 
 	sprites = {}
 	res_path = './assets/img'

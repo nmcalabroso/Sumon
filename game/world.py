@@ -54,6 +54,7 @@ class GameWorld(GameObject):
 		self.game_state = Resources.state['SETUP']
 		#self.media.queue(Resources.audio['game_bgm'])
 		self.media.next()
+		self.media.eos_action = self.media.EOS_LOOP
 		self.start_round = True
 
 	def switch_to_end(self):
