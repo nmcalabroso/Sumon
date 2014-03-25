@@ -66,11 +66,10 @@ def on_draw():
 						if obj.my_grid[i][j].wrestler != None:
 							obj.my_grid[i][j].wrestler.draw()
 
-						if world.game_state == Resources.state['TILE1'] or world.game_state == Resources.state['TILE2']:
-							if obj.my_grid[i][j].glow is True:
-								g = world.find_widget('glow')
-								g.set_position(obj.my_grid[i][j].x,obj.my_grid[i][j].y)
-								g.draw()
+						if obj.my_grid[i][j].glow is True:
+							g = world.find_widget('glow')
+							g.set_position(obj.my_grid[i][j].x,obj.my_grid[i][j].y)
+							g.draw()
 
 		if world.game_state == Resources.state['TILE1'] or world.game_state == Resources.state['TILE2']:
 			b = world.find_widget('blocker')
