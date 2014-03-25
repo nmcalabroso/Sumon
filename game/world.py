@@ -413,6 +413,7 @@ class GameWorld(GameObject):
 				self.move_wrestler(tile,sumo)
 
 		elif function == 'special':
+			original_color = color
 			special_type = action[2]
 			row = int(action[3])
 			col = int(action[4])
@@ -460,7 +461,7 @@ class GameWorld(GameObject):
 					tile = board.my_grid[row+1][col]
 
 				sumo = tile.wrestler
-				if sumo != None and not sumo.avatar:
+				if sumo != None and not sumo.avatar and sumo.sprite_color != original_color:
 					sumo.weight = 0
 
 			elif special_type == 'reverse':
@@ -475,22 +476,22 @@ class GameWorld(GameObject):
 
 				tile = board.my_grid[row+1][col]
 				sumo = tile.wrestler
-				if row+1 in range(8) and sumo != None and sumo.sprite_color != color:
+				if row+1 in range(8) and sumo != None and sumo.sprite_color != original_color:
 					tile.remove_content()
 
 				tile = board.my_grid[row-1][col]
 				sumo = tile.wrestler
-				if row-1 in range(8) and sumo != None and sumo.sprite_color != color:
+				if row-1 in range(8) and sumo != None and sumo.sprite_color != original_color:
 					tile.remove_content()
 
 				tile = board.my_grid[row][col+1]
 				sumo = tile.wrestler
-				if col+1 in range(8) and sumo != None and sumo.sprite_color != color:
+				if col+1 in range(8) and sumo != None and sumo.sprite_color != original_color:
 					tile.remove_content()
 
 				tile = board.my_grid[row][col-1]
 				sumo = tile.wrestler
-				if col-1 in range(8) and sumo != None and sumo.sprite_color != color:
+				if col-1 in range(8) and sumo != None and sumo.sprite_color != original_color:
 					tile.remove_content()
 
 
