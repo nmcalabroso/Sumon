@@ -62,10 +62,12 @@ class EndTurnButton(UIObject):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['end_turn_button2']
             
-            if self.world.game_state == Resources.state['PLAYER1']:
+            if self.world.game_state == Resources.state['PLAYER1'] or self.world.game_state == Resources.state['PROGRAMMING1']:
+                self.world.normal_phase()
                 self.world.game_state = Resources.state['TRANSITION_PLAYER2']
                 
-            elif self.world.game_state == Resources.state['PLAYER2']:
+            elif self.world.game_state == Resources.state['PLAYER2'] or self.world.game_state == Resources.state['PROGRAMMING2']:
+                self.world.normal_phase()
                 self.world.game_state = Resources.state['TRANSITION_BOARD']
 
             elif self.world.game_state == Resources.state['WAIT']:
@@ -234,9 +236,9 @@ class Terminal(UIObject):
                                             *args,
                                             **kwargs)
         self.name = name
-        self.opacity = 150
+        self.opacity = 0
         #self.doc = pyglet.text.decode_text('player@sumon: Start Round'.ljust(50))
-        text = 'player@sumon:Start Round'+"\n"+"\n"
+        text = 'admin@sumon:Start Round'+"\n"+"\n"
         self.doc = pyglet.text.document.UnformattedDocument(text)
         self.doc.set_style(0,len(self.doc.text),dict(color=(57, 255, 20, 255)))
 
@@ -248,8 +250,8 @@ class Terminal(UIObject):
 
         self.layout.x,self.layout.y = self.x,self.y
 
-    def add_message(self,msg):
-        txt = "player@sumon:"+msg+"\n"
+    def add_message(self,name,msg):
+        txt = name+"@sumon:"+msg+"\n"
         self.doc.insert_text(-1,txt)
         self.layout.view_y = -self.layout.content_height
 
@@ -275,16 +277,18 @@ class ReturnButton(UIObject):
             
             if self.world.game_state == Resources.state['PROGRAMMING1']:
                 terminal = self.world.find_widget('terminal')
+                player1 = self.world.find_game_object('Player1')
                 textx = self.world.find_widget('line_widget_1')
                 self.world.commands1.append(textx.document.text)
-                terminal.add_message(textx.document.text)
+                terminal.add_message(player1.actual_name,textx.document.text)
                 textx.document.text = ""
 
             elif self.world.game_state == Resources.state['PROGRAMMING2']:
                 terminal = self.world.find_widget('terminal')
+                player2 = self.world.find_game_object('Player2')
                 textx = self.world.find_widget('line_widget_2')
                 self.world.commands2.append(textx.document.text)
-                terminal.add_message(textx.document.text)
+                terminal.add_message(player2.actual_name,textx.document.text)
                 textx.document.text = ""
                 
     def on_mouse_release(self,x,y,button,modifiers):

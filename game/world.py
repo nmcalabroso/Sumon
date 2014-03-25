@@ -90,6 +90,12 @@ class GameWorld(GameObject):
 		p2 = self.find_game_object('Player2')
 		p2.actual_name = self.find_widget('text_p2').document.text
 
+		if len(p1.actual_name) == 0:
+			p1.actual_name = "PlayerX"
+
+		if len(p2.actual_name) == 0:
+			p2.actual_name = "PlayerY"
+
 		print "Player Names:"
 		print "Player1:",p1.actual_name
 		print "Player2:",p2.actual_name
@@ -248,6 +254,9 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+	def normal_phase(self):
+		bg = self.find_widget('prog_board')
+		bg.set_image(Resources.sprites['programming_board'])
 
 	def programming_phase(self):
 		bg = self.find_widget('prog_board')
@@ -420,6 +429,8 @@ class GameWorld(GameObject):
 			new_row = 0
 			tile = board.my_grid[row][col]
 			sumo = tile.wrestler
+			if sumo == None:
+				return
 
 			if sumo.reverse:
 				if color == "blue":
