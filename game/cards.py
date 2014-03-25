@@ -64,8 +64,16 @@ class Card(GameObject):
 					# delete from program
 					for i, card in enumerate(self.world.program1):
 						if card == self:
-							self.world.commands1.pop(i)
+							command = self.world.commands1.pop(i)
 							self.world.program1.pop(i)
+
+							words = command.split(" ")
+							if words[0] == "summon":
+								col = int(words[2])
+								board = self.world.find_game_object('game_board')
+								tile = board.my_grid[7][col]
+								tile.image = Resources.sprites['no_sprite']
+
 							break
 
 					# return deleted card to player
@@ -120,8 +128,15 @@ class Card(GameObject):
 					# delete from program
 					for i, card in enumerate(self.world.program2):
 						if card == self:
-							self.world.commands2.pop(i)
+							command = self.world.commands2.pop(i)
 							self.world.program2.pop(i)
+
+							words = command.split(" ")
+							if words[0] == "summon":
+								col = int(words[2])
+								board = self.world.find_game_object('game_board')
+								tile = board.my_grid[0][col]
+								tile.image = Resources.sprites['no_sprite']
 							break
 
 					# return deleted card to player
