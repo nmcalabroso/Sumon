@@ -426,6 +426,7 @@ class GameWorld(GameObject):
 		# Use boolean self.start_round to execute once during any state.
 		# Player input should be in their respective classes.
 		# (e.g what to do when clicking a card should be seen in cards.py)
+		
 		if self.game_state == Resources.state['SETUP']:
 			self.round+=1
 			self.start_round = True
