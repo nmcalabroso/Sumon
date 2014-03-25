@@ -470,6 +470,30 @@ class GameWorld(GameObject):
 			elif special_type == 'avatar':
 				sumo.avatar = True
 
+			elif special_type == 'kamikaze':
+				tile.remove_content()
+
+				tile = board.my_grid[row+1][col]
+				sumo = tile.wrestler
+				if row+1 in range(8) and sumo != None and sumo.sprite_color != color:
+					tile.remove_content()
+
+				tile = board.my_grid[row-1][col]
+				sumo = tile.wrestler
+				if row-1 in range(8) and sumo != None and sumo.sprite_color != color:
+					tile.remove_content()
+
+				tile = board.my_grid[row][col+1]
+				sumo = tile.wrestler
+				if col+1 in range(8) and sumo != None and sumo.sprite_color != color:
+					tile.remove_content()
+
+				tile = board.my_grid[row][col-1]
+				sumo = tile.wrestler
+				if col-1 in range(8) and sumo != None and sumo.sprite_color != color:
+					tile.remove_content()
+
+
 		self.game_state = Resources.state['WAIT']
 
 	def on_mouse_motion(self,x,y,dx,dy):
