@@ -123,7 +123,6 @@ class Card(GameObject):
 
 					self.world.game_state = Resources.state['DELETE2']
 
-
 class MoveCard(Card):
 	def __init__(self,*args,**kwargs):
 		tile_count = randint(1,5)
@@ -152,7 +151,7 @@ class WrestlerCard(Card):
 										**kwargs)
 		self.set_card()
 		self.type = 'wrestler'
-		self.command = "summon " + str(self.mana) + ' ' + self.title
+		self.command = "summon " + self.title
 
 	def set_card(self):
 		self.title = choice(Resources.wrestlers)

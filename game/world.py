@@ -260,24 +260,24 @@ class GameWorld(GameObject):
 			tile.wrestler.y = tile.y
 
 	def execute(self, action, board, player1, player2):
-		action_color = action[0]
-		action_type = action[1]
-		action_mana = int(action[2])
+		color = action[0]
+		function = action[1]
 		wrestler_list = []
 		total_weight = 0
 		temp = None
 		wrestler = None
 
-		if action_type == 'summon':
-			wrestler_type = action[3]
-			row = int(action[4])
-			col = int(action[5])
-			sumo = Wrestler(sprite_color = action_color, title = wrestler_type, name = 'Wrestler')
+		if function == 'summon':
+			wrestler_type = action[2].lower()
+			row = int(action[3])
+			col = int(action[4])
+			sumo = Wrestler(sprite_color = color, title = wrestler_type, name = 'Wrestler')
 			tile = board.my_grid[row][col]
 			if tile.wrestler == None:
 				self.move_wrestler(tile, sumo)
 
-		elif action_type == 'move':
+		elif function == 'move':
+			mana = int(action[2])
 			row = int(action[3])
 			col = int(action[4])
 			tile = board.my_grid[row][col]
@@ -287,8 +287,8 @@ class GameWorld(GameObject):
 			tile.remove_content()
 
 			# get tile positions
-			if action_color == 'blue':
-				for i in range(1,action_mana+1):
+			if color == 'blue':
+				for i in range(1,mana+1):
 					wrestler_list = []
 					total_weight = 0
 					if row-i < 0:
@@ -298,7 +298,7 @@ class GameWorld(GameObject):
 					
 					tile = board.my_grid[row-i][col]
 					if tile.wrestler != None:
-						for j in range(action_mana-i+2):
+						for j in range(mana-i+2):
 							if row-i-j < 0:
 								break
 							temp = board.my_grid[row-i-j][col]
@@ -336,19 +336,17 @@ class GameWorld(GameObject):
 							return
 
 			else:
-				for i in range(1,action_mana+1):
+				for i in range(1,mana+1):
 					wrestler_list = []
 					total_weight = 0
 					if row+i > 7:
-						print tile.row, tile.col
 						tile.remove_content()
-						print tile.wrestler
 						player1.lives -= sumo.weight
 						return
 
 					tile = board.my_grid[row+i][col]
 					if tile.wrestler != None:
-						for j in range(action_mana-i+2):
+						for j in range(mana-i+2):
 							if row+i+j > 7:
 								break
 							temp = board.my_grid[row+i+j][col]
@@ -389,7 +387,7 @@ class GameWorld(GameObject):
 			if tile.wrestler == None:
 				self.move_wrestler(tile,sumo)
 
-		# elif action_type == 'special':
+		# elif function == 'special':
 
 		self.game_state = Resources.state['WAIT']
 
@@ -426,7 +424,7 @@ class GameWorld(GameObject):
 		# Use boolean self.start_round to execute once during any state.
 		# Player input should be in their respective classes.
 		# (e.g what to do when clicking a card should be seen in cards.py)
-		
+
 		if self.game_state == Resources.state['SETUP']:
 			self.round+=1
 			self.start_round = True
