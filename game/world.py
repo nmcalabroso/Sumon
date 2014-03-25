@@ -254,6 +254,9 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+	def normal_phase(self):
+		bg = self.find_widget('prog_board')
+		bg.set_image(Resources.sprites['programming_board'])
 
 	def programming_phase(self):
 		bg = self.find_widget('prog_board')
