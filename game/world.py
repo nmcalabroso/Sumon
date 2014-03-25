@@ -391,22 +391,36 @@ class GameWorld(GameObject):
 			special_type = action[2]
 			row = int(action[3])
 			col = int(action[4])
+			new_row = 0
 
 			if special_type == 'jump':
 				tile = board.my_grid[row][col]
 
 				if color == 'blue':
-					jump_to = board.my_grid[row-2][col]
+					new_row = row-2
 
 				elif color == 'red':
-					jump_to = board.my_grid[row+2][col]
+					new_row = row+2
 
-				if jump_to.wrestler == None:
+
+				if new_row >= 0 and new_row <= 7:
+					jump_to = board.my_grid[new_row][col]
+					if jump_to.wrestler != None:
+						return
+
 					sumo = tile.wrestler
 					tile.remove_content()
 					self.move_wrestler(jump_to,sumo)
+	
+				elif new_row < 0:
+					sumo = tile.wrestler
+					tile.remove_content()
+					player2.lives -= sumo.weight
 
-
+				elif new_row > 7:
+					sumo = tile.wrestler
+					tile.remove_content()
+					player1.lives -= sumo.weight
 
 		self.game_state = Resources.state['WAIT']
 
