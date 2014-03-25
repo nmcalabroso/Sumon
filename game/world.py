@@ -494,6 +494,17 @@ class GameWorld(GameObject):
 				if col-1 in range(8) and sumo != None and sumo.sprite_color != original_color:
 					tile.remove_content()
 
+			elif special_type == 'swap':
+				row_other = int(action[5])
+				col_other = int(action[6])
+				tile_other = board.my_grid[row_other][col_other]
+				sumo_other = tile_other.wrestler
+
+				tile.remove_content()
+				tile_other.remove_content()
+
+				self.move_wrestler(tile_other, sumo)
+				self.move_wrestler(tile, sumo_other)
 
 		self.game_state = Resources.state['WAIT']
 
@@ -548,9 +559,6 @@ class GameWorld(GameObject):
 			self.commands2 = []
 			self.game_state = Resources.state['PLAYER1']
 
-		# elif self.game_state == Resources.state['PLAYER1']:
-		# 	self.start_round = True
-
 		elif self.game_state == Resources.state['DELETE1']:
 			for i, card in enumerate(self.program1):
 				card.x, card.y = Resources.card_pos2[i]
@@ -570,9 +578,6 @@ class GameWorld(GameObject):
 			self.player_program.close()
 
 			self.game_state = Resources.state['PLAYER2']
-	
-		# elif self.game_state == Resources.state['PLAYER2']:
-		# 	self.start_round = True
 
 		elif self.game_state == Resources.state['DELETE2']:
 			for i, card in enumerate(self.program2):

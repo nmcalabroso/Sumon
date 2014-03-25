@@ -47,7 +47,10 @@ class Card(GameObject):
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
 
 						#prompt for player to input row and col
-						self.world.game_state = Resources.state['TILE1']
+						if self.title == 'swap':
+							self.world.game_state = Resources.state['SWAP1']
+						else:
+							self.world.game_state = Resources.state['TILE1']
 
 				# delete card from program and put back to player
 				elif self.clicked:
@@ -98,7 +101,10 @@ class Card(GameObject):
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_red']
 						
 						#prompt for player to input row and col
-						self.world.game_state = Resources.state['TILE2']
+						if self.title == 'swap':
+							self.world.game_state = Resources.state['SWAP2']
+						else:
+							self.world.game_state = Resources.state['TILE2']
 
 				# delete card from program and put back to player
 				elif self.clicked:

@@ -22,11 +22,13 @@ class Resources:
 			'TRANSITION_PLAYER1':4,
 			'PLAYER1':5,
 			'PROGRAMMING1':18,
+			'SWAP1':20,
 			'TILE1':6,
 			'DELETE1':7,
 			'TRANSITION_PLAYER2':8,
 			'PLAYER2':9,
 			'PROGRAMMING2':19,
+			'SWAP2':21,
 			'TILE2':10,
 			'DELETE2':11,
 			'TRANSITION_BOARD':12,
@@ -47,7 +49,7 @@ class Resources:
 			'YOKUZANA':(13,10)
 			} # sumo constants (weight,energy)
 
-	special_cards = ['avatar','fat up','hex','jump','kamikaze','reverse','swap','take down']
+	special_cards = ['avatar','fat up','hex','jump','kamikaze','reverse','swap']#,'take down']
 	special_cards_det = {'AVATAR':(6,"Allied wrestler will become invulnerable to any enemy. This will last until the round ends."),
 						 'FAT UP':(3,"Increases weight of an allied wrestler by a random value between [0,5]"),
 						 'HEX':(7,"Turns an enemy wrestler into an animal, lowering its weight to 0."),
@@ -61,7 +63,7 @@ class Resources:
 	card_priority = {
 					'summon':3,
 					'move':2,
-					'card':1
+					'special':1
 					}
 
 	board_grid = [[(5+i*80,7+j*80) for i in range(8)] for j in range(8)]
