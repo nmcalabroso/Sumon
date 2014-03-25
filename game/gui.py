@@ -279,7 +279,7 @@ class ReturnButton(UIObject):
                 terminal = self.world.find_widget('terminal')
                 player1 = self.world.find_game_object('Player1')
                 textx = self.world.find_widget('line_widget_1')
-                self.world.commands1.append(textx.document.text)
+                self.world.commands1.append(textx.document.text + "\n")
                 terminal.add_message(player1.actual_name,textx.document.text)
                 textx.document.text = ""
 
