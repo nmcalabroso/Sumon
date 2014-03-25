@@ -527,11 +527,12 @@ class GameWorld(GameObject):
 				tile_other = board.my_grid[row_other][col_other]
 				sumo_other = tile_other.wrestler
 
-				tile.remove_content()
-				tile_other.remove_content()
+				if sumo != None and sumo_other != None:
+					tile.remove_content()
+					tile_other.remove_content()
 
-				self.move_wrestler(tile_other, sumo)
-				self.move_wrestler(tile, sumo_other)
+					self.move_wrestler(tile_other, sumo)
+					self.move_wrestler(tile, sumo_other)
 
 		self.game_state = Resources.state['WAIT']
 
