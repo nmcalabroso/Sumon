@@ -53,6 +53,7 @@ class EndTurnButton(UIObject):
                                             **kwargs)
         self.name = name
         self.hand_cursor = world.window.get_system_mouse_cursor('hand')
+        self.fx = Resources.audio['button2']
 
     def hit_test(self,x,y):
         if x > self.x and x < (self.x + (self.width)):
@@ -63,7 +64,7 @@ class EndTurnButton(UIObject):
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['end_turn_button2']
-            
+            self.fx.play()
             if self.world.game_state == Resources.state['PLAYER1'] or self.world.game_state == Resources.state['PROGRAMMING1']:
                 self.world.normal_phase()
                 self.world.game_state = Resources.state['TRANSITION_PLAYER2']
@@ -94,6 +95,7 @@ class ProgramButton(UIObject):
                                             **kwargs)
         self.name = name
         self.hand_cursor = world.window.get_system_mouse_cursor('hand')
+        self.fx = Resources.audio['button2']
 
     def hit_test(self,x,y):
         if x > self.x and x < (self.x + (self.width)):
@@ -104,7 +106,8 @@ class ProgramButton(UIObject):
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['program_button2']
-            
+            self.fx.play()
+
             if self.world.game_state == Resources.state['PLAYER1']:
                 self.world.programming_phase()
                 self.world.game_state = Resources.state['PROGRAMMING1']
@@ -270,6 +273,7 @@ class ReturnButton(UIObject):
                                             **kwargs)
         self.name = name
         self.hand_cursor = world.window.get_system_mouse_cursor('hand')
+        self.fx = Resources.audio['button2']
 
     def hit_test(self,x,y):
         if x > self.x and x < (self.x + (self.width)):
@@ -329,7 +333,7 @@ class ReturnButton(UIObject):
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['return_button2']
-            
+            self.fx.play()
             if self.world.game_state == Resources.state['PROGRAMMING1']:
                 terminal = self.world.find_widget('terminal')
                 player1 = self.world.find_game_object('Player1')
@@ -337,7 +341,7 @@ class ReturnButton(UIObject):
 
                 words = textx.document.text.split(" ")
                 if not (len(textx.document.text) > 0 and self.correct_syntax(words)):
-                    return
+                    terminal.add_message("admin","Syntax or Semantic Error")
 
                 mana_cost = self.get_mana_cost(words)
                 if mana_cost <= player1.mana:
@@ -348,12 +352,18 @@ class ReturnButton(UIObject):
                     terminal.add_message(player1.actual_name,textx.document.text)
                     textx.document.text = ""
 
+                else:
+                    terminal.add_message("admin","Syntax or Semantic Error")
+
             elif self.world.game_state == Resources.state['PROGRAMMING2']:
                 terminal = self.world.find_widget('terminal')
                 player2 = self.world.find_game_object('Player2')
                 textx = self.world.find_widget('line_widget_2')
 
                 words = textx.document.text.split(" ")
+                if not (len(textx.document.text) > 0 and self.correct_syntax(words)):
+                    terminal.add_message("admin","Syntax or Semantic Error")
+
                 mana_cost = self.get_mana_cost(words)
 
                 if mana_cost <= player2.mana:
@@ -363,6 +373,9 @@ class ReturnButton(UIObject):
                     self.world.commands2.append(textx.document.text + "\n")
                     terminal.add_message(player2.actual_name,textx.document.text)
                     textx.document.text = ""
+
+                else:
+                    terminal.add_message("admin","Syntax or Semantic Error")
                 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
