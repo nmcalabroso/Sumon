@@ -271,6 +271,17 @@ class ReturnButton(UIObject):
                 return True
         return False
 
+    def get_mana_cost(self, words):
+        if words[0] == 'summon':
+            return Resources.stype[words[1].upper()][1]
+        elif words[0] == 'move':
+            return int(words[1])
+            print mana_cost
+        elif words[0] == 'special':
+            return Resources.special_cards_det[words[1].upper()][0]
+
+        return 0
+
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['return_button2']
@@ -279,17 +290,33 @@ class ReturnButton(UIObject):
                 terminal = self.world.find_widget('terminal')
                 player1 = self.world.find_game_object('Player1')
                 textx = self.world.find_widget('line_widget_1')
-                self.world.commands1.append(textx.document.text + "\n")
-                terminal.add_message(player1.actual_name,textx.document.text)
-                textx.document.text = ""
+
+                words = textx.document.text.split(" ")
+                mana_cost = self.get_mana_cost(words)
+
+                if mana_cost <= player1.mana and len(textx.document.text) > 0:
+                    player1.mana -= mana_cost
+                    mana = self.world.find_label('mana')
+                    mana.text = player1.get_mana_label()
+                    self.world.commands1.append(textx.document.text + "\n")
+                    terminal.add_message(player1.actual_name,textx.document.text)
+                    textx.document.text = ""
 
             elif self.world.game_state == Resources.state['PROGRAMMING2']:
                 terminal = self.world.find_widget('terminal')
                 player2 = self.world.find_game_object('Player2')
                 textx = self.world.find_widget('line_widget_2')
-                self.world.commands2.append(textx.document.text)
-                terminal.add_message(player2.actual_name,textx.document.text)
-                textx.document.text = ""
+
+                words = textx.document.text.split(" ")
+                mana_cost = self.get_mana_cost(words)
+
+                if mana_cost <= player2.mana and len(textx.document.text) > 0:
+                    player2.mana -= mana_cost
+                    mana = self.world.find_label('mana')
+                    mana.text = player2.get_mana_label()
+                    self.world.commands2.append(textx.document.text + "\n")
+                    terminal.add_message(player2.actual_name,textx.document.text)
+                    textx.document.text = ""
                 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
