@@ -248,6 +248,7 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
+
 	def programming_phase(self):
 		bg = self.find_widget('prog_board')
 		bg.set_image(Resources.sprites['programming_board2'])
@@ -459,11 +460,15 @@ class GameWorld(GameObject):
 					tile = board.my_grid[row+1][col]
 
 				sumo = tile.wrestler
-				if sumo != None:
+				if sumo != None and not sumo.avatar:
 					sumo.weight = 0
 
 			elif special_type == 'reverse':
-				sumo.reverse = True
+				if not sumo.avatar:
+					sumo.reverse = True
+
+			elif special_type == 'avatar':
+				sumo.avatar = True
 
 		self.game_state = Resources.state['WAIT']
 
@@ -674,7 +679,7 @@ class GameWorld(GameObject):
 					sumo = tile.wrestler
 					if sumo != None:
 						sumo.weight = sumo.original_weight
-
+						sumo.avatar = False
 
 			self.game_state = Resources.state['SETUP']
 

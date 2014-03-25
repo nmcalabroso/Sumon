@@ -16,3 +16,4 @@ class Wrestler(GameObject):
 		self.weight,self.mana = Resources.stype[self.title.upper()]
 		self.original_weight = self.weight
 		self.reverse = False
+		self.avatar = False
