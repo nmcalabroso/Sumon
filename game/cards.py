@@ -183,4 +183,10 @@ class SpecialCard(Card):
 		self.title = choice(Resources.special_cards)
 		self.image = Resources.sprites['card_'+self.title.replace(" ","")]
 		self.mana,self.description = Resources.special_cards_det[self.title.upper()]
-		self.command = "special " + self.title
+		if self.title == "fat up":
+			self.command = "special fatup"
+		elif self.title == "take down":
+			self.command = "special takedown"
+		else:
+			self.command = "special " + self.title
+

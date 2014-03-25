@@ -14,3 +14,4 @@ class Wrestler(GameObject):
 	def set_wrestler(self):
 		self.image = Resources.sprites['wrestler_' + self.title + '_' + self.sprite_color]
 		self.weight,self.mana = Resources.stype[self.title.upper()]
+		self.original_weight = self.weight

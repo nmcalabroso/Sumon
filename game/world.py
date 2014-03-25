@@ -259,6 +259,10 @@ class GameWorld(GameObject):
 			tile.wrestler.x = tile.x
 			tile.wrestler.y = tile.y
 
+	def damage_player(self, opponent, player, sumo):
+		opponent.lives -= sumo.weight
+		player.mana += sumo.mana
+
 	def execute(self, action, board, player1, player2):
 		color = action[0]
 		function = action[1]
@@ -288,22 +292,25 @@ class GameWorld(GameObject):
 
 			# get tile positions
 			if color == 'blue':
+				# passes summoning lane
 				for i in range(1,mana+1):
 					wrestler_list = []
 					total_weight = 0
 					if row-i < 0:
 						tile.remove_content()
-						player2.lives -= sumo.weight
+						self.damage_player(player2,player1,sumo)
 						return
 					
 					tile = board.my_grid[row-i][col]
 					if tile.wrestler != None:
-						for j in range(mana-i+2):
+						for j in range(mana-i+2): # get all wrestlers in front
 							if row-i-j < 0:
 								break
+
 							temp = board.my_grid[row-i-j][col]
 							if temp.wrestler == None:
 								break
+
 							total_weight += temp.wrestler.weight
 							wrestler_list.append(temp.wrestler)
 							temp.remove_content()
@@ -333,6 +340,7 @@ class GameWorld(GameObject):
 								if temp.wrestler == None:
 									self.move_wrestler(temp,wrestler)
 								j += 1
+
 							return
 
 			else:
@@ -341,17 +349,19 @@ class GameWorld(GameObject):
 					total_weight = 0
 					if row+i > 7:
 						tile.remove_content()
-						player1.lives -= sumo.weight
+						self.damage_player(player1,player2,sumo)
 						return
 
 					tile = board.my_grid[row+i][col]
-					if tile.wrestler != None:
+					if tile.wrestler != None: # get all wrestlers in front
 						for j in range(mana-i+2):
 							if row+i+j > 7:
 								break
+
 							temp = board.my_grid[row+i+j][col]
 							if temp.wrestler == None:
 								break
+
 							total_weight += temp.wrestler.weight
 							wrestler_list.append(temp.wrestler)
 							temp.remove_content()
@@ -361,6 +371,7 @@ class GameWorld(GameObject):
 								self.move_wrestler(tile,sumo)
 
 							j = 1
+
 							for wrestler in wrestler_list:
 								if row+i+j > 7:
 									player1.lives -= wrestler.weight
@@ -392,35 +403,45 @@ class GameWorld(GameObject):
 			row = int(action[3])
 			col = int(action[4])
 			new_row = 0
+			tile = board.my_grid[row][col]
+			sumo = tile.wrestler
 
 			if special_type == 'jump':
-				tile = board.my_grid[row][col]
-
 				if color == 'blue':
 					new_row = row-2
 
 				elif color == 'red':
 					new_row = row+2
 
-
 				if new_row >= 0 and new_row <= 7:
 					jump_to = board.my_grid[new_row][col]
 					if jump_to.wrestler != None:
 						return
 
-					sumo = tile.wrestler
 					tile.remove_content()
 					self.move_wrestler(jump_to,sumo)
 	
 				elif new_row < 0:
-					sumo = tile.wrestler
 					tile.remove_content()
-					player2.lives -= sumo.weight
+					self.damage_player(player2,player1,sumo)
 
 				elif new_row > 7:
-					sumo = tile.wrestler
 					tile.remove_content()
-					player1.lives -= sumo.weight
+					self.damage_player(player1,player2,sumo)
+
+			elif special_type == 'fatup':
+				to_add = randint(0,5)
+				sumo.weight += to_add
+
+			elif special_type == 'hex':
+				if color == 'blue':
+					tile = board.my_grid[row-1][col]
+				elif color == 'red':
+					tile = board.my_grid[row+1][col]
+
+				sumo = tile.wrestler
+				if sumo != None:
+					sumo.weight = 0
 
 		self.game_state = Resources.state['WAIT']
 
@@ -609,6 +630,7 @@ class GameWorld(GameObject):
 
 			if self.sequence == []:
 				self.game_state = Resources.state['REPLENISH']
+
 			else:
 				player1 = self.find_game_object('Player1')
 				player2 = self.find_game_object('Player2')
@@ -620,8 +642,18 @@ class GameWorld(GameObject):
 		elif self.game_state == Resources.state['REPLENISH']:
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
+			board = self.find_game_object('game_board')
 			player1.mana += 5
 			player2.mana += 5
+			
+			for i in range(7):
+				for j in range(7):
+					tile = board.my_grid[i][j]
+					sumo = tile.wrestler
+					if sumo != None and sumo.weight != sumo.original_weight:
+						sumo.weight = sumo.original_weight
+
+
 			self.game_state = Resources.state['SETUP']
 
 		elif self.game_state == Resources.state['END']:
