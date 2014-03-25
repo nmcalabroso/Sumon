@@ -56,17 +56,6 @@ class Resources:
 						 'TAKE DOWN':(4,"Disables all the power cards and moves applied to the enemy wrestler.")
 						}
 
-	# format: special <mana> <number of parameters> 
-	special_cards_comm = {'AVATAR':"special 6 1",
-						 'FAT UP':"special 3 1",
-						 'HEX':"special 7 1",
-						 'JUMP':"special 3 1",
-						 'KAMIKAZE':"special 5 1",
-						 'REVERSE':"special 4 1",
-						 'SWAP':"special 7 1",
-						 'TAKE DOWN':"special 4 1"
-						}
-
 	card_priority = {
 					'summon':3,
 					'move':2,

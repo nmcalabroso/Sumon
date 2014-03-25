@@ -133,6 +133,7 @@ class MoveCard(Card):
 									img = Resources.sprites['card_move_'+str(tile_count)],
 									*args,
 									**kwargs)
+
 		self.tile_count = tile_count
 		self.type = 'move'
 		self.command = "move " + str(self.tile_count)
@@ -150,14 +151,14 @@ class WrestlerCard(Card):
 										*args,
 										**kwargs)
 		self.set_card()
-		self.type = 'wrestler'
-		self.command = "summon " + self.title
 
 	def set_card(self):
 		self.title = choice(Resources.wrestlers)
 		self.image = Resources.sprites['card_'+self.title]
 		self.weight,self.mana = Resources.stype[self.title.upper()]
 		self.description = "Summons a "+self.title.upper()+" wrestler."
+		self.type = 'wrestler'
+		self.command = "summon " + self.title
 
 	"""def on_mouse_press(self,x,y,button,modifiers):
 		super(WrestlerCard,self).on_mouse_press(x,y,button,modifiers)
@@ -182,4 +183,4 @@ class SpecialCard(Card):
 		self.title = choice(Resources.special_cards)
 		self.image = Resources.sprites['card_'+self.title.replace(" ","")]
 		self.mana,self.description = Resources.special_cards_det[self.title.upper()]
-		self.command = None #subject to syntax sync
+		self.command = "special " + self.title
