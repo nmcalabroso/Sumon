@@ -282,6 +282,17 @@ class ReturnButton(UIObject):
 
         return 0
 
+    def command_exists(self, words):
+        if len(words) < 3:
+            return False
+
+        command = words[0] + " " + words[1]
+        if command in self.world.commands_list:
+            self.world.commands_list.remove(command)
+            return True
+
+        return False
+
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['return_button2']
@@ -294,7 +305,7 @@ class ReturnButton(UIObject):
                 words = textx.document.text.split(" ")
                 mana_cost = self.get_mana_cost(words)
 
-                if mana_cost <= player1.mana and len(textx.document.text) > 0:
+                if mana_cost <= player1.mana and len(textx.document.text) > 0 and self.command_exists(words):
                     player1.mana -= mana_cost
                     mana = self.world.find_label('mana')
                     mana.text = player1.get_mana_label()
@@ -310,7 +321,7 @@ class ReturnButton(UIObject):
                 words = textx.document.text.split(" ")
                 mana_cost = self.get_mana_cost(words)
 
-                if mana_cost <= player2.mana and len(textx.document.text) > 0:
+                if mana_cost <= player2.mana and len(textx.document.text) > 0 and self.command_exists(words):
                     player2.mana -= mana_cost
                     mana = self.world.find_label('mana')
                     mana.text = player2.get_mana_label()

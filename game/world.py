@@ -31,6 +31,7 @@ class GameWorld(GameObject):
 		self.additional_mana2 = 0
 		self.current_summon = None
 		self.virtual_list = []
+		self.commands_list = []
 
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
 
@@ -81,6 +82,7 @@ class GameWorld(GameObject):
 			if player_title == 'Player2' and card.type == 'wrestler':
 				card.image = Resources.sprites['card_'+card.title+'_red']
 			player.add_card(card)
+			self.commands_list.append(card.command)
 
 		player.card_pos = [1]*10
 
@@ -565,6 +567,7 @@ class GameWorld(GameObject):
 			self.virtual_list = []
 			self.round += 1
 			self.start_round = False
+			self.commands_list = []
 			self.generate_cards('Player1')
 			self.change_player()
 			self.commands1 = []
@@ -581,6 +584,7 @@ class GameWorld(GameObject):
 			self.reset_virtual_list()
 			self.virtual_list = []
 			self.start_round = False
+			self.commands_list = []
 			self.generate_cards('Player2')
 			self.change_player()
 
