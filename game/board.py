@@ -79,6 +79,7 @@ class Tile(GameObject):
 				self.world.commands1.append(command)
 				self.image = self.world.current_summon
 				self.world.virtual_list.append(self)
+				self.opacity = 175
 				self.world.game_state = Resources.state['PLAYER1']
 
 			elif self.world.game_state == Resources.state['TILE2']:
@@ -86,6 +87,7 @@ class Tile(GameObject):
 				command = command + " " + str(self.row) + " " + str(self.col) + "\n"
 				self.world.commands2.append(command)
 				self.image = self.world.current_summon
+				self.opacity = 175
 				self.world.virtual_list.append(self)
 				self.world.game_state = Resources.state['PLAYER2']
 

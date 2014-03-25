@@ -44,7 +44,7 @@ class Card(GameObject):
 						self.world.commands1.append(self.command)
 
 						if self.type == "wrestler":
-							self.world.current_summon = Resources.sprites['wrestler_temp_blue']
+							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
 
 						#prompt for player to input row and col
 						self.world.game_state = Resources.state['TILE1']
@@ -95,7 +95,7 @@ class Card(GameObject):
 						self.world.commands2.append(self.command)
 
 						if self.type == "wrestler":
-							self.world.current_summon = Resources.sprites['wrestler_temp_red']
+							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
 						
 						#prompt for player to input row and col
 						self.world.game_state = Resources.state['TILE2']
