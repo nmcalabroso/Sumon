@@ -73,15 +73,18 @@ class Tile(GameObject):
 
 	def on_mouse_press(self,x,y,button,modifiers):
 		if self.hit_test(x,y):
-			#lprint "Tile:",self.name,"x=",self.x,"y=",self.y,"width=",self.width,"height:",self.height
 			if self.world.game_state == Resources.state['TILE1']:
-				self.world.commands1.append(" " + str(self.row) + " " + str(self.col) + "\n")
+				command = self.world.commands1.pop(-1)
+				command = command + " " + str(self.row) + " " + str(self.col) + "\n"
+				self.world.commands1.append(command)
 				self.image = self.world.current_summon
 				self.world.virtual_list.append(self)
 				self.world.game_state = Resources.state['PLAYER1']
 
 			elif self.world.game_state == Resources.state['TILE2']:
-				self.world.commands2.append(" " + str(self.row) + " " + str(self.col) + "\n")
+				command = self.world.commands2.pop(-1)
+				command = command + " " + str(self.row) + " " + str(self.col) + "\n"
+				self.world.commands2.append(command)
 				self.image = self.world.current_summon
 				self.world.virtual_list.append(self)
 				self.world.game_state = Resources.state['PLAYER2']

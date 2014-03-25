@@ -22,15 +22,17 @@ class Resources:
 			'TRANSITION_PLAYER1':4,
 			'PLAYER1':5,
 			'TILE1':6,
-			'TRANSITION_PLAYER2':7,
-			'PLAYER2':8,
-			'TILE2':9,
-			'TRANSITION_BOARD':10,
-			'BOARD':11,
-			'EXECUTE':12,
-			'WAIT':13,
-			'REPLENISH':14,
-			'END':15
+			'DELETE1':7,
+			'TRANSITION_PLAYER2':8,
+			'PLAYER2':9,
+			'TILE2':10,
+			'DELETE2':11,
+			'TRANSITION_BOARD':12,
+			'BOARD':13,
+			'EXECUTE':14,
+			'WAIT':15,
+			'REPLENISH':16,
+			'END':17
 			}
 
 	player = {'RED':1,'BLUE':2} # player side
@@ -46,12 +48,23 @@ class Resources:
 	special_cards = ['avatar','fat up','hex','jump','kamikaze','reverse','swap','take down']
 	special_cards_det = {'AVATAR':(6,"Allied wrestler will become invulnerable to any enemy. This will last until the round ends."),
 						 'FAT UP':(3,"Increases weight of an allied wrestler by a random value between [0,5]"),
-						 'HEX':(7,"Turns an enemy wrestler in to an animal lowering its weight to 0."),
+						 'HEX':(7,"Turns an enemy wrestler into an animal, lowering its weight to 0."),
 						 'JUMP':(3,"Allied wrestler jumps and skips one tile within the lane."),
 						 'KAMIKAZE':(5, "Allied wrestler commits suicide while also killing all the adjacent enemy wrestlers."),
 						 'REVERSE':(4, "Reverses the current direction of any wrestler."),
 						 'SWAP':(7,"Swaps an allied wrestler with an enemy wrestler."),
 						 'TAKE DOWN':(4,"Disables all the power cards and moves applied to the enemy wrestler.")
+						}
+
+	# format: special <mana> <number of parameters> 
+	special_cards_comm = {'AVATAR':"special 6 1",
+						 'FAT UP':"special 3 1",
+						 'HEX':"special 7 1",
+						 'JUMP':"special 3 1",
+						 'KAMIKAZE':"special 5 1",
+						 'REVERSE':"special 4 1",
+						 'SWAP':"special 7 1",
+						 'TAKE DOWN':"special 4 1"
 						}
 
 	card_priority = {
@@ -105,6 +118,7 @@ class Resources:
 	sprites['tile_glow']			= image.load(join(res_path,'tile_glow.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 	sprites['blocker']				= image.load(join(res_path,'blocker.png'))
+
 	# Ability Cards
 	sprites['card_avatar']			= center_image(image.load(join(res_path,'cards/coh_sp-avatar.jpg')))
 	sprites['card_fatup']			= center_image(image.load(join(res_path,'cards/coh_sp-fatup.jpg')))
@@ -114,12 +128,14 @@ class Resources:
 	sprites['card_reverse']			= center_image(image.load(join(res_path,'cards/coh_sp-reverse.jpg')))
 	sprites['card_swap']			= center_image(image.load(join(res_path,'cards/coh_sp-swap.jpg')))
 	sprites['card_takedown']		= center_image(image.load(join(res_path,'cards/coh_sp-takedown.jpg')))
+
 	# Move Cards
 	sprites['card_move_1']			= center_image(image.load(join(res_path,'cards/coh_move-1.jpg')))
 	sprites['card_move_2']			= center_image(image.load(join(res_path,'cards/coh_move-2.jpg')))
 	sprites['card_move_3']			= center_image(image.load(join(res_path,'cards/coh_move-3.jpg')))
 	sprites['card_move_4']			= center_image(image.load(join(res_path,'cards/coh_move-4.jpg')))
 	sprites['card_move_5']			= center_image(image.load(join(res_path,'cards/coh_move-5.jpg')))
+
 	# Wrestler Cards
 	sprites['card_jonokuchi']		= center_image(image.load(join(res_path,'cards/coh_level1-blue.jpg')))
 	sprites['card_komusubi']		= center_image(image.load(join(res_path,'cards/coh_level2-blue.jpg')))
@@ -146,7 +162,8 @@ class Resources:
 	sprites['wrestler_ozeki_red']		= image.load(join(res_path,'wrestlers/icon_level4-red.png'))
 	sprites['wrestler_yokuzana_red']	= image.load(join(res_path,'wrestlers/icon_level5-red.png'))
 
-
+	sprites['wrestler_temp_blue']		= image.load(join(res_path,'wrestlers/icon_hex-blue.png'))
+	sprites['wrestler_temp_red']		= image.load(join(res_path,'wrestlers/icon_hex-red.png'))
 
 
 
