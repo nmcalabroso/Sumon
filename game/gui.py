@@ -288,16 +288,43 @@ class ReturnButton(UIObject):
 
         return 0
 
-    def command_exists(self, words):
-        if len(words) < 3:
+    def correct_syntax(self, words):
+        # must have at least three words
+        if len(words) < 3: 
             return False
 
+        # check if command exists in cards
         command = words[0] + " " + words[1]
-        if command in self.world.commands_list:
-            self.world.commands_list.remove(command)
-            return True
+        if not command in self.world.commands_list:
+            return False
 
-        return False
+        self.world.commands_list.remove(command)
+        # check if <location is correct>
+        if words[0] == 'summon':
+            if len(words) != 3 or not int(words[-1]) in range(8):
+                return False
+        
+        elif words[0] == 'move':
+            if len(words) != 4 or not int(words[2]) in range(8) or not int(words[3]) in range(8):
+                return False
+
+        elif words[0] == 'special':
+            print words
+            print words[1]
+            print words[1] == 'swap'
+            if words[1] == 'swap':
+                print "here"
+                if len(words) != 6:
+                    return False
+
+                for num in words[2:]:
+                    if not int(num) in range(8):
+                        return False
+            else:
+                if len(words) != 4 or not int(words[2]) in range(8) or not int(words[3]) in range(8):
+                 return False
+
+        return True
 
     def on_mouse_press(self, x, y, button, modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
@@ -309,9 +336,11 @@ class ReturnButton(UIObject):
                 textx = self.world.find_widget('line_widget_1')
 
                 words = textx.document.text.split(" ")
-                mana_cost = self.get_mana_cost(words)
+                if not (len(textx.document.text) > 0 and self.correct_syntax(words)):
+                    return
 
-                if mana_cost <= player1.mana and len(textx.document.text) > 0 and self.command_exists(words):
+                mana_cost = self.get_mana_cost(words)
+                if mana_cost <= player1.mana:
                     player1.mana -= mana_cost
                     mana = self.world.find_label('mana')
                     mana.text = player1.get_mana_label()
@@ -327,7 +356,7 @@ class ReturnButton(UIObject):
                 words = textx.document.text.split(" ")
                 mana_cost = self.get_mana_cost(words)
 
-                if mana_cost <= player2.mana and len(textx.document.text) > 0 and self.command_exists(words):
+                if mana_cost <= player2.mana:
                     player2.mana -= mana_cost
                     mana = self.world.find_label('mana')
                     mana.text = player2.get_mana_label()

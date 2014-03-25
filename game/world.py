@@ -318,7 +318,8 @@ class GameWorld(GameObject):
 			tile = board.my_grid[row][col]
 			sumo = tile.wrestler
 			if sumo == None:
-				pass
+				return
+
 			tile.remove_content()
 
 			if sumo.reverse:
