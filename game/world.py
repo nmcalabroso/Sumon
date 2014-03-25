@@ -294,6 +294,12 @@ class GameWorld(GameObject):
 				pass
 			tile.remove_content()
 
+			if sumo.reverse:
+				if color == "blue":
+					color = "red"
+				elif color == "red":
+					color = "blue"
+
 			# get tile positions
 			if color == 'blue':
 				# passes summoning lane
@@ -326,7 +332,7 @@ class GameWorld(GameObject):
 							j = 1
 							for wrestler in wrestler_list:
 								if row-i-j < 0:
-									player2.lives -= wrestler.weight
+									self.damage_player(player2,player1,sumo)
 								else:
 									temp = board.my_grid[row-i-j][col]
 									if temp.wrestler == None:
@@ -378,7 +384,7 @@ class GameWorld(GameObject):
 
 							for wrestler in wrestler_list:
 								if row+i+j > 7:
-									player1.lives -= wrestler.weight
+									self.damage_player(player1,player2,sumo)
 								else:
 									temp = board.my_grid[row+i+j][col]
 									if temp.wrestler == None:
@@ -409,6 +415,12 @@ class GameWorld(GameObject):
 			new_row = 0
 			tile = board.my_grid[row][col]
 			sumo = tile.wrestler
+
+			if sumo.reverse:
+				if color == "blue":
+					color = "red"
+				elif color == "red":
+					color = "blue"
 
 			if special_type == 'jump':
 				if color == 'blue':
@@ -446,6 +458,9 @@ class GameWorld(GameObject):
 				sumo = tile.wrestler
 				if sumo != None:
 					sumo.weight = 0
+
+			elif special_type == 'reverse':
+				sumo.reverse = True
 
 		self.game_state = Resources.state['WAIT']
 
@@ -654,7 +669,8 @@ class GameWorld(GameObject):
 				for j in range(7):
 					tile = board.my_grid[i][j]
 					sumo = tile.wrestler
-					if sumo != None and sumo.weight != sumo.original_weight:
+					if sumo != None:
+						sumo.reverse = False
 						sumo.weight = sumo.original_weight
 
 
