@@ -670,7 +670,6 @@ class GameWorld(GameObject):
 					tile = board.my_grid[i][j]
 					sumo = tile.wrestler
 					if sumo != None:
-						sumo.reverse = False
 						sumo.weight = sumo.original_weight
 
 
