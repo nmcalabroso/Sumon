@@ -62,10 +62,12 @@ class EndTurnButton(UIObject):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['end_turn_button2']
             
-            if self.world.game_state == Resources.state['PLAYER1']:
+            if self.world.game_state == Resources.state['PLAYER1'] or self.world.game_state == Resources.state['PROGRAMMING1']:
+                self.world.normal_phase()
                 self.world.game_state = Resources.state['TRANSITION_PLAYER2']
                 
-            elif self.world.game_state == Resources.state['PLAYER2']:
+            elif self.world.game_state == Resources.state['PLAYER2'] or self.world.game_state == Resources.state['PROGRAMMING2']:
+                self.world.normal_phase()
                 self.world.game_state = Resources.state['TRANSITION_BOARD']
 
             elif self.world.game_state == Resources.state['WAIT']:
@@ -234,7 +236,7 @@ class Terminal(UIObject):
                                             *args,
                                             **kwargs)
         self.name = name
-        self.opacity = 150
+        self.opacity = 0
         #self.doc = pyglet.text.decode_text('player@sumon: Start Round'.ljust(50))
         text = 'admin@sumon:Start Round'+"\n"+"\n"
         self.doc = pyglet.text.document.UnformattedDocument(text)

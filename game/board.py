@@ -73,7 +73,25 @@ class Tile(GameObject):
 
 	def on_mouse_press(self,x,y,button,modifiers):
 		if self.hit_test(x,y):
-			if self.world.game_state == Resources.state['TILE1']:
+			if self.world.game_state == Resources.state['SWAP1']:
+				command = self.world.commands1.pop(-1)
+				command = command + " " + str(self.row) + " " + str(self.col)
+				self.world.commands1.append(command)
+				self.image = self.world.current_summon
+				self.world.virtual_list.append(self)
+				self.opacity = 175
+				self.world.game_state = Resources.state['TILE1']
+
+			elif self.world.game_state == Resources.state['SWAP2']:
+				command = self.world.commands2.pop(-1)
+				command = command + " " + str(self.row) + " " + str(self.col)
+				self.world.commands2.append(command)
+				self.image = self.world.current_summon
+				self.world.virtual_list.append(self)
+				self.opacity = 175
+				self.world.game_state = Resources.state['TILE2']
+
+			elif self.world.game_state == Resources.state['TILE1']:
 				command = self.world.commands1.pop(-1)
 				# words = command.split(" ")
 				# if words[0] == "summon":
@@ -108,4 +126,9 @@ class Tile(GameObject):
 			if self.world.game_state == Resources.state['TILE1'] or self.world.game_state == Resources.state['TILE2']:
 				self.glow = True
 				return
+
+			if self.world.game_state == Resources.state['SWAP1'] or self.world.game_state == Resources.state['SWAP2']:
+				self.glow = True
+				return
+
 		self.glow = False
