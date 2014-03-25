@@ -103,19 +103,19 @@ class Resources:
 
 	# UI Elements
 	sprites['no_sprite'] 			= image.load(join(res_path,'blank.png'))
-	#sprites['default_cursor'] 		= image.load(join(res_path,'default_cursor.PNG'))
-	#sprites['active_cursor'] 		= image.load(join(res_path,'active_cursor.PNG'))
-	#sprites['hand_cursor'] 		= image.load(join(res_path,'hand_cursor.PNG'))
 	sprites['start_button']  		= center_image(image.load(join(res_path,'start_button.png')))
 	sprites['play_button']  		= center_image(image.load(join(res_path,'play_button.png')))
 	sprites['end_turn_button']		= image.load(join(res_path,'endturn_button.png'))
 	sprites['end_turn_button2']		= image.load(join(res_path,'endturn_button_active.png'))
+	sprites['program_button']		= image.load(join(res_path,'program_button.png'))
+	sprites['program_button2']		= image.load(join(res_path,'program_button_active.png'))
 	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
 	sprites['main_bg'] 				= image.load(join(res_path,'main_bg.png'))
 	sprites['game_over'] 			= image.load(join(res_path,'game_over.png'))
 	sprites['game_board']			= image.load(join(res_path,'game_board.png'))
 	sprites['tile']					= image.load(join(res_path,'tile.png'))
 	sprites['tile_glow']			= image.load(join(res_path,'tile_glow.png'))
+	sprites['hand_board']			= image.load(join(res_path,'hand_board.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
 	sprites['blocker']				= image.load(join(res_path,'blocker.png'))
 

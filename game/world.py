@@ -63,9 +63,9 @@ class GameWorld(GameObject):
 	def generate_cards(self, player):
 		def randomize_card():
 			base = randint(0,100)
-			if base<=40:
+			if base<=60:
 				return WrestlerCard()
-			elif base>=41 and base<=80:
+			elif base>=61 and base<=80:
 				return MoveCard()
 			else:
 				return SpecialCard()

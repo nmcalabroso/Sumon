@@ -8,6 +8,7 @@ from game.gui import Background
 from game.gui import UILabel
 from game.gui import MyRectangle
 from game.gui import EndTurnButton
+from game.gui import ProgramButton
 from game.player import Player
 
 game_window = pyglet.window.Window(Resources.window_width, Resources.window_height)
@@ -148,7 +149,7 @@ def player_screen():
 	world.add_widget(play_button)
 
 def game_screen():
-	hand_board = MyRectangle(name = 'hand_board',curr_state = "GAME",opacity = 255, x = 650, y = 330, img = Resources.sprites['programming_board'],batch = game_batch)
+	hand_board = MyRectangle(name = 'hand_board',curr_state = "GAME",opacity = 255, x = 650, y = 330, img = Resources.sprites['hand_board'],batch = game_batch)
 	prog_board = MyRectangle(name = 'prog_board',curr_state = "GAME",opacity = 255, x = 650, y = 5, img = Resources.sprites['programming_board'],batch = game_batch)
 
 	player1 = Player(actual_name = 'Player',
@@ -165,7 +166,7 @@ def game_screen():
 
 	label_player =  UILabel(name = 'player',
 							text = 'Player2:',
-							x = hand_board.x+5,
+							x = hand_board.x+9,
 							y = hand_board.y+hand_board.height-2,
 							anchor_y = 'top',
                           	color = (57, 255, 20, 255),
@@ -235,6 +236,14 @@ def game_screen():
 									y = label_prog_card.y - 20,
 					   				batch = game_batch)
 
+	program_button = ProgramButton(name = 'program_button',
+								curr_state = 'PLAYER1',
+								world = world,
+								img = Resources.sprites['program_button'],
+								x = prog_board.x+9,
+								y = end_turn_button.y,
+								batch = game_batch)
+
 	game_board = GameBoard(name = 'game_board',world = world,x = 5,y = 7,img = Resources.sprites['game_board'])
 	blocker = MyRectangle(name = 'blocker',curr_state = "GAME",opacity = 200, x = 650, y = 5, img = Resources.sprites['blocker'])
 	glow = MyRectangle(name = 'glow',curr_state = "GAME",opacity = 255, x = 0,y = 0, img = Resources.sprites['tile_glow'])
@@ -245,13 +254,15 @@ def game_screen():
 	game_window.push_handlers(player2)
 	game_window.push_handlers(game_board)
 	game_window.push_handlers(end_turn_button)
+	game_window.push_handlers(program_button)
 
 	world.add_game_object(game_board)
-	world.add_widget(hand_board)
-	world.add_widget(prog_board)
 	world.add_widget(blocker)
 	world.add_widget(glow)
 	world.add_widget(end_turn_button)
+	world.add_widget(program_button)
+	world.add_widget(hand_board)
+	world.add_widget(prog_board)
 
 	world.add_game_object(player1)
 	world.add_game_object(player2)

@@ -46,7 +46,8 @@ class EndTurnButton(UIObject):
         super(EndTurnButton,self).__init__(name = name,
                                             curr_state = curr_state,
                                             world = world,
-                                            *args,**kwargs)
+                                            *args,
+                                            **kwargs)
         self.name = name
         self.hand_cursor = world.window.get_system_mouse_cursor('hand')
 
@@ -72,6 +73,45 @@ class EndTurnButton(UIObject):
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['end_turn_button']
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        if self.active and self.world.game_state == Resources.state[self.curr_state]:
+            if self.hit_test(x,y):
+                #print "Entering Button:",self.name
+                self.world.window.set_mouse_cursor(self.hand_cursor)
+
+class ProgramButton(UIObject):
+    def __init__(self,name,curr_state,world,*args,**kwargs):
+        super(ProgramButton,self).__init__(name = name,
+                                            curr_state = curr_state,
+                                            world = world,
+                                            *args,
+                                            **kwargs)
+        self.name = name
+        self.hand_cursor = world.window.get_system_mouse_cursor('hand')
+
+    def hit_test(self,x,y):
+        if x > self.x and x < (self.x + (self.width)):
+            if y > self.y and y < (self.y + (self.height)):
+                return True
+        return False
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if button == mouse.LEFT and self.hit_test(x,y):
+            self.image = Resources.sprites['program_button2']
+            
+            if self.world.game_state == Resources.state['PLAYER1']:
+                self.world.game_state = Resources.state['TRANSITION_PLAYER2']
+                
+            elif self.world.game_state == Resources.state['PLAYER2']:
+                self.world.game_state = Resources.state['TRANSITION_BOARD']
+
+            elif self.world.game_state == Resources.state['WAIT']:
+                self.world.game_state = Resources.state['EXECUTE']
+
+    def on_mouse_release(self,x,y,button,modifiers):
+        if button == mouse.LEFT and self.hit_test(x,y):
+            self.image = Resources.sprites['program_button']
 
     def on_mouse_motion(self, x, y, dx, dy):
         if self.active and self.world.game_state == Resources.state[self.curr_state]:
