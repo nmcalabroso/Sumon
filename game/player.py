@@ -45,9 +45,3 @@ class Player(GameObject):
 		self.active = False
 		for card in self.cards:
 			card.active = False
-
-	#def add_sumo_card(self, sumo_card):
-	#	self.sumo_cards.append(sumo_card)
-
-	#def add_power_card(self, power_card):
-	#	self.power_card.append(power_card)

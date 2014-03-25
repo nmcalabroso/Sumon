@@ -93,13 +93,12 @@ class Tile(GameObject):
 
 			elif self.world.game_state == Resources.state['TILE1']:
 				command = self.world.commands1.pop(-1)
-				# words = command.split(" ")
-				# if words[0] == "summon":
-				# 	command = command + " " + str(self.col) + "\n"
-				# else:
-				# 	command = command + " " + str(self.row) + " " + str(self.col) + "\n"
+				words = command.split(" ")
+				if words[0] == "summon":
+					command = command + " " + str(self.col) + "\n"
+				else:
+					command = command + " " + str(self.row) + " " + str(self.col) + "\n"
 
-				command = command + " " + str(self.row) + " " + str(self.col) + "\n"
 				self.world.commands1.append(command)
 				self.image = self.world.current_summon
 				self.world.virtual_list.append(self)
@@ -108,13 +107,12 @@ class Tile(GameObject):
 
 			elif self.world.game_state == Resources.state['TILE2']:
 				command = self.world.commands2.pop(-1)
-				# words = command.split(" ")
-				# if words[0] == "summon":
-				# 	command = command + " " + str(self.col) + "\n"
-				# else:
-				# 	command = command + " " + str(self.row) + " " + str(self.col) + "\n"
+				words = command.split(" ")
+				if words[0] == "summon":
+					command = command + " " + str(self.col) + "\n"
+				else:
+					command = command + " " + str(self.row) + " " + str(self.col) + "\n"
 
-				command = command + " " + str(self.row) + " " + str(self.col) + "\n"
 				self.world.commands2.append(command)
 				self.image = self.world.current_summon
 				self.opacity = 175
