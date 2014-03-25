@@ -45,6 +45,8 @@ class Card(GameObject):
 
 						if self.type == "wrestler":
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_blue']
+						else:
+							self.world.current_summon = Resources.sprites['no_sprite']
 
 						#prompt for player to input row and col
 						if self.title == 'swap':
@@ -99,6 +101,8 @@ class Card(GameObject):
 
 						if self.type == "wrestler":
 							self.world.current_summon = Resources.sprites['wrestler_'+self.title+'_red']
+						else:
+							self.world.current_summon = Resources.sprites['no_sprite']
 						
 						#prompt for player to input row and col
 						if self.title == 'swap':
