@@ -599,6 +599,8 @@ class GameWorld(GameObject):
 
 		elif self.game_state == Resources.state['TRANSITION_BOARD']:
 			self.reset_virtual_list()
+			# print "A", self.commands1
+			# print "B", self.commands2
 			player1 = self.find_game_object('Player1')
 			player2 = self.find_game_object('Player2')
 			player1.deactivate()

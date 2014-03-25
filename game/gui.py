@@ -109,7 +109,7 @@ class ProgramButton(UIObject):
                 
             elif self.world.game_state == Resources.state['PLAYER2']:
                 self.world.programming_phase()
-                self.world.game_state = Resources.state['PROGRAMMING1']
+                self.world.game_state = Resources.state['PROGRAMMING2']
 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
