@@ -1,6 +1,7 @@
 import pyglet
 from gameobject import GameObject
 from pyglet.text import Label
+from pyglet.text.layout import ScrollableTextLayout
 from pyglet.window import mouse
 from resources import Resources
 
@@ -233,12 +234,24 @@ class Terminal(UIObject):
                                             *args,
                                             **kwargs)
         self.name = name
+        self.opacity = 150
+        #self.doc = pyglet.text.decode_text('player@sumon: Start Round'.ljust(50))
+        text = 'player@sumon:Start Round'+"\n"+"\n"
+        self.doc = pyglet.text.document.UnformattedDocument(text)
+        self.doc.set_style(0,len(self.doc.text),dict(color=(57, 255, 20, 255)))
 
-    def hit_test(self,x,y):
-        if x > self.x and x < (self.x + (self.width)):
-            if y > self.y and y < (self.y + (self.height)):
-                return True
-        return False
+        self.layout = ScrollableTextLayout(document = self.doc,
+                                            width = self.width,
+                                            height = self.height,
+                                            multiline = True,
+                                            batch = self.batch)
+
+        self.layout.x,self.layout.y = self.x,self.y
+
+    def add_message(self,msg):
+        txt = "player@sumon:"+msg+"\n"
+        self.doc.insert_text(-1,txt)
+        self.layout.view_y = -self.layout.content_height
 
 class ReturnButton(UIObject):
     def __init__(self,name,curr_state,world,*args,**kwargs):
@@ -260,11 +273,19 @@ class ReturnButton(UIObject):
         if button == mouse.LEFT and self.hit_test(x,y):
             self.image = Resources.sprites['return_button2']
             
-            if self.world.game_state == Resources.state['PLAYER1']:
-                self.world.game_state = Resources.state['TRANSITION_PLAYER2']
-                
-            elif self.world.game_state == Resources.state['PLAYER2']:
-                self.world.game_state = Resources.state['TRANSITION_BOARD']
+            if self.world.game_state == Resources.state['PROGRAMMING1']:
+                terminal = self.world.find_widget('terminal')
+                textx = self.world.find_widget('line_widget_1')
+                self.world.commands1.append(textx.document.text)
+                terminal.add_message(textx.document.text)
+                textx.document.text = ""
+
+            elif self.world.game_state == Resources.state['PROGRAMMING2']:
+                terminal = self.world.find_widget('terminal')
+                textx = self.world.find_widget('line_widget_2')
+                self.world.commands2.append(textx.document.text)
+                terminal.add_message(textx.document.text)
+                textx.document.text = ""
                 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
