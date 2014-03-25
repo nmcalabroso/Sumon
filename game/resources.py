@@ -162,8 +162,4 @@ class Resources:
 	sprites['wrestler_ozeki_red']		= image.load(join(res_path,'wrestlers/icon_level4-red.png'))
 	sprites['wrestler_yokuzana_red']	= image.load(join(res_path,'wrestlers/icon_level5-red.png'))
 
-	sprites['wrestler_temp_blue']		= image.load(join(res_path,'wrestlers/icon_hex-blue.png'))
-	sprites['wrestler_temp_red']		= image.load(join(res_path,'wrestlers/icon_hex-red.png'))
-
-
 
