@@ -323,6 +323,8 @@ class ReturnButton(UIObject):
                     terminal.add_message(player1.actual_name,textx.document.text)
                     textx.document.text = ""
 
+                terminal.add_message("admin","Syntax or Semantic Error")
+
             elif self.world.game_state == Resources.state['PROGRAMMING2']:
                 terminal = self.world.find_widget('terminal')
                 player2 = self.world.find_game_object('Player2')
@@ -338,6 +340,7 @@ class ReturnButton(UIObject):
                     self.world.commands2.append(textx.document.text + "\n")
                     terminal.add_message(player2.actual_name,textx.document.text)
                     textx.document.text = ""
+                terminal.add_message("admin","Syntax or Semantic Error")
                 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
