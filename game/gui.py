@@ -101,13 +101,12 @@ class ProgramButton(UIObject):
             self.image = Resources.sprites['program_button2']
             
             if self.world.game_state == Resources.state['PLAYER1']:
-                self.world.game_state = Resources.state['TRANSITION_PLAYER2']
+                self.world.programming_phase()
+                self.world.game_state = Resources.state['PROGRAMMING1']
                 
             elif self.world.game_state == Resources.state['PLAYER2']:
-                self.world.game_state = Resources.state['TRANSITION_BOARD']
-
-            elif self.world.game_state == Resources.state['WAIT']:
-                self.world.game_state = Resources.state['EXECUTE']
+                self.world.programming_phase()
+                self.world.game_state = Resources.state['PROGRAMMING1']
 
     def on_mouse_release(self,x,y,button,modifiers):
         if button == mouse.LEFT and self.hit_test(x,y):
@@ -125,9 +124,12 @@ class UILabel(Label):
         self.name = name
 
 class MyRectangle(UIObject):
-     def __init__(self,name,opacity,curr_state,*args,**kwargs):
+    def __init__(self,name,opacity,curr_state,*args,**kwargs):
         super(MyRectangle, self).__init__(name = name, curr_state = curr_state, world = None,*args,**kwargs)
         self.opacity = opacity
+
+    def set_image(self,img):
+        self.image = img
 
 class Rectangle(object):
     '''Draws a rectangle into a batch.'''
@@ -222,3 +224,54 @@ class Background(GameObject):
         
     def set_image(self,img):
         self.image = img
+
+class Terminal(UIObject):
+    def __init__(self,name,curr_state,world,*args,**kwargs):
+        super(Terminal,self).__init__(name = name,
+                                            curr_state = curr_state,
+                                            world = world,
+                                            *args,
+                                            **kwargs)
+        self.name = name
+
+    def hit_test(self,x,y):
+        if x > self.x and x < (self.x + (self.width)):
+            if y > self.y and y < (self.y + (self.height)):
+                return True
+        return False
+
+class ReturnButton(UIObject):
+    def __init__(self,name,curr_state,world,*args,**kwargs):
+        super(ReturnButton,self).__init__(name = name,
+                                            curr_state = curr_state,
+                                            world = world,
+                                            *args,
+                                            **kwargs)
+        self.name = name
+        self.hand_cursor = world.window.get_system_mouse_cursor('hand')
+
+    def hit_test(self,x,y):
+        if x > self.x and x < (self.x + (self.width)):
+            if y > self.y and y < (self.y + (self.height)):
+                return True
+        return False
+
+    def on_mouse_press(self, x, y, button, modifiers):
+        if button == mouse.LEFT and self.hit_test(x,y):
+            self.image = Resources.sprites['return_button2']
+            
+            if self.world.game_state == Resources.state['PLAYER1']:
+                self.world.game_state = Resources.state['TRANSITION_PLAYER2']
+                
+            elif self.world.game_state == Resources.state['PLAYER2']:
+                self.world.game_state = Resources.state['TRANSITION_BOARD']
+                
+    def on_mouse_release(self,x,y,button,modifiers):
+        if button == mouse.LEFT and self.hit_test(x,y):
+            self.image = Resources.sprites['return_button']
+
+    def on_mouse_motion(self, x, y, dx, dy):
+        if self.active and self.world.game_state == Resources.state[self.curr_state]:
+            if self.hit_test(x,y):
+                #print "Entering Button:",self.name
+                self.world.window.set_mouse_cursor(self.hand_cursor)

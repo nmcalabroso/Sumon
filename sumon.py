@@ -9,6 +9,8 @@ from game.gui import UILabel
 from game.gui import MyRectangle
 from game.gui import EndTurnButton
 from game.gui import ProgramButton
+from game.gui import ReturnButton
+from game.gui import Terminal
 from game.player import Player
 
 game_window = pyglet.window.Window(Resources.window_width, Resources.window_height)
@@ -21,6 +23,9 @@ game_window.set_vsync(True)
 start_batch = pyglet.graphics.Batch()
 player_batch = pyglet.graphics.Batch()
 game_batch = pyglet.graphics.Batch()
+programming_batch = pyglet.graphics.Batch()
+text_batch_1 = pyglet.graphics.Batch()
+text_batch_2 = pyglet.graphics.Batch()
 end_batch = pyglet.graphics.Batch()
 # End of Batches
 
@@ -43,6 +48,13 @@ def on_draw():
 		end_batch.draw()
 	else:
 		game_batch.draw()
+		if world.game_state == Resources.state['PROGRAMMING1'] or world.game_state == Resources.state['PROGRAMMING2']:
+			programming_batch.draw()
+			if world.game_state == Resources.state['PROGRAMMING1']:
+				text_batch_1.draw()
+			else:
+				text_batch_2.draw()
+
 		for obj in world.get_game_objects():
 			obj.draw()
 			if obj.name == "Player1" or obj.name == "Player2":
@@ -55,7 +67,7 @@ def on_draw():
 						obj.my_grid[i][j].draw()
 						if obj.my_grid[i][j].wrestler != None:
 							obj.my_grid[i][j].wrestler.draw()
-						
+
 						if world.game_state == Resources.state['TILE1'] or world.game_state == Resources.state['TILE2']:
 							if obj.my_grid[i][j].glow is True:
 								g = world.find_widget('glow')
@@ -69,13 +81,6 @@ def on_draw():
 
 def update(dt):
 	world.update(dt)
-
-	for obj in world.get_game_objects():
-		obj.update(dt)
-
-	for widget in world.get_widgets():
-		widget.update(dt)
-
 #--- STATES ----------------------------------------------------------------------------------------------------------------
 
 def title_screen():
@@ -250,23 +255,68 @@ def game_screen():
 	glow.image.anchor_x += 20
 	glow.image.anchor_y += 20
 
+	#for manual programming
+	terminal = Terminal(name = 'terminal',
+						curr_state = 'PLAYER1',
+						world = world,
+						img = Resources.sprites['terminal'],
+						x = prog_board.x + 20,
+						y = prog_board.y + 109,
+						batch = programming_batch)
+
+	line_widget_1 = TextWidget(name = 'line_widget_1',
+						text = '',
+						x = terminal.x - 7,
+						y = terminal.y - 35,
+						width = 500,
+						cursor = game_window.get_system_mouse_cursor('text'),
+						curr_state = 'PROGRAMMING1',
+						world = world,
+						batch = text_batch_1)
+
+	line_widget_2 = TextWidget(name = 'line_widget_2',
+						text = '',
+						x = terminal.x - 7,
+						y = terminal.y - 35,
+						width = 500,
+						cursor = game_window.get_system_mouse_cursor('text'),
+						curr_state = 'PROGRAMMING2',
+						world = world,
+						batch = text_batch_2)
+
+	return_button = ReturnButton(name = 'return_button',
+								curr_state = 'PLAYER1',
+								world = world,
+								img = Resources.sprites['return_button'],
+								x = line_widget_1.x+500+13,
+								y = line_widget_1.y - 3,
+								batch = programming_batch)
+
 	game_window.push_handlers(player1)
 	game_window.push_handlers(player2)
 	game_window.push_handlers(game_board)
 	game_window.push_handlers(end_turn_button)
 	game_window.push_handlers(program_button)
-
+	game_window.push_handlers(line_widget_1)
+	game_window.push_handlers(line_widget_2)
+	game_window.push_handlers(return_button)
+	
 	world.add_game_object(game_board)
 	world.add_widget(blocker)
 	world.add_widget(glow)
 	world.add_widget(end_turn_button)
 	world.add_widget(program_button)
+	world.add_widget(terminal)
+	world.add_widget(line_widget_1)
+	world.add_widget(line_widget_2)
+	world.add_widget(return_button)
+	world.add_widget(world)
 	world.add_widget(hand_board)
 	world.add_widget(prog_board)
 
 	world.add_game_object(player1)
 	world.add_game_object(player2)
-
+	
 	world.add_label(label_player)
 	world.add_label(player_name)
 	world.add_label(label_hand_card)

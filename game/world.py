@@ -248,7 +248,10 @@ class GameWorld(GameObject):
 			self.widgets.remove(widget)
 
 	# --- GAME LOGIC --------------------------------------------------------------------------------------------------
-	
+	def programming_phase(self):
+		bg = self.find_widget('prog_board')
+		bg.set_image(Resources.sprites['programming_board2'])
+
 	def reset_virtual_list(self):
 		for tile in self.virtual_list:
 			tile.image = Resources.sprites['no_sprite']

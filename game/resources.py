@@ -21,10 +21,12 @@ class Resources:
 			'SETUP':3,
 			'TRANSITION_PLAYER1':4,
 			'PLAYER1':5,
+			'PROGRAMMING1':18,
 			'TILE1':6,
 			'DELETE1':7,
 			'TRANSITION_PLAYER2':8,
 			'PLAYER2':9,
+			'PROGRAMMING2':19,
 			'TILE2':10,
 			'DELETE2':11,
 			'TRANSITION_BOARD':12,
@@ -98,6 +100,8 @@ class Resources:
 	sprites['end_turn_button2']		= image.load(join(res_path,'endturn_button_active.png'))
 	sprites['program_button']		= image.load(join(res_path,'program_button.png'))
 	sprites['program_button2']		= image.load(join(res_path,'program_button_active.png'))
+	sprites['return_button']		= image.load(join(res_path,'return_button.png'))
+	sprites['return_button2']		= image.load(join(res_path,'return_button_active.png'))
 	sprites['title_bg'] 			= image.load(join(res_path,'title_bg.png'))
 	sprites['main_bg'] 				= image.load(join(res_path,'main_bg.png'))
 	sprites['game_over'] 			= image.load(join(res_path,'game_over.png'))
@@ -106,6 +110,8 @@ class Resources:
 	sprites['tile_glow']			= image.load(join(res_path,'tile_glow.png'))
 	sprites['hand_board']			= image.load(join(res_path,'hand_board.png'))
 	sprites['programming_board'] 	= image.load(join(res_path,'programming_board.png'))
+	sprites['programming_board2'] 	= image.load(join(res_path,'programming_board2.png'))
+	sprites['terminal'] 			= image.load(join(res_path,'terminal.png'))
 	sprites['blocker']				= image.load(join(res_path,'blocker.png'))
 
 	# Ability Cards
