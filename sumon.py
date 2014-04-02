@@ -1,5 +1,6 @@
 import pyglet
 from pyglet.media import Player as MediaPlayer
+from pyglet.graphics import OrderedGroup
 from game.resources import Resources
 from game.world import GameWorld
 from game.board import GameBoard
@@ -18,7 +19,6 @@ game_window = pyglet.window.Window(Resources.window_width, Resources.window_heig
 game_window.set_caption("SUMOn")
 game_window.set_location(Resources.center_x,Resources.center_y)
 game_window.set_vsync(True)
-#fps = pyglet.clock.ClockDisplay()
 
 # Object Batches per state #
 start_batch = pyglet.graphics.Batch()
@@ -74,7 +74,6 @@ def on_draw():
 		if world.game_state == Resources.state['TILE1'] or world.game_state == Resources.state['TILE2']:
 			b = world.find_widget('blocker')
 			b.draw()
-	#fps.draw()
 
 def update(dt):
 	world.update(dt)
@@ -152,9 +151,28 @@ def player_screen():
 	world.add_widget(play_button)
 
 def game_screen():
+	background = OrderedGroup(0)
+	foreground = OrderedGroup(1)
+
 	mp.queue(Resources.audio['game_bgm'])
-	hand_board = MyRectangle(name = 'hand_board',curr_state = "GAME",opacity = 255, x = 650, y = 330, img = Resources.sprites['hand_board'],batch = game_batch)
-	prog_board = MyRectangle(name = 'prog_board',curr_state = "GAME",opacity = 255, x = 650, y = 5, img = Resources.sprites['programming_board'],batch = game_batch)
+
+	hand_board = MyRectangle(name = 'hand_board',
+							curr_state = "GAME",
+							opacity = 255,
+							x = 650,
+							y = 330,
+							img = Resources.sprites['hand_board'],
+							batch = game_batch,
+							group = background)
+
+	prog_board = MyRectangle(name = 'prog_board',
+							curr_state = "GAME",
+							opacity = 255,
+							x = 650,
+							y = 5,
+							img = Resources.sprites['programming_board'],
+							batch = game_batch,
+							group = background)
 
 	player1 = Player(actual_name = 'Player',
 					name = 'Player1',
@@ -174,7 +192,8 @@ def game_screen():
 							y = hand_board.y+hand_board.height-2,
 							anchor_y = 'top',
                           	color = (57, 255, 20, 255),
-                          	batch = game_batch)
+                          	batch = game_batch,
+                          	group = foreground)
 
 	player_name = UILabel(name = 'player_name',
 						text = player1.name,
@@ -182,7 +201,8 @@ def game_screen():
 						y = label_player.y,
 						anchor_y = 'top',
 						color = (57,255,20,255),
-						batch = game_batch)
+						batch = game_batch,
+						group = foreground)
 
 	label_hand_card = UILabel(name = 'label_hand_card',
 						text = 'Card at Hand',
@@ -190,7 +210,8 @@ def game_screen():
 						y = label_player.y,
 						anchor_y = 'top',
 						color = (57,255,20,255),
-						batch = game_batch)
+						batch = game_batch,
+						group = foreground)
 
 	label_prog_card = UILabel(name = 'label_prog_card',
 						text = 'Programming Board',
@@ -198,7 +219,8 @@ def game_screen():
 						y = prog_board.y+prog_board.height,
 						anchor_y = 'top',
 						color = (57,255,20,255),
-						batch = game_batch)
+						batch = game_batch,
+						group = foreground)
 
 	label_lives =  UILabel(name = 'label_lives',
 						text = 'Lives: ',
@@ -206,7 +228,8 @@ def game_screen():
 						y = hand_board.y+hand_board.height-2,
 						anchor_y = 'top',
                   		color = (57, 255, 20, 255),
-                  		batch = game_batch)
+                  		batch = game_batch,
+                  		group = foreground)
 
 	lives =  UILabel(name = 'lives',
 					text = player1.get_life_label(),
@@ -214,7 +237,8 @@ def game_screen():
 					y = label_lives.y,
 					anchor_y = 'top',
                   	color = (57, 255, 20, 255),
-                  	batch = game_batch)
+                  	batch = game_batch,
+                  	group = foreground)
 
 	label_mana =  UILabel(name = 'label_mana',
 						text = 'Mana: ',
@@ -222,7 +246,8 @@ def game_screen():
 						y = hand_board.y+hand_board.height-2,
 						anchor_y = 'top',
                       	color = (57, 255, 20, 255),
-                      	batch = game_batch)
+                      	batch = game_batch,
+                      	group = foreground)
 
 	mana =  UILabel(name = 'mana',
 					text = player1.get_mana_label(),
@@ -230,7 +255,8 @@ def game_screen():
 					y = hand_board.y+hand_board.height-2,
 					anchor_y = 'top',
                   	color = (57, 255, 20, 255),
-                  	batch = game_batch)
+                  	batch = game_batch,
+                  	group = foreground)
 
 	end_turn_button = EndTurnButton(name = 'end_turn_button',
 									curr_state = 'PLAYER1',
@@ -238,7 +264,8 @@ def game_screen():
 									img = Resources.sprites['end_turn_button'],
 					   				x = mana.x - 46,
 									y = label_prog_card.y - 20,
-					   				batch = game_batch)
+					   				batch = game_batch,
+					   				group = foreground)
 
 	program_button = ProgramButton(name = 'program_button',
 								curr_state = 'PLAYER1',
@@ -246,11 +273,29 @@ def game_screen():
 								img = Resources.sprites['program_button'],
 								x = prog_board.x+9,
 								y = end_turn_button.y,
-								batch = game_batch)
+								batch = game_batch,
+								group = foreground)
 
-	game_board = GameBoard(name = 'game_board',world = world,x = 5,y = 7,img = Resources.sprites['game_board'])
-	blocker = MyRectangle(name = 'blocker',curr_state = "GAME",opacity = 200, x = 650, y = 5, img = Resources.sprites['blocker'])
-	glow = MyRectangle(name = 'glow',curr_state = "GAME",opacity = 255, x = 0,y = 0, img = Resources.sprites['tile_glow'])
+	game_board = GameBoard(name = 'game_board',
+						world = world,
+						x = 5,
+						y = 7,
+						img = Resources.sprites['game_board'])
+
+	blocker = MyRectangle(name = 'blocker',
+						curr_state = "GAME",
+						opacity = 200,
+						x = 650,
+						y = 5,
+						img = Resources.sprites['blocker'])
+
+	glow = MyRectangle(name = 'glow',
+					curr_state = "GAME",
+					opacity = 255,
+					x = 0,
+					y = 0,
+					img = Resources.sprites['tile_glow'])
+	
 	glow.image.anchor_x += 20
 	glow.image.anchor_y += 20
 
@@ -326,7 +371,13 @@ def game_screen():
 	world.add_label(mana)
 
 def end_screen():
-	game_over = MyRectangle(name = 'game_over_logo',curr_state = "END",opacity = 255, x = 650-428, y = 290, img = Resources.sprites['game_over'],batch = end_batch)
+	game_over = MyRectangle(name = 'game_over_logo',
+						curr_state = "END",
+						opacity = 255,
+						x = 650-428,
+						y = 290,
+						img = Resources.sprites['game_over'],
+						batch = end_batch)
 	
 	player_end =  UILabel(name = 'player_end',
 						text = 'PLAYERX WINS!',
@@ -383,10 +434,12 @@ def main():
 	world.set_window(game_window)
 	world.set_media_player(mp)
 	world.add_widget(my_bg)
+
 	title_screen()
 	player_screen()
 	game_screen()
 	end_screen()
+
 	game_window.push_handlers(world)
 	pyglet.clock.schedule_interval(update, 1/120.0)
 	pyglet.clock.set_fps_limit(120)
