@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to SUMOn’s documentation! &mdash; SUMOn 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="SUMOn 1.0 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="#">SUMOn 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-sumon-s-documentation">
+<h1>Welcome to SUMOn&#8217;s documentation!<a class="headerlink" href="#welcome-to-sumon-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+</div>
+<div class="section" id="general-syntax">
+<h1>General Syntax<a class="headerlink" href="#general-syntax" title="Permalink to this headline">¶</a></h1>
+<p>[function] [card] [location]</p>
+<div class="section" id="sample-code">
+<h2>Sample code:<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h2>
+<p>special hex 5 5
+summon jonokuchi 3
+move 2 3 3</p>
+<ul class="simple">
+<li>First command will apply the hex card ability on the wrestler in the the (5,5) tile.</li>
+<li>Second command summons a jonokuchi at the (0,3) or (7,3) tile. Row depends on which player programmed the code.</li>
+<li>Third command moves the wrestler in the (3,3) tile forward by two.</li>
+</ul>
+</div>
+<div class="section" id="functions">
+<h2>Functions:<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>There are only three functions: summon, move, special. We can think of [card] and [location] as the parameters of these functions. Note that [location] may require more than one integer input from the user. This will be further discussed in the next two sections.</p>
+</div>
+<div class="section" id="location">
+<h2>Location<a class="headerlink" href="#location" title="Permalink to this headline">¶</a></h2>
+<p>For location, a player may input [row] [col] for special and move functions; and only [col] for the summon function, since the row is fixed when summoning. The game will check which row to place the wrestler based on who programmed the code. Player 1 summons in row 7 while player 2 summons in row 0. For reference, the top-left tile has the position (7,0) while the bottom-right tile has the position (0,7). Index starts at 0.</p>
+<p>Special note on move function: the location indicates the position of the wrestler you want to move <em>during the turn the card is used</em>. If you use two move cards consecutively, the row and column will be different. For example: if the original position is (7,0) and you place a Move 2 card and a Move 1 card, then the syntax would be &#8220;move 2 7 0&#8221; and &#8220;move 1 7 0&#8221; respectively.</p>
+</div>
+<div class="section" id="cards">
+<h2>Cards<a class="headerlink" href="#cards" title="Permalink to this headline">¶</a></h2>
+<p>For the summon function, the player can only use the following wrestler_type cards: jonokuchi, komusubi, sekiwake, ozeki, yokuzana. Each wrester_type has a corresponding mana cost that will be deducted from the player.</p>
+<p>For the move function, the player may input any number between 1 and 5, inclusive. This number also corresponds to the mana cost of the card.</p>
+<p>For the special function, the player can only use the following special_type cards: jump, fatup, takedown, reverse, kamikaze, avatar, swap, hex. Most cards will only require one set of [row] [col] for location. Swap will require two. (e.g. &#8220;special swap 5 5 0 7&#8221;)</p>
+</div>
+<div class="section" id="other-notes">
+<h2>Other Notes<a class="headerlink" href="#other-notes" title="Permalink to this headline">¶</a></h2>
+<p>We use whitespace and newline as delimiters. Space separates the terms; newline separates commands. Each card has a corresponding command, and one command is executed per concurrent turn.</p>
+<p>Non-numerical input should be in lowercase. Remove space for those with more than one word. (e.g. &#8220;takedown&#8221; instead of &#8220;take down&#8221;).</p>
+<p>Players may only code the cards given to them. Mana cost will be computed first before the player may end his turn in programming. That is, the total mana cost of the player&#8217;s code should be less than or equal to the mana he or she has; otherwise the game will not let the player end his programming turn.</p>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to SUMOn&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#general-syntax">General Syntax</a><ul>
+<li><a class="reference internal" href="#sample-code">Sample code:</a></li>
+<li><a class="reference internal" href="#functions">Functions:</a></li>
+<li><a class="reference internal" href="#location">Location</a></li>
+<li><a class="reference internal" href="#cards">Cards</a></li>
+<li><a class="reference internal" href="#other-notes">Other Notes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="#">SUMOn 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, M.P. Andres, N.M. Calabroso, T.R. Esguerra, K.L. Mendoza, M.O. Shen.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

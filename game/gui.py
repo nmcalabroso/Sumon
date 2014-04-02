@@ -227,8 +227,6 @@ class TextWidget(UIObject):
 class Background(GameObject):
     def __init__(self,name,*args, **kwargs):
         super(Background, self).__init__(name = name,*args, **kwargs)
-        self.x = 0
-        self.y = 0
         
     def set_image(self,img):
         self.image = img

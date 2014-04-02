@@ -37,22 +37,19 @@ class GameWorld(GameObject):
 	# --- SWITCH ------------------------------------------------------------------------------------------------------
 
 	def switch_to_player(self,batch):
-		#bg = self.find_widget('my_bg')
-		#bg.set_image(Resources.sprites['title_bg'])
 		self.delete_widgets_by_batch(batch)
-		#self.media.queue(Resources.audio['game_bgm'])
 		self.game_state = Resources.state['PLAYER']
 
 	def switch_to_game(self,batch):
-		bg = self.find_widget('my_bg')
-		bg.set_image(Resources.sprites['main_bg'])
+		bg1 = self.find_widget('my_bg_1')
+		bg1.set_image(Resources.sprites['main_bg_1'])
+		bg2 = self.find_widget('my_bg_2')
+		bg2.set_image(Resources.sprites['main_bg_2'])
+		
 		self.set_player_names()
 		self.delete_widgets_by_batch(batch)
-		#print "before:",self.labels
 		self.delete_labels_by_batch(batch)
-		#print "after:",self.labels
 		self.game_state = Resources.state['SETUP']
-		#self.media.queue(Resources.audio['game_bgm'])
 		self.media.next()
 		self.media.eos_action = self.media.EOS_LOOP
 		self.start_round = True

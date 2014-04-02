@@ -31,13 +31,15 @@ end_batch = pyglet.graphics.Batch()
 # End of Batches
 
 world = GameWorld() #instantiate the main world
-my_bg = Background(name = 'my_bg',img =  Resources.sprites['title_bg'])
+my_bg_1 = Background(name = 'my_bg_1',img =  Resources.sprites['title_bg_1'],x = 0,y = 0)
+my_bg_2 = Background(name = 'my_bg_2',img =  Resources.sprites['title_bg_2'],x = my_bg_1.width,y=0)
 mp = MediaPlayer()
 
 @game_window.event
 def on_draw():
 	game_window.clear()
-	my_bg.draw()
+	my_bg_1.draw()
+	my_bg_2.draw()
 	if world.game_state == Resources.state['START']:
 		start_batch.draw()
 	elif world.game_state == Resources.state['PLAYER']:
@@ -433,7 +435,8 @@ def end_screen():
 def main():
 	world.set_window(game_window)
 	world.set_media_player(mp)
-	world.add_widget(my_bg)
+	world.add_widget(my_bg_1)
+	world.add_widget(my_bg_2)
 
 	title_screen()
 	player_screen()
