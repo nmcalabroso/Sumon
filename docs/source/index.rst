@@ -60,9 +60,13 @@ Players may only code the cards given to them. Mana cost will be computed first 
 Contributors
 .................................
 Andres, Mireya Gen P.
+
 Calabroso, Neil Francis M.
+
 Esguerra, Tricia Mae R.
+
 Mendoza, Kristoffer Marion L.
+
 Shen, Mara O.
 
 
