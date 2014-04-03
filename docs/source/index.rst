@@ -57,10 +57,14 @@ Non-numerical input should be in lowercase. Remove space for those with more tha
 
 Players may only code the cards given to them. Mana cost will be computed first before the player may end his turn in programming. That is, the total mana cost of the player's code should be less than or equal to the mana he or she has; otherwise the game will not let the player end his programming turn.
 
-Indices and tables
-==================
+Contributors
+.................................
+Andres, Mireya Gen P.
+Calabroso, Neil Francis M.
+Esguerra, Tricia Mae R.
+Mendoza, Kristoffer Marion L.
+Shen, Mara O.
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+
+
 
