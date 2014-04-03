@@ -14,14 +14,16 @@ Contents:
 General Syntax
 =================================
 
-[function] [card] [location]
+::
+   [function] [card] [location]
 
 Sample code:
 ---------------------------------
 
-special hex 5 5
-summon jonokuchi 3
-move 2 3 3
+::
+   special hex 5 5
+   summon jonokuchi 3
+   move 2 3 3
 
 - First command will apply the hex card ability on the wrestler in the the (5,5) tile.
 - Second command summons a jonokuchi at the (0,3) or (7,3) tile. Row depends on which player programmed the code.
@@ -59,15 +61,11 @@ Players may only code the cards given to them. Mana cost will be computed first 
 
 Contributors
 .................................
-Andres, Mireya Gen P.
-
-Calabroso, Neil Francis M.
-
-Esguerra, Tricia Mae R.
-
-Mendoza, Kristoffer Marion L.
-
-Shen, Mara O.
+|  Andres, Mireya Gen P.
+|  Calabroso, Neil Francis M.
+|  Esguerra, Tricia Mae R.
+|  Mendoza, Kristoffer Marion L.
+|  Shen, Mara O.
 
 
 
