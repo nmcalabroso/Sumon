@@ -11,7 +11,7 @@ General Syntax
 =================================
 
 |   ``[function] [card] [location]``
-
+| 
 Sample code:
 ---------------------------------
 |   ``special hex 5 5``
